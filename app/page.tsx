@@ -37,7 +37,7 @@ export default function Home() {
             </div>
           </div>
           <div className="heroImage">
-            <Image src={img.castle} alt="Elegant castle setting at sunset" fill priority sizes="(max-width: 800px) 100vw, 50vw" />
+            <Image src={img.castle} alt="Elegant castle setting at sunset" fill priority quality={95} sizes="(max-width: 800px) 100vw, 50vw" />
           </div>
         </section>
 
@@ -78,7 +78,7 @@ export default function Home() {
         </section>
 
         <section className="ball">
-          <Image src={img.ballroom} alt="" fill sizes="100vw" />
+          <Image src={img.ballroom} alt="" fill quality={95} sizes="100vw" />
           <div className="ballOverlay" />
           <div className="ballCopy">
             <p className="eyebrow gold">SATURDAY EVENING</p>
@@ -88,7 +88,7 @@ export default function Home() {
         </section>
 
         <section id="venue" className="section split">
-          <div className="venueImage"><Image src={img.hotel} alt="Embassy Suites Noblesville Indianapolis Conference Center entrance" fill sizes="(max-width:800px) 100vw, 50vw" /></div>
+          <div className="venueImage"><Image src={img.hotel} alt="Embassy Suites Noblesville Indianapolis Conference Center entrance" fill quality={95} sizes="(max-width:800px) 100vw, 50vw" /></div>
           <div>
             <p className="eyebrow plum">VENUE & STAY</p>
             <h2>Everything in one place.</h2>
