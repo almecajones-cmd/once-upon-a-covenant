@@ -7,10 +7,7 @@ export default function RegisterPage() {
   return (
     <main className="formPage registrationPage">
       <header className="formTopbar">
-        <Link className="formBrand" href="/">
-          <span className="formBrandMark">♛</span>
-          <span>Once Upon a Covenant</span>
-        </Link>
+        <Link className="formBrand" href="/" aria-label="Once Upon a Covenant home"><BrandMark compact /></Link>
         <Link className="formHomeLink" href="/">RETURN TO EXPERIENCE</Link>
       </header>
 
