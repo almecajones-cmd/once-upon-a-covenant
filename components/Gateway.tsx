@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { track } from "@/lib/analytics";
 
 export default function Gateway() {
   const [entered, setEntered] = useState(true);
@@ -11,6 +12,7 @@ export default function Gateway() {
 
   function enter() {
     sessionStorage.setItem("ouc-entered", "1");
+    track("gateway_enter");
     setEntered(true);
     requestAnimationFrame(() =>
       document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })
