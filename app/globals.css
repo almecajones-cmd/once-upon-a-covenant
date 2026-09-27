@@ -12,7 +12,47 @@
 .gatewayContent blockquote{font-family:var(--font-serif),Georgia,serif;font-size:clamp(1.12rem,2vw,1.55rem);font-weight:500;line-height:1.25;margin:1rem auto;color:#fff8ef}
 .gatewayContent blockquote span{font-family:var(--font-body),Arial,sans-serif;display:block;font-size:.72rem;font-weight:500;letter-spacing:.2em;margin-top:.7rem;color:#e8d6bf}
 .gatewayContent .date{font-family:var(--font-serif),Georgia,serif;font-size:clamp(1.1rem,2vw,1.45rem);letter-spacing:.13em;margin:1rem 0 1.4rem;color:#f8ead6}
-.gatewayEnter{min-width:300px;border:1px solid #e0b568;background:rgba(70,14,50,.86);color:#f0c979;padding:.9rem 2.25rem .8rem;cursor:pointer;box-shadow:0 0 0 1px rgba(255,220,155,.16) inset,0 8px 26px rgba(0,0,0,.22)}
+.gatewayEnter{
+  min-width:300px;
+  border:1px solid #e0b568;
+  background:rgba(70,14,50,.88);
+  color:#f0c979;
+  padding:.9rem 2.25rem .8rem;
+  cursor:pointer;
+  box-shadow:
+    0 0 0 1px rgba(255,220,155,.20) inset,
+    0 0 10px rgba(224,181,104,.35),
+    0 0 22px rgba(224,181,104,.22),
+    0 0 40px rgba(224,181,104,.12);
+  animation:invitationGlow 2.8s ease-in-out infinite;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.gatewayEnter:hover{
+  transform:translateY(-2px);
+  border-color:#f6d99d;
+  box-shadow:
+    0 0 0 1px rgba(255,240,205,.35) inset,
+    0 0 15px rgba(246,217,157,.70),
+    0 0 35px rgba(224,181,104,.45),
+    0 0 60px rgba(224,181,104,.25);
+}
+@keyframes invitationGlow{
+  0%,100%{
+    border-color:rgba(224,181,104,.75);
+    box-shadow:
+      0 0 0 1px rgba(255,220,155,.18) inset,
+      0 0 8px rgba(224,181,104,.25),
+      0 0 18px rgba(224,181,104,.15);
+  }
+  50%{
+    border-color:#f0ce8c;
+    box-shadow:
+      0 0 0 1px rgba(255,235,190,.30) inset,
+      0 0 12px rgba(240,206,140,.55),
+      0 0 28px rgba(224,181,104,.38),
+      0 0 50px rgba(224,181,104,.20);
+  }
+}
 .gatewayEnterMain{display:block;font-family:var(--font-title),Georgia,serif;font-size:1.65rem;letter-spacing:.08em;line-height:1.1}
 .gatewayEnterSub{display:block;font-family:var(--font-body),Arial,sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.28em;color:#fff;margin-top:.35rem}
 .brand{font-family:var(--font-title),var(--font-serif),Georgia,serif}
@@ -270,3 +310,7 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
   .manageShell,.adminShell,.paymentPageShell{width:min(100% - 1rem,1180px);margin-top:1rem}
 }
 @media(prefers-reduced-motion:reduce){.wizardProgressBar span{transition:none}}
+
+@media(prefers-reduced-motion:reduce){
+  .gatewayEnter{animation:none}
+}
