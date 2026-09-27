@@ -24,3 +24,97 @@ h1,h2,h3{font-family:var(--font-serif),Georgia,"Times New Roman",serif}
   .gatewayContent .tagline{font-size:1.65rem}
   .gatewayEnter{min-width:min(300px,86vw)}
 }
+
+/* ===== Registration experience ===== */
+.formPage{min-height:100vh;background:linear-gradient(180deg,#fffaf2 0%,#fbf3e8 100%);color:var(--ink)}
+.formTopbar{height:76px;padding:0 clamp(1.25rem,5vw,5rem);display:flex;align-items:center;justify-content:space-between;background:var(--plum2);color:#fff;border-bottom:1px solid rgba(217,178,106,.4)}
+.formBrand{display:flex;gap:.7rem;align-items:center;text-decoration:none;font-family:var(--font-title),Georgia,serif;font-size:1rem;letter-spacing:.02em}
+.formBrandMark{color:var(--gold);font-size:1.2rem}
+.formHomeLink{font-size:.68rem;letter-spacing:.16em;text-decoration:none;color:#f2ddbb;font-weight:600}
+.registrationHero{background:linear-gradient(rgba(53,16,42,.94),rgba(53,16,42,.94)),url("https://res.cloudinary.com/v78xwhwr/image/upload/v1790523684/06_plum_velvet_texture_es7rrv.jpg") center/cover;padding:clamp(3.5rem,7vw,6rem) 1.25rem;text-align:center;color:#fff;position:relative;overflow:hidden}
+.registrationHero:before,.registrationHero:after{content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(203,163,90,.2);transform:rotate(45deg);top:-185px}
+.registrationHero:before{left:-130px}.registrationHero:after{right:-130px}
+.registrationHeroInner{max-width:840px;margin:auto;position:relative;z-index:1}
+.registrationHero h1{font-family:var(--font-title),var(--font-serif),Georgia,serif;font-size:clamp(2.6rem,5vw,4.8rem);font-weight:400;letter-spacing:.015em;color:#f0d198;margin:.2rem 0 .85rem}
+.registrationHeroSub{font-size:.9rem;letter-spacing:.045em;color:#f7eee5;margin:.5rem 0}
+.registrationRule{width:120px;height:1px;margin:1.6rem auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.registrationHeroCopy{max-width:720px;margin:auto;color:#f6ece5;font-size:1rem;line-height:1.75}
+.registrationShell{width:min(1240px,calc(100% - 2.5rem));margin:clamp(2rem,5vw,4.5rem) auto 6rem;display:grid;grid-template-columns:300px minmax(0,1fr);gap:2rem;align-items:start}
+.registrationSummary{position:sticky;top:98px;background:#fffdf9;border:1px solid #e3d3bd;padding:2rem;box-shadow:0 16px 50px rgba(68,39,49,.07)}
+.registrationSummary h2{font-size:2.2rem;color:var(--plum);margin-bottom:1.5rem}
+.summaryItem{padding:1rem 0;border-top:1px solid #eadfce}
+.summaryItem span{display:block;font-size:.67rem;letter-spacing:.13em;text-transform:uppercase;color:#8c777c;margin-bottom:.25rem}
+.summaryItem strong{font-family:var(--font-serif),Georgia,serif;font-size:1.15rem;color:#38242f}
+.summaryNote{background:var(--champagne);padding:1rem 1.1rem;margin:1.4rem 0;font-size:.83rem}
+.summaryNote p{margin:.25rem 0 0}
+.summaryPaymentLink{display:inline-block;color:var(--plum);font-size:.82rem;font-weight:700;text-decoration:none}
+.registrationMain{min-width:0}
+.registrationIntroCard{padding:0 .2rem 1.3rem}
+.registrationIntroCard h2{font-size:clamp(2rem,4vw,3.2rem);color:var(--plum)}
+.registrationIntroCard p:last-child{max-width:760px;color:#66555d;margin-bottom:0}
+.registrationForm{display:flex;flex-direction:column;gap:1.25rem}
+.registrationForm fieldset{min-width:0;margin:0;border:1px solid #e3d5c3;background:#fffdf9;padding:clamp(1.25rem,3vw,2.2rem);box-shadow:0 12px 35px rgba(69,42,51,.045)}
+.registrationForm legend{float:left;width:100%;padding:0;border:0;font-family:var(--font-serif),Georgia,serif;font-size:1.7rem;font-weight:600;color:var(--plum);line-height:1.05}
+.fieldsetHeading{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.7rem;padding-bottom:1.3rem;border-bottom:1px solid #eadfce}
+.fieldsetHeading>div{flex:1}
+.fieldsetHeading p{margin:.35rem 0 0;color:#7a6a71;font-size:.82rem}
+.fieldsetNumber{width:38px;height:38px;flex:0 0 38px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-size:.68rem;letter-spacing:.08em;color:var(--plum);font-weight:700}
+.registrationForm .twoCol{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.25rem}
+.registrationForm .threeCol{display:grid;grid-template-columns:1.45fr .7fr .75fr;gap:1rem}
+.field{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1rem;font-size:.8rem;font-weight:600;color:#46343d}
+.field>span{letter-spacing:.015em}
+.field b{color:#8e315f}
+.field small{font-weight:400;color:#8a777f;margin-left:.2rem}
+.fieldMedium{max-width:440px}
+.registrationForm input:not([type="checkbox"]),.registrationForm select,.registrationForm textarea{width:100%;min-height:52px;border:1px solid #cdbdaf;border-radius:0;background:#fff;color:#2f2630;padding:.8rem .9rem;font:inherit;font-size:.94rem;outline:none;transition:border-color .15s,box-shadow .15s}
+.registrationForm textarea{min-height:118px;resize:vertical}
+.registrationForm input:focus,.registrationForm select:focus,.registrationForm textarea:focus{border-color:var(--plum);box-shadow:0 0 0 3px rgba(84,20,61,.09)}
+.registrationForm input::placeholder,.registrationForm textarea::placeholder{color:#a3969b}
+.personDivider{display:flex;align-items:center;gap:1rem;margin:.35rem 0 1.25rem;color:#a88956;font-size:.6rem;letter-spacing:.22em}
+.personDivider:before,.personDivider:after{content:"";height:1px;background:#eadfce;flex:1}
+.fieldHelp{color:#6c5d64;font-size:.88rem;margin:.2rem 0 1.15rem}
+.checkCard{display:flex!important;align-items:flex-start;gap:.8rem;padding:1rem 1.1rem;margin:.7rem 0;background:#fbf5ec;border:1px solid #eadbc9;cursor:pointer;font-size:.88rem}
+.checkCard input{width:20px;height:20px;margin:.1rem 0 0;accent-color:var(--plum);flex:0 0 auto}
+.checkCard span{display:flex;flex-direction:column;gap:.12rem}
+.checkCard strong{color:#493640}
+.checkCard small{font-size:.76rem;color:#806f76}
+.nightGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.nightChoice{display:flex;align-items:center;justify-content:center;gap:.55rem;min-height:58px;border:1px solid #d9c8b5;background:#fff;padding:.7rem;cursor:pointer;font-size:.82rem;font-weight:600;color:#4a3942}
+.nightChoice:has(input:checked){border-color:var(--plum);background:#f5e9ef;color:var(--plum)}
+.nightChoice input{accent-color:var(--plum)}
+.submitButton{align-self:flex-start;min-width:280px;border:none;font-family:var(--font-body),Arial,sans-serif;font-size:.78rem;letter-spacing:.13em;padding:1.05rem 1.5rem}
+.submitButton:hover{background:#6a1b4c}
+.submitButton:disabled{opacity:.65;cursor:wait}
+.submitHelp{font-size:.77rem;color:#7c6b73;margin:.1rem 0}
+.formError{padding:1rem 1.1rem;background:#fff0f0;border-left:4px solid #a43c3c;color:#7a2222;font-size:.88rem}
+.successCard{background:#fffdf9;border:1px solid #e0cfb9;padding:clamp(2rem,5vw,4rem);box-shadow:0 18px 55px rgba(69,42,51,.07)}
+.successCard h2{color:var(--plum);font-size:clamp(2.3rem,5vw,4rem)}
+.backLink{display:none}
+@media(max-width:980px){
+  .registrationShell{grid-template-columns:1fr}
+  .registrationSummary{position:static;display:grid;grid-template-columns:1fr 1fr;gap:0 1.4rem}
+  .registrationSummary>.eyebrow,.registrationSummary>h2,.summaryNote,.summaryPaymentLink{grid-column:1/-1}
+  .summaryItem{padding:.8rem 0}
+  .registrationForm .threeCol{grid-template-columns:1fr 1fr}
+  .nightGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .formTopbar{height:auto;min-height:66px;padding:.8rem 1rem}
+  .formHomeLink{display:none}
+  .formBrand{font-size:.86rem}
+  .registrationHero{padding:3rem 1rem}
+  .registrationHero h1{font-size:2.55rem}
+  .registrationHeroSub{font-size:.78rem}
+  .registrationShell{width:min(100% - 1.25rem,1240px);margin:1.4rem auto 4rem;gap:1.25rem}
+  .registrationSummary{display:block;padding:1.35rem}
+  .registrationSummary h2{font-size:1.8rem}
+  .registrationForm fieldset{padding:1.15rem}
+  .registrationForm .twoCol,.registrationForm .threeCol{grid-template-columns:1fr;gap:0}
+  .fieldsetHeading{gap:.75rem}
+  .fieldsetNumber{width:34px;height:34px;flex-basis:34px}
+  .registrationForm legend{font-size:1.45rem}
+  .nightGrid{grid-template-columns:1fr 1fr}
+  .submitButton{width:100%;min-width:0}
+  .registrationIntroCard{padding:.25rem .4rem 1rem}
+  .registrationIntroCard h2{font-size:2.2rem}
+}
