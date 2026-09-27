@@ -6,15 +6,23 @@ type BrandMarkProps = {
 };
 
 export default function BrandMark({ compact = false, showTitle = true }: BrandMarkProps) {
+  if (compact) {
+    return (
+      <span className="brandLockup brandLockup--compact">
+        <span className="brandLockupTitle">Once Upon a Covenant</span>
+      </span>
+    );
+  }
+
   return (
-    <span className={compact ? "brandLockup brandLockup--compact" : "brandLockup"}>
+    <span className="brandLockup">
       <img
         className="brandEmblem"
         src={LOGO_URL}
         alt="Midwest Marriage Consortium"
-        width={compact ? 38 : 52}
-        height={compact ? 38 : 52}
-        loading="eager"
+        width={52}
+        height={52}
+        loading="lazy"
       />
       {showTitle && <span className="brandLockupTitle">Once Upon a Covenant</span>}
     </span>
