@@ -256,6 +256,7 @@ export default function RegistrationForm(){
         {(draft.paymentMethod==="check"||draft.paymentMethod==="money_order")&&<p>After registration is created, you’ll receive the mailing instructions. Checks are not accepted after August 31, 2027.</p>}
       </div>
       <div className="paymentTotalLine"><span>Payment selected today</span><strong>{new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(paymentCents/100)}</strong></div>
+      <p className="paymentScheduleLink">Prefer to budget over time? <a href="/pay" target="_blank">View the suggested payment plan and payment methods.</a></p>
       <p className="privacyInline">By submitting, you agree that the retreat team may use the information provided to administer registration, lodging coordination, accessibility needs, payments, and retreat communications. <a href="/privacy" target="_blank">Read the privacy notice.</a></p>
     </section>}
 
