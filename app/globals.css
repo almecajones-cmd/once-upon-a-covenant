@@ -715,3 +715,18 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
   .scheduleTimeline>div{grid-template-columns:1fr;gap:.25rem}
   .scheduleTimeline time{font-size:.66rem}
 }
+
+
+/* Mobile-friendly dietary selections */
+.retreatNeedsGrid{align-items:start}
+.dietaryField{margin-bottom:1rem}
+.dietaryChoiceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+.dietaryChoice{min-height:52px;display:flex;align-items:center;gap:.65rem;padding:.75rem .85rem;border:1px solid #d9c8b5;background:#fff;cursor:pointer;font-size:.8rem;font-weight:600;color:#4a3942;transition:border-color .15s,background .15s,box-shadow .15s}
+.dietaryChoice:hover{border-color:#b79768}
+.dietaryChoice.selected{border-color:var(--plum);background:#f5e9ef;color:var(--plum);box-shadow:0 0 0 1px rgba(84,20,61,.05)}
+.dietaryChoice input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--plum)}
+.dietaryDetailField{display:flex;flex-direction:column;gap:.45rem;margin-top:.8rem;font-size:.78rem;font-weight:600;color:#46343d}
+.dietaryDetailField small{font-weight:400;color:#8a777f}
+.dietaryDetailField textarea{width:100%;min-height:92px;border:1px solid #cdbdaf;background:#fff;padding:.8rem .9rem;font:inherit;resize:vertical}
+@media(max-width:680px){.dietaryChoiceGrid{grid-template-columns:1fr 1fr;gap:.55rem}.dietaryChoice{min-height:56px;padding:.7rem;font-size:.76rem}}
+@media(max-width:420px){.dietaryChoiceGrid{grid-template-columns:1fr}}
