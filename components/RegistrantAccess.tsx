@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { track } from "@/lib/analytics";
 
 type Summary = {
@@ -23,11 +24,18 @@ type Summary = {
     verified_at:string|null;
   }>;
   verifiedPaidCents:number;
+  pendingTotalCents:number;
   balanceCents:number;
   totalDueCents:number;
+  latestVerifiedPaymentCents:number;
+  latestVerifiedPaymentDate:string|null;
+  displayStatus:string;
+  invitationConfirmed:boolean;
 };
 
-function money(cents:number){return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(cents/100)}
+function money(cents:number){
+  return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(cents/100);
+}
 
 export default function RegistrantAccess(){
   const [stage,setStage]=useState<"lookup"|"code"|"summary">("lookup");
@@ -41,6 +49,7 @@ export default function RegistrantAccess(){
   const [amount,setAmount]=useState("");
   const [method,setMethod]=useState("pushpay");
   const [paymentMessage,setPaymentMessage]=useState("");
+  const paymentRef=useRef("");
 
   async function loadSummary(){
     const res=await fetch("/api/registrant/summary",{cache:"no-store"});
@@ -77,18 +86,45 @@ export default function RegistrantAccess(){
   }
 
   async function submitPayment(e:FormEvent){
-    e.preventDefault();setBusy(true);setError("");setPaymentMessage("");
-    const res=await fetch("/api/registrant/payment",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({amount,method})});
+    e.preventDefault();
+    if(busy)return;
+    setBusy(true);setError("");setPaymentMessage("");
+
+    if(!paymentRef.current) paymentRef.current=crypto.randomUUID();
+
+    const res=await fetch("/api/registrant/payment",{
+      method:"POST",
+      headers:{"content-type":"application/json"},
+      body:JSON.stringify({amount,method,clientReference:paymentRef.current})
+    });
     const data=await res.json();
-    if(!res.ok){setError(data.error||"We could not record that payment request.");setBusy(false);return}
-    track("registrant_payment_submit",{method,amount:Number(amount)});
-    if(method==="pushpay" && data.pushPayUrl){
-      window.location.assign(data.pushPayUrl);
+
+    if(!res.ok){
+      setError(data.error||"We could not record that payment request.");
+      setBusy(false);
       return;
     }
-    if(method==="zelle") setPaymentMessage("Payment request recorded. Send your payment by Zelle to mbankhead@myeccoc.com. The balance will update after verification.");
-    if(method==="check"||method==="money_order") setPaymentMessage("Payment request recorded. Mail payment to Eagle Creek Church of Christ, c/o 2027 Midwest Marriage Retreat, 3025 W. 69th Street, Indianapolis, IN 46268. Put Midwest Marriage Retreat in the memo.");
-    await loadSummary();setBusy(false);
+
+    track("registrant_payment_submit",{method,amount:Number(amount)});
+    paymentRef.current="";
+
+    if(method==="pushpay" && data.pushPayUrl){
+      setPaymentMessage("Your payment request has been recorded. You are being sent to secure PushPay. Your verified balance will update after the retreat finance team confirms the payment.");
+      window.setTimeout(()=>window.location.assign(data.pushPayUrl),900);
+      return;
+    }
+
+    if(method==="zelle"){
+      setPaymentMessage("Payment request recorded. Send your payment by Zelle to mbankhead@myeccoc.com. Your verified balance will update after the retreat finance team confirms receipt.");
+    }
+
+    if(method==="check"||method==="money_order"){
+      setPaymentMessage("Payment request recorded. Mail payment to Eagle Creek Church of Christ, c/o 2027 Midwest Marriage Retreat, 3025 W. 69th Street, Indianapolis, IN 46268. Put Midwest Marriage Retreat in the memo. Your balance will update after verification.");
+    }
+
+    setAmount("");
+    await loadSummary();
+    setBusy(false);
   }
 
   async function logout(){
@@ -99,29 +135,70 @@ export default function RegistrantAccess(){
   if(stage==="summary" && summary){
     const r=summary.registration;
     return <div className="manageGrid">
-      <section className="balanceCard">
-        <div className="manageTopline"><span className="eyebrow plum">YOUR REGISTRATION</span><button className="textAction" onClick={logout}>Sign out</button></div>
-        <h2>{r.husband_first_name} & {r.wife_first_name}</h2>
-        <p className="confirmationPill">{r.confirmation_code}</p>
-        <div className="balanceStats">
-          <div><span>Total</span><strong>{money(summary.totalDueCents)}</strong></div>
-          <div><span>Verified paid</span><strong>{money(summary.verifiedPaidCents)}</strong></div>
-          <div><span>Remaining</span><strong>{money(summary.balanceCents)}</strong></div>
+      <section className={summary.invitationConfirmed?"balanceCard balanceCard--confirmed":"balanceCard"}>
+        <div className="manageTopline">
+          <span className="eyebrow plum">{summary.invitationConfirmed?"YOUR INVITATION IS CONFIRMED":"YOUR REGISTRATION"}</span>
+          <button className="textAction" onClick={logout}>Sign out</button>
         </div>
-        <p className="statusLine"><strong>Status:</strong> {r.registration_status==="confirmed"?"Confirmed":"Deposit pending verification"}</p>
+
+        <h2>{r.husband_first_name} & {r.wife_first_name}</h2>
+        <p className="eventLine">Once Upon a Covenant · October 8–10, 2027</p>
+        <p className="confirmationPill">{r.confirmation_code}</p>
+
+        <div className="statusBanner">
+          <span>Current status</span>
+          <strong>{summary.displayStatus}</strong>
+        </div>
+
+        <div className="balanceStats balanceStats--four">
+          <div><span>Total registration</span><strong>{money(summary.totalDueCents)}</strong></div>
+          <div><span>Latest verified payment</span><strong>{money(summary.latestVerifiedPaymentCents)}</strong></div>
+          <div><span>Total verified paid</span><strong>{money(summary.verifiedPaidCents)}</strong></div>
+          <div><span>Remaining balance</span><strong>{money(summary.balanceCents)}</strong></div>
+        </div>
+
+        {summary.pendingTotalCents>0&&<p className="pendingNotice">You also have <strong>{money(summary.pendingTotalCents)}</strong> awaiting manual verification. It is not subtracted from the verified balance yet.</p>}
+
+        <div className="confirmationActions">
+          {summary.balanceCents>0&&<a className="plumButton" href="#make-payment">MAKE ANOTHER PAYMENT</a>}
+          <a className="outlineButton" href="/api/calendar">ADD TO CALENDAR</a>
+        </div>
       </section>
 
-      <section className="manageCard">
+      <section id="make-payment" className="manageCard">
         <p className="eyebrow plum">MAKE A PAYMENT</p>
         <h3>Choose any amount up to your remaining balance.</h3>
+
         {summary.balanceCents===0 ? <p>Your registration is paid in full.</p> :
         <form onSubmit={submitPayment} className="managePaymentForm">
-          <label className="field"><span>Amount</span><input type="number" min="1" max={(summary.balanceCents/100).toFixed(2)} step=".01" value={amount} onChange={e=>setAmount(e.target.value)} required/></label>
-          <label className="field"><span>Payment method</span><select value={method} onChange={e=>setMethod(e.target.value)}><option value="pushpay">PushPay</option><option value="zelle">Zelle</option><option value="check">Check</option><option value="money_order">Money Order</option></select></label>
+          <label className="field">
+            <span>Amount</span>
+            <input type="number" min="1" max={(summary.balanceCents/100).toFixed(2)} step=".01" value={amount} onChange={e=>setAmount(e.target.value)} required/>
+          </label>
+
+          <label className="field">
+            <span>Payment method</span>
+            <select value={method} onChange={e=>setMethod(e.target.value)}>
+              <option value="pushpay">PushPay</option>
+              <option value="zelle">Zelle</option>
+              <option value="check">Check</option>
+              <option value="money_order">Money Order</option>
+            </select>
+          </label>
+
+          <div className="beforeYouPay">
+            <strong>Before you continue</strong>
+            {method==="pushpay"&&<p>We’ll record the amount you selected, then send you to secure PushPay. The amount remains pending until the retreat finance team verifies the payment.</p>}
+            {method==="zelle"&&<p>We’ll record the amount you selected, then show the Zelle instructions. Your verified balance changes only after the finance team confirms receipt.</p>}
+            {(method==="check"||method==="money_order")&&<p>We’ll record the amount you selected, then show mailing instructions. Your verified balance changes only after the finance team confirms receipt.</p>}
+          </div>
+
           <button className="plumButton" disabled={busy}>{busy?"RECORDING…":"CONTINUE WITH PAYMENT"}</button>
         </form>}
+
         {paymentMessage&&<p className="successNotice" aria-live="polite">{paymentMessage}</p>}
         {error&&<p className="formError" role="alert">{error}</p>}
+        <p className="paymentHelpLink">Need help with a payment? <Link href="/contact">Contact the retreat team.</Link></p>
       </section>
 
       <section className="manageCard paymentHistoryCard">
@@ -142,6 +219,7 @@ export default function RegistrantAccess(){
     <p className="eyebrow plum">EXISTING REGISTRANT</p>
     <h2>Securely access your registration.</h2>
     <p>Use your registration reference and one of the email addresses on the registration. No password or account is required.</p>
+
     {stage==="lookup"?
       <form onSubmit={requestCode}>
         <label className="field"><span>Registration reference</span><input value={confirmation} onChange={e=>setConfirmation(e.target.value.toUpperCase())} placeholder="OUC-XXXXXXXX" required/></label>
@@ -155,7 +233,9 @@ export default function RegistrantAccess(){
         <button className="plumButton" disabled={busy}>{busy?"VERIFYING…":"VERIFY & VIEW REGISTRATION"}</button>
         <button type="button" className="textAction recoveryAction" onClick={()=>setStage("lookup")}>Use different information</button>
       </form>}
+
     {message&&stage==="lookup"&&<p className="lookupMessage" aria-live="polite">{message}</p>}
     {error&&<p className="formError" role="alert">{error}</p>}
+    <p className="paymentHelpLink">Lookup not working? <Link href="/contact">Get help from the retreat team.</Link></p>
   </section>
 }
