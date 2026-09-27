@@ -1,0 +1,19 @@
+import Link from "next/link";
+import RegistrantAccess from "@/components/RegistrantAccess";
+
+export const metadata={title:"Manage Registration & Payments | Once Upon a Covenant"};
+
+export default function ManagePage(){
+  return <main className="formPage">
+    <header className="formTopbar">
+      <Link className="formBrand" href="/"><span className="formBrandMark">♛</span><span>Once Upon a Covenant</span></Link>
+      <Link className="formHomeLink" href="/">RETURN TO EXPERIENCE</Link>
+    </header>
+    <section className="simpleHero">
+      <p className="eyebrow gold">REGISTRATION & PAYMENTS</p>
+      <h1>Welcome Back</h1>
+      <p>View your balance, payment history, and make another payment securely.</p>
+    </section>
+    <div className="manageShell"><RegistrantAccess/></div>
+  </main>
+}
