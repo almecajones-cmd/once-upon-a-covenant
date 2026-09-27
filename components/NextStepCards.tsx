@@ -7,32 +7,39 @@ export default function NextStepCards({ compact = false }: { compact?: boolean }
         <p className="eyebrow plum">YOUR NEXT STEP</p>
         <h2>Ready to Strengthen Your Covenant?</h2>
         <p>Your marriage matters. Your weekend matters. Choose the path that fits where you are today.</p>
+        <div className="nextStepOrnament" aria-hidden="true">
+          <span />
+          <b>♡</b>
+          <span />
+        </div>
       </div>
 
       <div className="nextStepGrid">
         <article className="nextStepCard nextStepCard--primary">
-          <span className="nextStepBadge">BEST NEXT STEP</span>
+          <span className="nextStepRibbon">BEGIN YOUR CHAPTER</span>
           <div className="nextStepIcon" aria-hidden="true">01</div>
-          <h3>Register & Pay Deposit</h3>
           <p className="nextStepKicker">Secure Your Spot</p>
-          <p>Complete your registration and choose at least the $100 non-refundable deposit. Your registration is confirmed only after the required deposit is received and verified.</p>
+          <h3>Register & Pay Deposit</h3>
+          <p>Complete your registration with a minimum $100 non-refundable deposit. Your reservation is confirmed once the deposit is received and verified.</p>
           <Link className="plumButton nextStepButton" href="/register" data-track="register_cta" data-track-label="Next Step Card">REGISTER NOW</Link>
           <small>$100 non-refundable deposit per couple</small>
         </article>
 
         <article className="nextStepCard">
+          <span className="nextStepRibbon nextStepRibbon--quiet">CONTINUE YOUR JOURNEY</span>
           <div className="nextStepIcon" aria-hidden="true">02</div>
-          <h3>Already Registered?</h3>
           <p className="nextStepKicker">Make a Payment</p>
-          <p>Use your registration reference and email to securely view your balance, payment history, and make another payment. No password is required.</p>
+          <h3>Already Registered?</h3>
+          <p>Securely view your balance and payment history, then make another payment using your registration reference and email.</p>
           <Link className="outlineButton nextStepButton" href="/manage">MAKE A PAYMENT</Link>
           <small>Secure one-time email verification</small>
         </article>
 
         <article className="nextStepCard">
+          <span className="nextStepRibbon nextStepRibbon--quiet">STAY IN THE STORY</span>
           <div className="nextStepIcon" aria-hidden="true">03</div>
-          <h3>Not Ready Yet?</h3>
           <p className="nextStepKicker">Stay Updated</p>
+          <h3>Not Ready Yet?</h3>
           <p>Join the interest list for retreat updates, important dates, and special announcements without registering yet.</p>
           <a className="outlineButton nextStepButton" href="#stay-updated">YES, KEEP ME UPDATED</a>
           <small>No commitment.</small>
