@@ -12,6 +12,14 @@ const img = {
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
   rings: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523684/05_wedding_rings_velvet_yom92x.jpg",
   speakerDavid: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540868/ChatGPT_Image_Sep_27_2026_04_26_37_PM_up6w3b.jpg",
+  diningAspen: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546105/aspen_creek_hty5wb.webp",
+  diningLivery: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546105/Livery_itmkr6.webp",
+  diningFord: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546104/ford_hrrgnp.webp",
+  diningChuy: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546103/chuy_azsnye.webp",
+  diningKoto: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546102/KOTO_zkoty8.webp",
+  diningMcalisters: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546102/mccalester_fj7cvw.jpg",
+  diningHandels: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546101/handles_snt1eo.jpg",
+  diningStoneCreek: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546101/stonecreek_jzxx7f.jpg",
 };
 
 export default function Home() {
@@ -243,15 +251,18 @@ export default function Home() {
             <div className="diningCategoryHead"><span>01</span><div><h3>Date-Lunch Favorites</h3><p>A little more polished if you want lunch to feel like part of the retreat experience.</p></div></div>
             <div className="restaurantGrid">
               {[
-                ["Livery Noblesville","Latin-inspired","Hamilton Town Center","Empanadas, tacos, shareables, and a polished casual atmosphere.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Livery+Noblesville+13225+Levinson+Ln+Noblesville+IN"],
-                ["Stone Creek Dining Company","American · Steak · Seafood","Hamilton Town Center","A comfortable upscale-casual option with salads, seafood, pasta, steaks, and lunch service.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Stone+Creek+Dining+Company+13904+Town+Center+Blvd+Noblesville+IN"],
-              ].map(([name,cuisine,area,copy,url])=>(
-                <article className="restaurantCard" key={name}>
+                ["Livery Noblesville","Latin-inspired","Hamilton Town Center","Empanadas, tacos, shareables, and a polished casual atmosphere.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Livery+Noblesville+13225+Levinson+Ln+Noblesville+IN",img.diningLivery],
+                ["Stone Creek Dining Company","American · Steak · Seafood","Hamilton Town Center","A comfortable upscale-casual option with salads, seafood, pasta, steaks, and lunch service.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Stone+Creek+Dining+Company+13904+Town+Center+Blvd+Noblesville+IN",img.diningStoneCreek],
+              ].map(([name,cuisine,area,copy,url,image])=>(
+                <article className="restaurantCard restaurantCard--feature" key={name}>
+                  <div className="restaurantImage"><img src={image} alt={`${name} dining experience`} loading="lazy"/></div>
+                  <div className="restaurantCardBody">
                   <p className="restaurantMeta">{cuisine}</p>
                   <h4>{name}</h4>
                   <span className="restaurantArea">{area}</span>
                   <p>{copy}</p>
                   <a href={url} target="_blank" rel="noreferrer">DIRECTIONS →</a>
+                  </div>
                 </article>
               ))}
             </div>
@@ -261,18 +272,21 @@ export default function Home() {
             <div className="diningCategoryHead"><span>02</span><div><h3>Close & Casual</h3><p>Easy nearby choices when you want a relaxed sit-down lunch without going far.</p></div></div>
             <div className="restaurantGrid restaurantGrid--three">
               {[
-                ["Aspen Creek Grill","American · Grill","Very close to the hotel","Steaks, burgers, salads, ribs, seafood, and familiar comfort-food choices.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Aspen+Creek+Grill+13489+Tegler+Dr+Noblesville+IN"],
-                ["Ford's Garage","Burgers · American","Hamilton Town Center","A fun 1920s automotive-themed restaurant with burgers, salads, sandwiches, and more.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Ford's+Garage+13193+Levinson+Ln+Noblesville+IN"],
-                ["Chuy's","Tex-Mex","Hamilton Town Center","A lively option for tacos, enchiladas, fajitas, burritos, and plenty of shareable favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Chuy's+14150+Town+Center+Blvd+Noblesville+IN"],
-                ["Pies & Pints","Pizza · Casual","Hamilton Town Center","Pizza and casual lunch fare in an easygoing setting near the hotel.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Pies+%26+Pints+Noblesville+IN"],
-                ["Koto Japanese Steakhouse","Japanese · Sushi · Hibachi","Near the hotel","Saturday lunch begins at noon, with sushi, hibachi, bento-style choices, and Japanese favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Koto+Japanese+Steakhouse+13398+Tegler+Dr+Noblesville+IN"],
-              ].map(([name,cuisine,area,copy,url])=>(
+                ["Aspen Creek Grill","American · Grill","Very close to the hotel","Steaks, burgers, salads, ribs, seafood, and familiar comfort-food choices.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Aspen+Creek+Grill+13489+Tegler+Dr+Noblesville+IN",img.diningAspen],
+                ["Ford's Garage","Burgers · American","Hamilton Town Center","A fun 1920s automotive-themed restaurant with burgers, salads, sandwiches, and more.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Ford's+Garage+13193+Levinson+Ln+Noblesville+IN",img.diningFord],
+                ["Chuy's","Tex-Mex","Hamilton Town Center","A lively option for tacos, enchiladas, fajitas, burritos, and plenty of shareable favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Chuy's+14150+Town+Center+Blvd+Noblesville+IN",img.diningChuy],
+                ["Pies & Pints","Pizza · Casual","Hamilton Town Center","Pizza and casual lunch fare in an easygoing setting near the hotel.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Pies+%26+Pints+Noblesville+IN",""],
+                ["Koto Japanese Steakhouse","Japanese · Sushi · Hibachi","Near the hotel","Saturday lunch begins at noon, with sushi, hibachi, bento-style choices, and Japanese favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Koto+Japanese+Steakhouse+13398+Tegler+Dr+Noblesville+IN",img.diningKoto],
+              ].map(([name,cuisine,area,copy,url,image])=>(
                 <article className="restaurantCard" key={name}>
+                  {image ? <div className="restaurantImage"><img src={image} alt={`${name} dining experience`} loading="lazy"/></div> : <div className="restaurantImage restaurantImage--placeholder"><span>Pies & Pints</span></div>}
+                  <div className="restaurantCardBody">
                   <p className="restaurantMeta">{cuisine}</p>
                   <h4>{name}</h4>
                   <span className="restaurantArea">{area}</span>
                   <p>{copy}</p>
                   <a href={url} target="_blank" rel="noreferrer">DIRECTIONS →</a>
+                  </div>
                 </article>
               ))}
             </div>
@@ -282,21 +296,27 @@ export default function Home() {
             <div>
               <div className="diningCategoryHead"><span>03</span><div><h3>Quick & Easy</h3><p>Good when you want to maximize your free afternoon.</p></div></div>
               <article className="restaurantCard restaurantCard--wide">
+                <div className="restaurantImage"><img src={img.diningMcalisters} alt="McAlister's Deli dining experience" loading="lazy"/></div>
+                <div className="restaurantCardBody">
                 <p className="restaurantMeta">Deli · Sandwiches · Salads</p>
                 <h4>McAlister's Deli</h4>
                 <span className="restaurantArea">Hamilton Town Center</span>
                 <p>Sandwiches, soups, salads, baked potatoes, and quick counter-service lunch options.</p>
                 <a href="https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=McAlister's+Deli+14191+Town+Center+Blvd+Noblesville+IN" target="_blank" rel="noreferrer">DIRECTIONS →</a>
+                </div>
               </article>
             </div>
             <div>
               <div className="diningCategoryHead"><span>04</span><div><h3>Something Sweet</h3><p>A simple stop before heading back to the hotel.</p></div></div>
               <article className="restaurantCard restaurantCard--wide">
+                <div className="restaurantImage"><img src={img.diningHandels} alt="Handel's Homemade Ice Cream" loading="lazy"/></div>
+                <div className="restaurantCardBody">
                 <p className="restaurantMeta">Ice Cream · Dessert</p>
                 <h4>Handel's Homemade Ice Cream</h4>
                 <span className="restaurantArea">Cabela Parkway · Nearby</span>
                 <p>Fresh-made ice cream with a large rotating flavor selection—an easy sweet finish to couple time.</p>
                 <a href="https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Handel's+Homemade+Ice+Cream+14165+Cabela+Pkwy+Noblesville+IN" target="_blank" rel="noreferrer">DIRECTIONS →</a>
+                </div>
               </article>
             </div>
           </div>
