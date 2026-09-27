@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Gateway from "@/components/Gateway";
 import BrandMark from "@/components/BrandMark";
+import NextStepCards from "@/components/NextStepCards";
+import StayUpdatedForm from "@/components/StayUpdatedForm";
 
 const img = {
   castle: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523683/02_castle_sunset_balose.jpg",
@@ -212,6 +214,17 @@ export default function Home() {
               <Link className="lightTextButton" href="/manage">MAKE A PAYMENT →</Link>
             </div>
           </div>
+        </section>
+
+        <NextStepCards />
+
+        <section id="stay-updated" className="homepageInterest">
+          <div className="homepageInterestCopy">
+            <p className="eyebrow gold">STAY UPDATED</p>
+            <h2>Not ready to register yet?</h2>
+            <p>Join the interest list for retreat updates, speaker announcements, important dates, and special messages. No commitment and no registration required.</p>
+          </div>
+          <StayUpdatedForm/>
         </section>
 
         <section id="faq" className="section faq">
