@@ -108,56 +108,59 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="schedule" className="section scheduleExperience">
-          <div className="sectionHeading">
-            <p className="eyebrow plum">THE WEEKEND</p>
-            <h2>Your story unfolds chapter by chapter.</h2>
-            <p>A high-level look at the weekend so you can plan your time together.</p>
+        <section id="schedule" className="section scheduleExperience scheduleToc">
+          <div className="sectionHeading scheduleTocHeading">
+            <p className="eyebrow plum">THE WEEKEND STORY</p>
+            <h2>A table of contents for your weekend.</h2>
+            <p>Each day unfolds like a chapter—moving from invitation, to purpose and plot twists, to the Royal Ball, and finally to the story you carry home.</p>
           </div>
 
           <div className="scheduleDayGrid">
-            <article className="scheduleDayCard">
-              <div className="scheduleDayHead">
-                <p className="eyebrow plum">FRIDAY</p>
-                <h3>The Invitation</h3>
+            <article className="scheduleDayCard scheduleChapterCard">
+              <div className="scheduleDayHead scheduleChapterHead">
+                <p className="scheduleChapterLabel">FRIDAY — CHAPTER ONE</p>
+                <h3>The Invitation to the Ball</h3>
+                <p className="scheduleChapterVerse">Love originates from God <span>•</span> 1 John 4:7</p>
               </div>
-              <div className="scheduleTimeline">
-                <div><time>6:00 PM</time><span><strong>Welcome & Opening</strong></span></div>
-                <div><time>6:15 PM</time><span><strong>Icebreaker</strong></span></div>
-                <div><time>7:00 PM</time><span><strong>Dinner</strong></span></div>
-                <div><time>7:30 PM</time><span><strong>Opening Speaker</strong><small>Speaker assignment to be announced.</small></span></div>
-                <div><time>9:00 PM</time><span><strong>Optional Fellowship</strong><small>Games, movie, or personal couple time.</small></span></div>
-              </div>
-            </article>
-
-            <article className="scheduleDayCard scheduleDayCard--featured">
-              <div className="scheduleDayHead">
-                <p className="eyebrow plum">SATURDAY</p>
-                <h3>The Journey</h3>
-              </div>
-              <div className="scheduleTimeline">
-                <div><time>7:00–8:30 AM</time><span><strong>Breakfast</strong></span></div>
-                <div><time>8:45 AM</time><span><strong>Opening Session</strong><small>Led by a planning team member.</small></span></div>
-                <div><time>9:15 AM</time><span><strong>Transition</strong></span></div>
-                <div><time>9:30 AM</time><span><strong>Breakout Session I</strong><small>Couples split between two topics.</small></span></div>
-                <div><time>10:45 AM</time><span><strong>Transition</strong></span></div>
-                <div><time>11:00 AM</time><span><strong>Breakout Session II</strong><small>Groups switch topics.</small></span></div>
-                <div className="scheduleLunch"><time>12:15 PM</time><span><strong>Lunch & Couple Time</strong><small>Lunch is on your own. Explore nearby dining, walk around, or enjoy intentional time together before the evening celebration.</small><a href="#dining">EXPLORE NEARBY DINING →</a></span></div>
-                <div><time>5:00 PM</time><span><strong>Photo Booth Opens</strong></span></div>
-                <div><time>6:00 PM</time><span><strong>Banquet Doors Open</strong></span></div>
-                <div><time>6:30 PM</time><span><strong>Royal Ball Banquet</strong></span></div>
+              <div className="scheduleTimeline scheduleContents">
+                <div><time>6:00 PM</time><span><strong>The Invitation</strong><small>Welcome & Opening</small></span></div>
+                <div><time>6:15 PM</time><span><strong>The Royal Introduction</strong><small>Icebreaker</small></span></div>
+                <div><time>7:00 PM</time><span><strong>The Opening Feast</strong><small>Dinner</small></span></div>
+                <div><time>7:30 PM</time><span><strong>Every Fairytale Has a Villain</strong><small>Opening Message</small></span></div>
+                <div><time>9:00 PM</time><span><strong>Battle of the Kingdoms</strong><small>Optional Fellowship</small></span></div>
               </div>
             </article>
 
-            <article className="scheduleDayCard">
-              <div className="scheduleDayHead">
-                <p className="eyebrow plum">SUNDAY</p>
+            <article className="scheduleDayCard scheduleDayCard--featured scheduleChapterCard">
+              <div className="scheduleDayHead scheduleChapterHead">
+                <p className="scheduleChapterLabel">SATURDAY — CHAPTER TWO</p>
+                <h3>Happily Ever After Is a Journey</h3>
+                <p className="scheduleChapterVerse">God binds husband & wife <span>•</span> Ecclesiastes 4:12</p>
+              </div>
+              <div className="scheduleTimeline scheduleContents">
+                <div><time>7:00–8:30 AM</time><span><strong>Morning at the Kingdom</strong><small>Breakfast</small></span></div>
+                <div><time>8:45 AM</time><span><strong>Divine Purpose</strong><small>General Session</small></span></div>
+                <div><time>9:15 AM</time><span><strong>Intermission</strong></span></div>
+                <div><time>9:30 AM</time><span><strong>The Plot Twists</strong><small>Breakout I</small></span></div>
+                <div><time>10:45 AM</time><span><strong>Intermission</strong></span></div>
+                <div><time>11:00 AM</time><span><strong>The Plot Twists</strong><small>Breakout II</small></span></div>
+                <div className="scheduleLunch"><time>12:15 PM</time><span><strong>Our Own Chapter</strong><small>Lunch & Couple Time — lunch is on your own. Explore nearby dining or enjoy intentional time together before the evening celebration.</small><a href="#dining">EXPLORE NEARBY DINING →</a></span></div>
+                <div><time>5:00 PM</time><span><strong>A Moment in the Story</strong><small>Photo Experience Opens</small></span></div>
+                <div><time>6:00 PM</time><span><strong>The Royal Ball</strong><small>Doors Open</small></span></div>
+                <div><time>6:30 PM</time><span><strong>The Royal Ball</strong><small>An Evening of Enchantment</small></span></div>
+              </div>
+            </article>
+
+            <article className="scheduleDayCard scheduleChapterCard">
+              <div className="scheduleDayHead scheduleChapterHead">
+                <p className="scheduleChapterLabel">SUNDAY — THE FINAL CHAPTER</p>
                 <h3>The Story Continues</h3>
+                <p className="scheduleChapterVerse">Ever After Begins Now</p>
               </div>
-              <div className="scheduleTimeline">
-                <div><time>7:00–8:30 AM</time><span><strong>Breakfast</strong></span></div>
-                <div><time>9:00 AM</time><span><strong>Worship Service</strong><small>Sunday sermon speaker to be announced.</small></span></div>
-                <div><time>11:00 AM</time><span><strong>Hotel Check-out</strong></span></div>
+              <div className="scheduleTimeline scheduleContents">
+                <div><time>7:00–8:30 AM</time><span><strong>Breakfast Together</strong></span></div>
+                <div><time>9:00 AM</time><span><strong>The Story Continues</strong><small>Worship & Reflection</small></span></div>
+                <div><time>11:00 AM</time><span><strong>Ever After Begins Now</strong><small>Departure</small></span></div>
               </div>
             </article>
           </div>
