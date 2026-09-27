@@ -314,3 +314,23 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
 @media(prefers-reduced-motion:reduce){
   .gatewayEnter{animation:none}
 }
+
+/* Consortium emblem lockup */
+.brandLockup{display:inline-flex;align-items:center;gap:.7rem;min-width:0}
+.brandLockup--compact{gap:.55rem}
+.brandEmblem{display:block;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.16))}
+.brandLockupTitle{display:block;color:#fff!important;margin:0!important;font-family:var(--font-title),var(--font-serif),Georgia,serif;font-size:1rem;letter-spacing:.015em;white-space:nowrap}
+.siteHeader .brand{display:inline-flex;align-items:center;text-decoration:none;min-width:0}
+.formBrand .brandLockupTitle{font-size:.92rem}
+.footerBrand{display:flex;justify-content:center;margin-bottom:.25rem}
+.footerBrand .brandLockup{flex-direction:column;gap:.35rem}
+.footerBrand .brandLockupTitle{font-size:.85rem;color:#f3dcae!important}
+.footerBrand .brandEmblem{width:58px;height:58px}
+@media(max-width:680px){
+  .brandLockupTitle{font-size:.78rem}
+  .siteHeader .brandLockupTitle{display:none}
+  .formBrand .brandLockupTitle{font-size:.76rem}
+  .brandEmblem{width:36px;height:36px}
+  .footerBrand .brandLockupTitle{display:block}
+  .footerBrand .brandEmblem{width:54px;height:54px}
+}
