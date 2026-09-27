@@ -6,7 +6,7 @@ import NextStepCards from "@/components/NextStepCards";
 import StayUpdatedForm from "@/components/StayUpdatedForm";
 
 const img = {
-  castle: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790543437/02_castle_sunset_wxv9b1.jpg",
+  castle: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790545016/ChatGPT_Image_Sep_27_2026_05_36_15_PM_jmnyri.png",
   ballroom: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/03_royal_ballroom_cabvif.jpg",
   hotel: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540661/indnb-exterior-02_m2nsu5.avif",
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
