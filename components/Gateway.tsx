@@ -12,7 +12,9 @@ export default function Gateway() {
   function enter() {
     sessionStorage.setItem("ouc-entered", "1");
     setEntered(true);
-    requestAnimationFrame(() => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }));
+    requestAnimationFrame(() =>
+      document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })
+    );
   }
 
   if (entered) return null;
@@ -21,12 +23,30 @@ export default function Gateway() {
     <section className="gateway" aria-label="Once Upon a Covenant entrance">
       <div className="gatewayShade" />
       <div className="gatewayContent">
-        <p className="eyebrow">YOUR INVITATION AWAITS</p>
-        <h1>Once Upon a Covenant</h1>
+        <p className="gatewayKicker">YOUR INVITATION AWAITS</p>
+
+        <h1 className="gatewayTitle">
+          <span className="gatewayTitleTop">Once Upon A</span>
+          <span className="gatewayTitleMain">Covenant</span>
+        </h1>
+
         <p className="tagline">A Love Story Written by God</p>
-        <p className="date">October 8–10, 2027</p>
-        <blockquote>“A cord of three strands is not quickly broken.” <span>— Ecclesiastes 4:12</span></blockquote>
-        <button className="goldButton" onClick={enter}>ENTER THE STORY</button>
+
+        <div className="gatewayRule" aria-hidden="true" />
+
+        <blockquote>
+          “A cord of three strands<br />is not quickly broken.”
+          <span>ECCLESIASTES 4:12</span>
+        </blockquote>
+
+        <div className="gatewayRule gatewayRuleShort" aria-hidden="true" />
+
+        <p className="date">OCTOBER 8–10, 2027</p>
+
+        <button className="gatewayEnter" onClick={enter}>
+          <span className="gatewayEnterMain">ENTER</span>
+          <span className="gatewayEnterSub">YOUR INVITATION AWAITS</span>
+        </button>
       </div>
     </section>
   );
