@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandMark from "@/components/BrandMark";
 import AdminPortal from "@/components/AdminPortal";
 
 export const metadata={title:"Retreat Administration | Once Upon a Covenant"};
