@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandMark from "@/components/BrandMark";
 import RegistrationForm from "@/components/RegistrationForm";
 
 export const metadata = { title: "Register | Once Upon a Covenant" };
