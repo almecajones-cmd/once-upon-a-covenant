@@ -9,6 +9,7 @@ const img = {
   hotel: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540661/indnb-exterior-02_m2nsu5.avif",
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
   rings: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523684/05_wedding_rings_velvet_yom92x.jpg",
+  speakerDavid: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540868/ChatGPT_Image_Sep_27_2026_04_26_37_PM_up6w3b.jpg",
 };
 
 export default function Home() {
@@ -139,18 +140,50 @@ export default function Home() {
 
         <section id="speakers" className="section speakerSection">
           <div className="sectionHeading">
-            <p className="eyebrow plum">CONFIRMED SPEAKER</p>
-            <h2>Meet David Wilson.</h2>
+            <p className="eyebrow plum">OUR SPEAKERS</p>
+            <h2>Voices for the journey.</h2>
+            <p>Two speakers will guide couples through biblical truth, practical reflection, and meaningful conversation throughout the weekend.</p>
           </div>
-          <article className="speakerCard">
-            <div className="speakerMonogram" aria-hidden="true">DW</div>
-            <div>
-              <p className="eyebrow plum">THE EXPOSITOR</p>
-              <h3>David Wilson</h3>
-              <p className="speakerRole">Minister · Kings Church of Christ · Brooklyn, New York</p>
-              <p>Affectionately known as “The Expositor,” David Wilson is the dynamic Minister of the Kings Church of Christ in Brooklyn, New York. He exhibits the trifecta of great gospel preaching: a love for God, a love for His people, and a love for the truth. David brings a unique blend of talents, passion, and experience that enables him to explain the Word of God in a way that is exciting, informative, and relevant.</p>
-            </div>
-          </article>
+
+          <div className="speakerGrid">
+            <article className="speakerProfileCard">
+              <div className="speakerPhoto">
+                <Image
+                  src={img.speakerDavid}
+                  alt="David Wilson, Minister at Kings Church of Christ in Brooklyn, New York"
+                  fill
+                  quality={95}
+                  sizes="(max-width: 760px) 100vw, 420px"
+                />
+              </div>
+              <div className="speakerProfileBody">
+                <p className="eyebrow plum">THE EXPOSITOR</p>
+                <h3>David Wilson</h3>
+                <p className="speakerRole">Minister, Kings Church of Christ<br/>Brooklyn, New York</p>
+                <p className="speakerTeaser">Affectionately known as <strong>“The Expositor,”</strong> David Wilson is known for explaining the Word of God in an exciting, informative, and relevant manner.</p>
+
+                <details className="speakerBio">
+                  <summary>Meet David <span aria-hidden="true">→</span></summary>
+                  <div className="speakerBioContent">
+                    <p>Affectionately known as <strong>“The Expositor,”</strong> David Wilson is the dynamic Minister of the Kings Church of Christ in Brooklyn, New York. He exhibits the trifecta of great gospel preaching: a love for God, a love for His people, and a love for the truth.</p>
+                    <p>David brings a unique blend of talents, passion, and experience that enables him to explain the Word of God in a way that is <strong>exciting, informative, and relevant</strong>.</p>
+                  </div>
+                </details>
+              </div>
+            </article>
+
+            <article className="speakerProfileCard speakerProfileCard--placeholder" aria-label="Second speaker details coming soon">
+              <div className="speakerPlaceholderVisual" aria-hidden="true">
+                <span>02</span>
+              </div>
+              <div className="speakerProfileBody">
+                <p className="eyebrow plum">SECOND SPEAKER</p>
+                <h3>Details Coming Soon</h3>
+                <p className="speakerRole">Speaker announcement in progress</p>
+                <p className="speakerTeaser">Our second speaker will be added here as soon as the final bio, image, and session information are confirmed.</p>
+              </div>
+            </article>
+          </div>
         </section>
 
         <section id="venue" className="section split">
