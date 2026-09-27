@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { track } from "@/lib/analytics";
+import BrandMark from "@/components/BrandMark";
 
 export default function Gateway() {
   const [entered, setEntered] = useState(true);
@@ -24,6 +25,7 @@ export default function Gateway() {
   return (
     <section className="gateway" aria-label="Once Upon a Covenant entrance">
       <div className="gatewayShade" />
+      <div className="gatewayConsortium"><BrandMark showTitle={false} /></div>
       <div className="gatewayContent">
         <p className="gatewayKicker">YOUR INVITATION AWAITS</p>
 
