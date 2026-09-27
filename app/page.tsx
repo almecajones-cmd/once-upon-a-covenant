@@ -12,12 +12,13 @@ const img = {
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
   rings: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523684/05_wedding_rings_velvet_yom92x.jpg",
   speakerDavid: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540868/ChatGPT_Image_Sep_27_2026_04_26_37_PM_up6w3b.jpg",
-  diningAspen: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546105/aspen_creek_hty5wb.webp",
+  diningAspen: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547186/revised_aspen_creek_cxqgxo.jpg",
   diningLivery: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546105/Livery_itmkr6.webp",
-  diningFord: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546104/ford_hrrgnp.webp",
-  diningChuy: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546103/chuy_azsnye.webp",
-  diningKoto: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546102/KOTO_zkoty8.webp",
-  diningMcalisters: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546102/mccalester_fj7cvw.jpg",
+  diningFord: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547186/Ford_revised_image_yf4pcx.jpg",
+  diningChuy: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547185/chuys_revised_image_d61ig5.jpg",
+  diningPiesPints: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547184/pprevised_dr0igq.webp",
+  diningKoto: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547145/Screenshot_2026-09-27_181135_qyrhzr.png",
+  diningMcalisters: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547145/Screenshot_2026-09-27_181207_d21vbi.png",
   diningHandels: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546101/handles_snt1eo.jpg",
   diningStoneCreek: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546101/stonecreek_jzxx7f.jpg",
 };
@@ -275,7 +276,7 @@ export default function Home() {
                 ["Aspen Creek Grill","American · Grill","Very close to the hotel","Steaks, burgers, salads, ribs, seafood, and familiar comfort-food choices.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Aspen+Creek+Grill+13489+Tegler+Dr+Noblesville+IN",img.diningAspen],
                 ["Ford's Garage","Burgers · American","Hamilton Town Center","A fun 1920s automotive-themed restaurant with burgers, salads, sandwiches, and more.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Ford's+Garage+13193+Levinson+Ln+Noblesville+IN",img.diningFord],
                 ["Chuy's","Tex-Mex","Hamilton Town Center","A lively option for tacos, enchiladas, fajitas, burritos, and plenty of shareable favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Chuy's+14150+Town+Center+Blvd+Noblesville+IN",img.diningChuy],
-                ["Pies & Pints","Pizza · Casual","Hamilton Town Center","Pizza and casual lunch fare in an easygoing setting near the hotel.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Pies+%26+Pints+Noblesville+IN",""],
+                ["Pies & Pints","Pizza · Casual","Hamilton Town Center","Pizza and casual lunch fare in an easygoing setting near the hotel.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Pies+%26+Pints+Noblesville+IN",img.diningPiesPints],
                 ["Koto Japanese Steakhouse","Japanese · Sushi · Hibachi","Near the hotel","Saturday lunch begins at noon, with sushi, hibachi, bento-style choices, and Japanese favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Koto+Japanese+Steakhouse+13398+Tegler+Dr+Noblesville+IN",img.diningKoto],
               ].map(([name,cuisine,area,copy,url,image])=>(
                 <article className="restaurantCard" key={name}>
