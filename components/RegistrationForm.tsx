@@ -1,13 +1,84 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+
+type Church = {
+  id: number;
+  name: string;
+  location: string;
+  state: string;
+};
 
 export default function RegistrationForm() {
   const [state,setState]=useState<"idle"|"sending"|"success"|"error">("idle");
   const [code,setCode]=useState("");
+  const [relationship,setRelationship]=useState("");
+  const [churchType,setChurchType]=useState("");
+  const [churchQuery,setChurchQuery]=useState("");
+  const [churches,setChurches]=useState<Church[]>([]);
+  const [churchLoading,setChurchLoading]=useState(false);
+  const [selectedChurchId,setSelectedChurchId]=useState("");
+  const [selectedChurchLabel,setSelectedChurchLabel]=useState("");
+  const [manualChurch,setManualChurch]=useState(false);
+  const [churchError,setChurchError]=useState("");
+
+  useEffect(()=>{
+    if(churchType!=="midwest_church_of_christ" || manualChurch || churchQuery.trim().length<2 || selectedChurchLabel===churchQuery){
+      setChurches([]);
+      return;
+    }
+
+    const controller=new AbortController();
+    const timer=window.setTimeout(async()=>{
+      try{
+        setChurchLoading(true);
+        const res=await fetch(`/api/churches?q=${encodeURIComponent(churchQuery.trim())}`,{signal:controller.signal});
+        if(res.ok){
+          const data=await res.json();
+          setChurches(Array.isArray(data)?data:[]);
+        }
+      }catch(e){
+        if((e as Error).name!=="AbortError") console.error(e);
+      }finally{
+        setChurchLoading(false);
+      }
+    },220);
+
+    return ()=>{
+      controller.abort();
+      window.clearTimeout(timer);
+    };
+  },[churchQuery,churchType,manualChurch,selectedChurchLabel]);
+
+  function selectChurch(church:Church){
+    const label=`${church.name} — ${church.location}`;
+    setSelectedChurchId(String(church.id));
+    setSelectedChurchLabel(label);
+    setChurchQuery(label);
+    setChurches([]);
+    setChurchError("");
+  }
+
+  function changeChurchType(value:string){
+    setChurchType(value);
+    setChurchQuery("");
+    setSelectedChurchId("");
+    setSelectedChurchLabel("");
+    setManualChurch(false);
+    setChurches([]);
+    setChurchError("");
+  }
 
   async function submit(e:FormEvent<HTMLFormElement>){
     e.preventDefault();
+
+    if(churchType==="midwest_church_of_christ" && !manualChurch && !selectedChurchId){
+      setChurchError("Please select your congregation from the list, or choose “My congregation isn’t listed.”");
+      document.getElementById("churchSearch")?.focus();
+      return;
+    }
+
+    setChurchError("");
     setState("sending");
     const form=e.currentTarget;
     const body=Object.fromEntries(new FormData(form).entries());
@@ -36,7 +107,7 @@ export default function RegistrationForm() {
 
         <label className="field fieldMedium">
           <span>Relationship status <b>*</b></span>
-          <select name="relationshipStatus" required defaultValue="">
+          <select name="relationshipStatus" required value={relationship} onChange={e=>setRelationship(e.target.value)}>
             <option value="" disabled>Select relationship status</option>
             <option value="married">Married</option>
             <option value="engaged">Engaged</option>
@@ -62,10 +133,13 @@ export default function RegistrationForm() {
           <label className="field"><span>Wife email <b>*</b></span><input name="wifeEmail" type="email" required/></label>
           <label className="field"><span>Wife mobile <b>*</b></span><input name="wifePhone" type="tel" required/></label>
         </div>
-        <label className="field fieldMedium">
-          <span>Wedding anniversary <small>married couples</small></span>
-          <input name="weddingAnniversary" type="date"/>
-        </label>
+
+        {relationship==="married" && (
+          <label className="field fieldMedium">
+            <span>Wedding anniversary</span>
+            <input name="weddingAnniversary" type="date"/>
+          </label>
+        )}
       </fieldset>
 
       <fieldset>
@@ -87,17 +161,111 @@ export default function RegistrationForm() {
           <span className="fieldsetNumber">03</span>
           <div><legend>Church & Retreat Information</legend><p>Help the committee prepare for your experience.</p></div>
         </div>
+
         <label className="field">
           <span>Church affiliation <b>*</b></span>
-          <select name="churchAffiliationType" required defaultValue="">
+          <select name="churchAffiliationType" required value={churchType} onChange={e=>changeChurchType(e.target.value)}>
             <option value="" disabled>Select church affiliation</option>
-            <option value="midwest_church_of_christ">Midwest Church of Christ congregation</option>
-            <option value="guest_of_church_of_christ_member">Guest of a Church of Christ member</option>
-            <option value="other_congregation">Other congregation</option>
-            <option value="no_church_affiliation">No church affiliation</option>
+            <option value="midwest_church_of_christ">I attend a Church of Christ congregation</option>
+            <option value="guest_of_church_of_christ_member">I am a guest of a Church of Christ member</option>
+            <option value="other_congregation">I attend another congregation</option>
+            <option value="no_church_affiliation">I do not have a church affiliation</option>
           </select>
         </label>
-        <label className="field"><span>Congregation name</span><input name="churchNameOther"/></label>
+
+        {churchType==="midwest_church_of_christ" && !manualChurch && (
+          <div className="churchLookup">
+            <label className="field">
+              <span>Congregation name <b>*</b></span>
+              <input
+                id="churchSearch"
+                type="text"
+                value={churchQuery}
+                onChange={e=>{
+                  setChurchQuery(e.target.value);
+                  setSelectedChurchId("");
+                  setSelectedChurchLabel("");
+                  setChurchError("");
+                }}
+                autoComplete="off"
+                aria-autocomplete="list"
+                aria-controls="churchSuggestions"
+                aria-expanded={churches.length>0}
+                placeholder="Start typing your congregation or city"
+                required
+              />
+              <input type="hidden" name="churchId" value={selectedChurchId}/>
+            </label>
+
+            {(churchLoading || churches.length>0 || (churchQuery.trim().length>=2 && !selectedChurchId)) && (
+              <div className="churchSuggestionsWrap">
+                {churchLoading && <div className="churchSearchStatus">Searching congregations…</div>}
+                {!churchLoading && churches.length>0 && (
+                  <div id="churchSuggestions" className="churchSuggestions" role="listbox" aria-label="Church suggestions">
+                    {churches.map(church=>(
+                      <button
+                        type="button"
+                        className="churchSuggestion"
+                        key={church.id}
+                        onClick={()=>selectChurch(church)}
+                        role="option"
+                      >
+                        <strong>{church.name}</strong>
+                        <span>{church.location}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {!churchLoading && churches.length===0 && churchQuery.trim().length>=2 && !selectedChurchId && (
+                  <div className="churchSearchStatus">No matching congregation found yet. Try the church name or city.</div>
+                )}
+              </div>
+            )}
+
+            {selectedChurchId && <p className="churchSelected">✓ Congregation selected</p>}
+            {churchError && <p className="fieldError" role="alert">{churchError}</p>}
+            <button
+              type="button"
+              className="manualChurchButton"
+              onClick={()=>{
+                setManualChurch(true);
+                setChurches([]);
+                setSelectedChurchId("");
+                setChurchQuery("");
+                setChurchError("");
+              }}
+            >
+              My congregation isn’t listed
+            </button>
+          </div>
+        )}
+
+        {churchType==="midwest_church_of_christ" && manualChurch && (
+          <div className="manualChurchPanel">
+            <label className="field">
+              <span>Congregation name <b>*</b></span>
+              <input name="churchNameOther" required placeholder="Enter the full congregation name"/>
+            </label>
+            <button type="button" className="manualChurchButton" onClick={()=>setManualChurch(false)}>
+              Search the directory instead
+            </button>
+          </div>
+        )}
+
+        {churchType==="other_congregation" && (
+          <label className="field">
+            <span>Congregation name</span>
+            <input name="churchNameOther" placeholder="Enter your congregation name"/>
+          </label>
+        )}
+
+        {churchType==="guest_of_church_of_christ_member" && (
+          <label className="field">
+            <span>Church or congregation you are connected with <small>optional</small></span>
+            <input name="churchNameOther"/>
+          </label>
+        )}
+
         <label className="field"><span>Who referred you? <small>optional</small></span><input name="referredBy"/></label>
         <div className="twoCol">
           <label className="field"><span>Dietary restrictions or allergies</span><textarea name="dietaryRestrictions" rows={4} placeholder="Tell us what the meal team should know."/></label>
