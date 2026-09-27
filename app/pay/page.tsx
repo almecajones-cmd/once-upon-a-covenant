@@ -4,7 +4,7 @@ export const metadata={title:"Payment Options | Once Upon a Covenant"};
 
 export default function PayPage(){
   return <main className="formPage">
-    <header className="formTopbar"><Link className="formBrand" href="/"><span className="formBrandMark">♛</span><span>Once Upon a Covenant</span></Link><Link className="formHomeLink" href="/">RETURN TO EXPERIENCE</Link></header>
+    <header className="formTopbar"><Link className="formBrand" href="/" aria-label="Once Upon a Covenant home"><BrandMark compact /></Link><Link className="formHomeLink" href="/">RETURN TO EXPERIENCE</Link></header>
     <section className="simpleHero"><p className="eyebrow gold">PAYMENT INFORMATION</p><h1>Payment Options</h1><p>Total registration is $600 per couple. The first $100 is non-refundable.</p></section>
     <div className="paymentPageShell">
       <section className="paymentLeadCard"><h2>Already registered?</h2><p>Use your secure registration lookup to see your verified balance and payment history before making another payment.</p><Link className="plumButton" href="/manage">VIEW MY BALANCE & PAY</Link></section>
