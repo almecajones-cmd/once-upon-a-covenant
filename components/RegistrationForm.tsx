@@ -17,6 +17,7 @@ const initialDraft:Draft={
   churchAffiliationType:"",churchId:"",churchNameOther:"",
   howHeard:"",referredBy:"",
   dietaryRestrictions:"",accessibilityNeeds:"",
+  dietaryNone:false,dietaryVegetarian:false,dietaryVegan:false,dietaryGlutenFree:false,dietaryDairyFree:false,dietaryKosher:false,dietaryAllergy:false,dietaryOther:false,dietaryDetails:"",
   accessibleRoomRequested:false,
   extraWednesday:false,extraThursday:false,extraSunday:false,extraMonday:false,
   noChildrenAcknowledged:false,depositPolicyAcknowledged:false,
@@ -25,6 +26,17 @@ const initialDraft:Draft={
 };
 
 const stepNames=["Couple","Retreat Needs","Review","Payment"];
+
+const dietaryOptions=[
+  ["dietaryNone","No dietary restrictions"],
+  ["dietaryVegetarian","Vegetarian"],
+  ["dietaryVegan","Vegan"],
+  ["dietaryGlutenFree","Gluten-free"],
+  ["dietaryDairyFree","Dairy-free"],
+  ["dietaryKosher","Kosher"],
+  ["dietaryAllergy","Food allergy / sensitivity"],
+  ["dietaryOther","Other"],
+] as const;
 
 export default function RegistrationForm(){
   const [draft,setDraft]=useState<Draft>(initialDraft);
@@ -87,6 +99,38 @@ export default function RegistrationForm(){
   },[draft.paymentChoice,draft.paymentAmount]);
 
   function setField(name:string,value:string|boolean){setDraft(d=>({...d,[name]:value}));setErrors([])}
+
+  function toggleDietary(key:string,checked:boolean){
+    setDraft(d=>{
+      if(key==="dietaryNone"){
+        if(!checked)return {...d,dietaryNone:false};
+        return {
+          ...d,
+          dietaryNone:true,
+          dietaryVegetarian:false,
+          dietaryVegan:false,
+          dietaryGlutenFree:false,
+          dietaryDairyFree:false,
+          dietaryKosher:false,
+          dietaryAllergy:false,
+          dietaryOther:false,
+          dietaryDetails:"",
+        };
+      }
+      return {...d,[key]:checked,dietaryNone:false};
+    });
+    setErrors([]);
+  }
+
+  function dietarySummary(){
+    if(draft.dietaryNone)return "None";
+    const selected=dietaryOptions
+      .filter(([key])=>key!=="dietaryNone"&&Boolean(draft[key]))
+      .map(([,label])=>label);
+    const details=String(draft.dietaryDetails||"").trim();
+    if(details)selected.push(`Details: ${details}`);
+    return selected.join("; ");
+  }
   function focusTop(){window.setTimeout(()=>topRef.current?.focus(),0)}
   function validEmail(v:any){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||""))}
 
@@ -137,7 +181,7 @@ export default function RegistrationForm(){
     e.preventDefault();
     if(!validateStep(3)){focusTop();return}
     setState("sending");setErrors([]);track("registration_submit",{amount_cents:paymentCents,method:draft.paymentMethod});
-    const payload={...draft,paymentAmount:(paymentCents/100).toFixed(2)};
+    const payload={...draft,dietaryRestrictions:dietarySummary(),paymentAmount:(paymentCents/100).toFixed(2)};
     const res=await fetch("/api/register",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
     const data=await res.json();
     if(res.status===409&&data.error==="possible_duplicate"){setState("duplicate");setResult(data);return}
@@ -213,7 +257,26 @@ export default function RegistrationForm(){
       {draft.churchAffiliationType==="guest_of_church_of_christ_member"&&<label className="field"><span>Church or congregation you are connected with <small>optional</small></span><input value={String(draft.churchNameOther)} onChange={e=>setField("churchNameOther",e.target.value)}/></label>}
 
       <div className="twoCol"><label className="field"><span>How did you hear about the retreat?</span><select value={String(draft.howHeard)} onChange={e=>setField("howHeard",e.target.value)}><option value="">Select</option><option value="church">Church announcement</option><option value="friend_family">Friend or family</option><option value="previous_attendee">Previous attendee</option><option value="social_media">Social media</option><option value="other">Other</option></select></label>{(draft.howHeard==="friend_family"||draft.howHeard==="previous_attendee")&&<label className="field"><span>Who invited or referred you?</span><input value={String(draft.referredBy)} onChange={e=>setField("referredBy",e.target.value)}/></label>}</div>
-      <div className="twoCol"><label className="field"><span>Dietary restrictions or allergies</span><textarea rows={4} value={String(draft.dietaryRestrictions)} onChange={e=>setField("dietaryRestrictions",e.target.value)}/></label><label className="field"><span>Accessibility or accommodation needs</span><textarea rows={4} value={String(draft.accessibilityNeeds)} onChange={e=>setField("accessibilityNeeds",e.target.value)}/></label></div>
+      <div className="twoCol retreatNeedsGrid">
+        <div className="field dietaryField">
+          <span>Dietary restrictions or allergies <small>select all that apply</small></span>
+          <div className="dietaryChoiceGrid" role="group" aria-label="Dietary restrictions or allergies">
+            {dietaryOptions.map(([key,label])=>(
+              <label className={Boolean(draft[key])?"dietaryChoice selected":"dietaryChoice"} key={key}>
+                <input type="checkbox" checked={Boolean(draft[key])} onChange={e=>toggleDietary(key,e.target.checked)}/>
+                <span>{label}</span>
+              </label>
+            ))}
+          </div>
+          {(draft.dietaryAllergy||draft.dietaryOther)&&
+            <label className="dietaryDetailField">
+              <span>Please tell us what we should know <small>include whose need it is, if applicable</small></span>
+              <textarea rows={3} value={String(draft.dietaryDetails)} onChange={e=>setField("dietaryDetails",e.target.value)} placeholder="Example: Husband — shellfish allergy; Wife — other dietary need..."/>
+            </label>
+          }
+        </div>
+        <label className="field"><span>Accessibility or accommodation needs</span><textarea rows={4} value={String(draft.accessibilityNeeds)} onChange={e=>setField("accessibilityNeeds",e.target.value)}/></label>
+      </div>
       <label className="checkCard"><input type="checkbox" checked={Boolean(draft.accessibleRoomRequested)} onChange={e=>setField("accessibleRoomRequested",e.target.checked)}/><span><strong>Accessible hotel room requested</strong><small>We will include this in room coordination information.</small></span></label>
 
       <div className="sectionDivider"/>
@@ -235,7 +298,7 @@ export default function RegistrationForm(){
         <div><span>Church</span><strong>{selectedChurchLabel||String(draft.churchNameOther)||String(draft.churchAffiliationType).replaceAll("_"," ")}</strong></div>
         <div><span>Accessible room</span><strong>{draft.accessibleRoomRequested?"Yes":"No"}</strong></div>
         <div><span>Additional nights</span><strong>{[draft.extraWednesday&&"Wednesday",draft.extraThursday&&"Thursday",draft.extraSunday&&"Sunday",draft.extraMonday&&"Monday"].filter(Boolean).join(", ")||"None"}</strong></div>
-        <div><span>Dietary / accessibility</span><strong>{draft.dietaryRestrictions||draft.accessibilityNeeds?"Information provided":"None provided"}</strong></div>
+        <div><span>Dietary</span><strong>{dietarySummary()||"None provided"}</strong></div><div><span>Accessibility</span><strong>{String(draft.accessibilityNeeds||"").trim()||"None provided"}</strong></div>
       </div>
       <button type="button" className="textAction editLink" onClick={()=>{setStep(0);focusTop()}}>Edit couple information</button>
       <button type="button" className="textAction editLink" onClick={()=>{setStep(1);focusTop()}}>Edit retreat needs</button>
