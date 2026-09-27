@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandMark from "@/components/BrandMark";
 import RegistrantAccess from "@/components/RegistrantAccess";
 
 export const metadata={title:"Manage Registration & Payments | Once Upon a Covenant"};
