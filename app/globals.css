@@ -658,3 +658,60 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
   .gatewayContent blockquote{font-size:1.02rem}
   .gatewayEnter{padding:.85rem 1rem .8rem}
 }
+
+
+/* ===== Detailed weekend schedule + Saturday dining ===== */
+.scheduleExperience{background:#fffaf2}
+.scheduleDayGrid{display:grid;grid-template-columns:1fr 1.28fr 1fr;gap:1rem;align-items:start}
+.scheduleDayCard{background:#fffdf9;border:1px solid #e2d4c1;box-shadow:0 14px 40px rgba(62,33,45,.055);overflow:hidden}
+.scheduleDayCard--featured{border-top:4px solid var(--gold)}
+.scheduleDayHead{padding:1.35rem 1.35rem 1rem;background:linear-gradient(180deg,#fbf3e8,#fffdf9);border-bottom:1px solid #eadfce}
+.scheduleDayHead h3{color:var(--plum);font-size:2rem;margin:.12rem 0}
+.scheduleTimeline{padding:.25rem 1.2rem 1.2rem}
+.scheduleTimeline>div{display:grid;grid-template-columns:105px 1fr;gap:.85rem;padding:.9rem 0;border-bottom:1px solid #eee3d6}
+.scheduleTimeline>div:last-child{border-bottom:0}
+.scheduleTimeline time{font-size:.7rem;font-weight:700;color:#9b7638;letter-spacing:.04em}
+.scheduleTimeline span{display:flex;flex-direction:column;gap:.2rem}
+.scheduleTimeline strong{font-size:.84rem;color:#49343e}
+.scheduleTimeline small{font-size:.72rem;line-height:1.45;color:#7c6b73}
+.scheduleLunch{background:#f8efe2;margin:.3rem -.4rem;padding:.95rem .4rem!important;border:1px solid #e1cda9!important}
+.scheduleLunch a{margin-top:.3rem;color:var(--plum);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-decoration:none}
+.scheduleLunch a:hover{text-decoration:underline}
+
+.diningSection{background:linear-gradient(180deg,#fbf3e8 0%,#fffaf2 100%)}
+.diningIntro{max-width:860px;margin-bottom:2.8rem}
+.diningIntro h2{color:var(--plum);font-size:clamp(2.6rem,5vw,4.5rem)}
+.diningIntro>p:not(.eyebrow):not(.diningNote){color:#62555b;font-size:1rem;line-height:1.75}
+.diningNote{font-size:.72rem;color:#83737a;border-left:2px solid var(--gold);padding-left:.8rem}
+.diningCategory{margin-top:2.6rem}
+.diningCategoryHead{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem}
+.diningCategoryHead>span{width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;flex:0 0 38px;color:var(--plum);font-size:.7rem;font-weight:800}
+.diningCategoryHead h3{color:var(--plum);font-size:2rem;margin:0}
+.diningCategoryHead p{margin:.2rem 0 0;color:#74646b;font-size:.82rem}
+.restaurantGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.restaurantGrid--three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.restaurantCard{background:#fffdf9;border:1px solid #e1d4c2;padding:1.35rem;box-shadow:0 12px 32px rgba(62,33,45,.045);display:flex;flex-direction:column;min-height:250px}
+.restaurantMeta{margin:0 0 .35rem!important;color:#ad7f38!important;font-size:.62rem!important;letter-spacing:.1em;text-transform:uppercase;font-weight:800}
+.restaurantCard h4{font-family:var(--font-serif),Georgia,serif;color:#442c38;font-size:1.65rem;margin:.05rem 0 .25rem}
+.restaurantArea{font-size:.68rem;color:#87737c;margin-bottom:.75rem}
+.restaurantCard>p:not(.restaurantMeta){font-size:.82rem;color:#62545b;line-height:1.65;flex:1}
+.restaurantCard>a{color:var(--plum);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-decoration:none;margin-top:.7rem}
+.restaurantCard>a:hover{text-decoration:underline}
+.diningCategory--split{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.restaurantCard--wide{min-height:220px}
+
+@media(max-width:1080px){
+  .scheduleDayGrid{grid-template-columns:1fr}
+  .scheduleDayCard--featured{order:0}
+  .restaurantGrid--three{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .scheduleTimeline>div{grid-template-columns:88px 1fr}
+  .restaurantGrid,.restaurantGrid--three,.diningCategory--split{grid-template-columns:1fr}
+  .diningCategory{margin-top:2rem}
+  .restaurantCard{min-height:0}
+}
+@media(max-width:460px){
+  .scheduleTimeline>div{grid-template-columns:1fr;gap:.25rem}
+  .scheduleTimeline time{font-size:.66rem}
+}

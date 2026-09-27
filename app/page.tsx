@@ -109,24 +109,58 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="schedule" className="section stack">
+        <section id="schedule" className="section scheduleExperience">
           <div className="sectionHeading">
             <p className="eyebrow plum">THE WEEKEND</p>
             <h2>Your story unfolds chapter by chapter.</h2>
+            <p>A high-level look at the weekend so you can plan your time together.</p>
           </div>
-          <div className="chapterGrid">
-            {[
-              ["Friday", "The Invitation", "Welcome, connection, dinner, and an opening message that sets the tone for the weekend."],
-              ["Saturday", "The Journey", "Breakfast, general session, two practical breakout sessions, and intentional time together."],
-              ["Saturday Evening", "The Royal Ball", "An elegant celebration of covenant with dinner, fellowship, photos, and a signature evening experience."],
-              ["Sunday", "The Story Continues", "Breakfast, worship, and a meaningful close designed to send couples home with purpose."],
-            ].map(([day,title,copy]) => (
-              <article className="chapterCard" key={title}>
-                <p className="eyebrow plum">{day}</p>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </article>
-            ))}
+
+          <div className="scheduleDayGrid">
+            <article className="scheduleDayCard">
+              <div className="scheduleDayHead">
+                <p className="eyebrow plum">FRIDAY</p>
+                <h3>The Invitation</h3>
+              </div>
+              <div className="scheduleTimeline">
+                <div><time>6:00 PM</time><span><strong>Welcome & Opening</strong></span></div>
+                <div><time>6:15 PM</time><span><strong>Icebreaker</strong></span></div>
+                <div><time>7:00 PM</time><span><strong>Dinner</strong></span></div>
+                <div><time>7:30 PM</time><span><strong>Opening Speaker</strong><small>Speaker assignment to be announced.</small></span></div>
+                <div><time>9:00 PM</time><span><strong>Optional Fellowship</strong><small>Games, movie, or personal couple time.</small></span></div>
+              </div>
+            </article>
+
+            <article className="scheduleDayCard scheduleDayCard--featured">
+              <div className="scheduleDayHead">
+                <p className="eyebrow plum">SATURDAY</p>
+                <h3>The Journey</h3>
+              </div>
+              <div className="scheduleTimeline">
+                <div><time>7:00–8:30 AM</time><span><strong>Breakfast</strong></span></div>
+                <div><time>8:45 AM</time><span><strong>Opening Session</strong><small>Led by a planning team member.</small></span></div>
+                <div><time>9:15 AM</time><span><strong>Transition</strong></span></div>
+                <div><time>9:30 AM</time><span><strong>Breakout Session I</strong><small>Couples split between two topics.</small></span></div>
+                <div><time>10:45 AM</time><span><strong>Transition</strong></span></div>
+                <div><time>11:00 AM</time><span><strong>Breakout Session II</strong><small>Groups switch topics.</small></span></div>
+                <div className="scheduleLunch"><time>12:15 PM</time><span><strong>Lunch & Couple Time</strong><small>Lunch is on your own. Explore nearby dining, walk around, or enjoy intentional time together before the evening celebration.</small><a href="#dining">EXPLORE NEARBY DINING →</a></span></div>
+                <div><time>5:00 PM</time><span><strong>Photo Booth Opens</strong></span></div>
+                <div><time>6:00 PM</time><span><strong>Banquet Doors Open</strong></span></div>
+                <div><time>6:30 PM</time><span><strong>Royal Ball Banquet</strong></span></div>
+              </div>
+            </article>
+
+            <article className="scheduleDayCard">
+              <div className="scheduleDayHead">
+                <p className="eyebrow plum">SUNDAY</p>
+                <h3>The Story Continues</h3>
+              </div>
+              <div className="scheduleTimeline">
+                <div><time>7:00–8:30 AM</time><span><strong>Breakfast</strong></span></div>
+                <div><time>9:00 AM</time><span><strong>Worship Service</strong><small>Sunday sermon speaker to be announced.</small></span></div>
+                <div><time>11:00 AM</time><span><strong>Hotel Check-out</strong></span></div>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -194,6 +228,77 @@ export default function Home() {
             <p><strong>Embassy Suites Noblesville Indianapolis Conference Center</strong><br/>13700 Conference Center Drive South<br/>Noblesville, IN 46060</p>
             <p>Your $600 couple registration includes Friday and Saturday lodging. Additional nights may be requested during registration for Wednesday, Thursday, Sunday, or Monday and are paid separately by the couple.</p>
             <p>Accessible-room requests can also be submitted with your registration.</p>
+          </div>
+        </section>
+
+        <section id="dining" className="section diningSection">
+          <div className="diningIntro">
+            <p className="eyebrow plum">SATURDAY LUNCH AROUND TOWN</p>
+            <h2>Dine Around Noblesville.</h2>
+            <p>Saturday afternoon is yours to enjoy. These options are concentrated around the hotel and Hamilton Town Center, so couples can have lunch, enjoy some time together, and still return comfortably before the Royal Ball.</p>
+            <p className="diningNote">Restaurant hours and availability can change. Check current hours before heading out.</p>
+          </div>
+
+          <div className="diningCategory">
+            <div className="diningCategoryHead"><span>01</span><div><h3>Date-Lunch Favorites</h3><p>A little more polished if you want lunch to feel like part of the retreat experience.</p></div></div>
+            <div className="restaurantGrid">
+              {[
+                ["Livery Noblesville","Latin-inspired","Hamilton Town Center","Empanadas, tacos, shareables, and a polished casual atmosphere.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Livery+Noblesville+13225+Levinson+Ln+Noblesville+IN"],
+                ["Stone Creek Dining Company","American · Steak · Seafood","Hamilton Town Center","A comfortable upscale-casual option with salads, seafood, pasta, steaks, and lunch service.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Stone+Creek+Dining+Company+13904+Town+Center+Blvd+Noblesville+IN"],
+              ].map(([name,cuisine,area,copy,url])=>(
+                <article className="restaurantCard" key={name}>
+                  <p className="restaurantMeta">{cuisine}</p>
+                  <h4>{name}</h4>
+                  <span className="restaurantArea">{area}</span>
+                  <p>{copy}</p>
+                  <a href={url} target="_blank" rel="noreferrer">DIRECTIONS →</a>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="diningCategory">
+            <div className="diningCategoryHead"><span>02</span><div><h3>Close & Casual</h3><p>Easy nearby choices when you want a relaxed sit-down lunch without going far.</p></div></div>
+            <div className="restaurantGrid restaurantGrid--three">
+              {[
+                ["Aspen Creek Grill","American · Grill","Very close to the hotel","Steaks, burgers, salads, ribs, seafood, and familiar comfort-food choices.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Aspen+Creek+Grill+13489+Tegler+Dr+Noblesville+IN"],
+                ["Ford's Garage","Burgers · American","Hamilton Town Center","A fun 1920s automotive-themed restaurant with burgers, salads, sandwiches, and more.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Ford's+Garage+13193+Levinson+Ln+Noblesville+IN"],
+                ["Chuy's","Tex-Mex","Hamilton Town Center","A lively option for tacos, enchiladas, fajitas, burritos, and plenty of shareable favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Chuy's+14150+Town+Center+Blvd+Noblesville+IN"],
+                ["Pies & Pints","Pizza · Casual","Hamilton Town Center","Pizza and casual lunch fare in an easygoing setting near the hotel.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Pies+%26+Pints+Noblesville+IN"],
+                ["Koto Japanese Steakhouse","Japanese · Sushi · Hibachi","Near the hotel","Saturday lunch begins at noon, with sushi, hibachi, bento-style choices, and Japanese favorites.","https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Koto+Japanese+Steakhouse+13398+Tegler+Dr+Noblesville+IN"],
+              ].map(([name,cuisine,area,copy,url])=>(
+                <article className="restaurantCard" key={name}>
+                  <p className="restaurantMeta">{cuisine}</p>
+                  <h4>{name}</h4>
+                  <span className="restaurantArea">{area}</span>
+                  <p>{copy}</p>
+                  <a href={url} target="_blank" rel="noreferrer">DIRECTIONS →</a>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="diningCategory diningCategory--split">
+            <div>
+              <div className="diningCategoryHead"><span>03</span><div><h3>Quick & Easy</h3><p>Good when you want to maximize your free afternoon.</p></div></div>
+              <article className="restaurantCard restaurantCard--wide">
+                <p className="restaurantMeta">Deli · Sandwiches · Salads</p>
+                <h4>McAlister's Deli</h4>
+                <span className="restaurantArea">Hamilton Town Center</span>
+                <p>Sandwiches, soups, salads, baked potatoes, and quick counter-service lunch options.</p>
+                <a href="https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=McAlister's+Deli+14191+Town+Center+Blvd+Noblesville+IN" target="_blank" rel="noreferrer">DIRECTIONS →</a>
+              </article>
+            </div>
+            <div>
+              <div className="diningCategoryHead"><span>04</span><div><h3>Something Sweet</h3><p>A simple stop before heading back to the hotel.</p></div></div>
+              <article className="restaurantCard restaurantCard--wide">
+                <p className="restaurantMeta">Ice Cream · Dessert</p>
+                <h4>Handel's Homemade Ice Cream</h4>
+                <span className="restaurantArea">Cabela Parkway · Nearby</span>
+                <p>Fresh-made ice cream with a large rotating flavor selection—an easy sweet finish to couple time.</p>
+                <a href="https://www.google.com/maps/dir/?api=1&origin=Embassy+Suites+Noblesville+Indianapolis+Conference+Center&destination=Handel's+Homemade+Ice+Cream+14165+Cabela+Pkwy+Noblesville+IN" target="_blank" rel="noreferrer">DIRECTIONS →</a>
+              </article>
+            </div>
           </div>
         </section>
 
