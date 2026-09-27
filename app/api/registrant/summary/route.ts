@@ -20,18 +20,37 @@ export async function GET() {
     .eq("registration_id", registration.id)
     .order("created_at", { ascending: false });
 
-  const verifiedPaid = (payments || [])
-    .filter((p) => p.status === "verified")
-    .reduce((sum, p) => sum + p.amount_cents, 0);
+  const rows=payments || [];
+  const verifiedRows=rows.filter((p) => p.status === "verified");
+  const verifiedPaid = verifiedRows.reduce((sum, p) => sum + p.amount_cents, 0);
+  const pendingTotal = rows.filter((p)=>p.status==="pending_verification").reduce((sum,p)=>sum+p.amount_cents,0);
+  const hasFailed = rows.some((p)=>p.status==="failed" || p.status==="rejected");
 
   const totalDue = registration.total_fee_cents + registration.late_fee_cents;
   const balance = Math.max(totalDue - verifiedPaid, 0);
+  const latestVerified=verifiedRows[0] || null;
+
+  let displayStatus="Deposit Pending";
+  if(registration.registration_status==="cancelled") displayStatus="Cancelled";
+  else if(registration.registration_status==="transferred") displayStatus="Transferred";
+  else if(registration.registration_status==="refund_review") displayStatus="Refund Review";
+  else if(registration.registration_status==="refunded") displayStatus="Refunded";
+  else if(balance===0 && verifiedPaid>0) displayStatus="Paid in Full";
+  else if(verifiedPaid>10000 && balance>0) displayStatus="Partially Paid";
+  else if(verifiedPaid>=10000) displayStatus="Confirmed — Deposit Paid";
+  else if(pendingTotal>0) displayStatus="Manual Payment Pending Verification";
+  else if(hasFailed) displayStatus="Payment Failed";
 
   return NextResponse.json({
     registration,
-    payments: payments || [],
+    payments: rows,
     verifiedPaidCents: verifiedPaid,
+    pendingTotalCents: pendingTotal,
     balanceCents: balance,
     totalDueCents: totalDue,
+    latestVerifiedPaymentCents: latestVerified?.amount_cents || 0,
+    latestVerifiedPaymentDate: latestVerified?.verified_at || latestVerified?.payment_date || null,
+    displayStatus,
+    invitationConfirmed: verifiedPaid >= 10000 && !["cancelled","transferred","refund_review","refunded"].includes(registration.registration_status),
   });
 }
