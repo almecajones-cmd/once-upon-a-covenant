@@ -134,3 +134,139 @@ h1,h2,h3{font-family:var(--font-serif),Georgia,"Times New Roman",serif}
 .manualChurchButton{appearance:none;border:0;background:transparent;padding:.15rem 0;margin:.1rem 0 1rem;color:var(--plum);font:inherit;font-size:.77rem;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .manualChurchButton:hover{color:#7b2658}
 @media(max-width:680px){.churchSuggestions{max-height:280px}.churchSuggestion{padding:.9rem}}
+
+/* ===== Functional release: accessibility, wizard, registrant and admin experiences ===== */
+:where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #b57d25;outline-offset:3px}
+button,a,input,select,textarea{font-family:inherit}
+button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
+.srOnly{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+/* Homepage additions */
+.whySection{background:#fffaf2}
+.outcomeGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.outcomeCard{border-top:1px solid var(--gold);padding:1.6rem 1.15rem;background:#fffdf9;min-height:260px}
+.outcomeCard>span{font-family:var(--font-serif),Georgia,serif;color:#b68d4b;font-size:1rem}
+.outcomeCard h3{color:var(--plum);font-size:1.65rem;margin-top:1rem}
+.outcomeCard p{font-size:.88rem;color:#685a61}
+.speakerSection{background:#fbf3e8}
+.speakerCard{max-width:980px;display:grid;grid-template-columns:210px 1fr;gap:2.4rem;align-items:center;background:#fffdf9;border:1px solid #e1d1bc;padding:clamp(1.5rem,4vw,3rem);box-shadow:0 18px 55px rgba(58,31,43,.06)}
+.speakerMonogram{width:190px;aspect-ratio:3/4;background:linear-gradient(145deg,#68204b,#311024);display:grid;place-items:center;color:#e0bd78;font-family:var(--font-title),Georgia,serif;font-size:3rem;border:1px solid #b98e4d;box-shadow:inset 0 0 0 8px rgba(255,255,255,.03)}
+.speakerCard h3{font-size:3rem;color:var(--plum)}
+.speakerRole{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#876e78;font-weight:600}
+.investmentSection{display:grid;grid-template-columns:.9fr 1.1fr;background:var(--plum2);color:white;min-height:650px}
+.investmentVisual{position:relative;min-height:580px}
+.investmentVisual img{object-fit:cover}
+.investmentCopy{padding:clamp(3rem,7vw,7rem);align-self:center}
+.investmentCopy h2{color:#f0d19b}
+.investmentCopy p,.investmentCopy li{color:#f5e9e2}
+.investmentCopy li{margin:.65rem 0}
+.lightTextButton,.secondaryDarkLink{color:#f4d7a1;font-weight:700;text-decoration:none}
+.centeredButtons{justify-content:center}
+.footerLinks{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;font-size:.78rem}
+
+/* Four-step registration wizard */
+.registrationWizard{display:flex;flex-direction:column;gap:1.25rem}
+.wizardHeader{background:#fffdf9;border:1px solid #e3d5c3;padding:1.15rem 1.35rem;box-shadow:0 12px 35px rgba(69,42,51,.045)}
+.wizardProgressText{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-size:.75rem;color:#806d75;text-transform:uppercase;letter-spacing:.1em}
+.wizardProgressText strong{color:var(--plum)}
+.wizardProgressBar{height:4px;background:#eee2d2;margin:.85rem 0}
+.wizardProgressBar span{display:block;height:100%;background:linear-gradient(90deg,var(--plum),var(--gold));transition:width .2s ease}
+.wizardSteps{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;font-size:.66rem;letter-spacing:.05em;color:#9b8b91}
+.wizardSteps span.active{color:var(--plum);font-weight:700}
+.wizardSteps span.complete{color:#6a775f}
+.wizardPanel{background:#fffdf9;border:1px solid #e3d5c3;padding:clamp(1.25rem,3vw,2.2rem);box-shadow:0 12px 35px rgba(69,42,51,.045)}
+.wizardPanel .fieldsetHeading h3{font-size:1.9rem;color:var(--plum);margin:0}
+.registrationWizard .twoCol{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.25rem}
+.registrationWizard .threeCol{display:grid;grid-template-columns:1.45fr .7fr .75fr;gap:1rem}
+.registrationWizard input:not([type="checkbox"]):not([type="radio"]),.registrationWizard select,.registrationWizard textarea,.managePaymentForm input,.managePaymentForm select,.adminLoginCard input,.adminSearch{width:100%;min-height:52px;border:1px solid #cdbdaf;background:#fff;color:#2f2630;padding:.8rem .9rem;font:inherit;font-size:.94rem;outline:none}
+.registrationWizard input:focus,.registrationWizard select:focus,.registrationWizard textarea:focus,.managePaymentForm input:focus,.managePaymentForm select:focus,.adminLoginCard input:focus,.adminSearch:focus{border-color:var(--plum);box-shadow:0 0 0 3px rgba(84,20,61,.09)}
+.registrationWizard textarea{min-height:118px;resize:vertical}
+.sectionDivider{height:1px;background:#eadfce;margin:1.2rem 0 1.6rem}
+.errorSummary{background:#fff2f2;border-left:4px solid #963448;padding:1rem 1.15rem;color:#6e2435}
+.errorSummary strong{display:block;margin-bottom:.35rem}.errorSummary ul{margin:.25rem 0 0;padding-left:1.3rem}
+.reviewGrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#e8d9c7;border:1px solid #e8d9c7}
+.reviewGrid>div{background:#fff;padding:1rem 1.15rem}
+.reviewGrid span{display:block;font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;color:#8b767e;margin-bottom:.25rem}
+.reviewGrid strong{font-size:.88rem;color:#402f38}
+.editLink{margin:.9rem 1rem 0 0}
+.paymentChoiceGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.4rem}
+.paymentChoiceCard{position:relative;display:block;cursor:pointer;border:1px solid #dac7b0;background:#fff;padding:1.15rem;min-height:170px}
+.paymentChoiceCard.selected{border:2px solid var(--plum);background:#f8eef3;padding:calc(1.15rem - 1px)}
+.paymentChoiceCard input{position:absolute;right:1rem;top:1rem;accent-color:var(--plum);width:20px;height:20px}
+.paymentChoiceCard span{display:flex;flex-direction:column;gap:.35rem;padding-right:1.5rem}
+.paymentChoiceCard strong{color:var(--plum);font-size:.88rem}
+.paymentChoiceCard b{font-family:var(--font-serif),Georgia,serif;font-size:2rem;color:#3d2934}
+.paymentChoiceCard small{font-size:.74rem;color:#796970;line-height:1.45}
+.paymentMethodNotice{background:#fbf4e9;border-left:3px solid var(--gold);padding:.9rem 1rem;font-size:.82rem;color:#67575f;margin:-.25rem 0 1rem}
+.paymentMethodNotice p{margin:0}
+.paymentTotalLine{display:flex;justify-content:space-between;align-items:center;padding:1.15rem 0;border-top:1px solid #eadfce;border-bottom:1px solid #eadfce;margin-top:1rem}
+.paymentTotalLine span{font-size:.76rem;text-transform:uppercase;letter-spacing:.09em;color:#7e6c74}
+.paymentTotalLine strong{font-family:var(--font-serif),Georgia,serif;font-size:2rem;color:var(--plum)}
+.privacyInline{font-size:.72rem;color:#75666d;line-height:1.55;margin:1rem 0 0}
+.wizardActions{display:flex;justify-content:space-between;gap:1rem}
+.outlineButton{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--plum);background:transparent;color:var(--plum);padding:.85rem 1.2rem;font-weight:700;font-size:.75rem;letter-spacing:.08em;text-decoration:none;cursor:pointer}
+.draftNotice{text-align:center;font-size:.7rem;color:#8b7a81;margin:.15rem 0}
+.successPaymentSummary{padding:1rem 0;border-top:1px solid #e6d8c6;border-bottom:1px solid #e6d8c6;margin:1.2rem 0}
+.successPaymentSummary span{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#8a767e}.successPaymentSummary strong{font-size:1.2rem}
+.paymentInstruction{background:#fbf4e9;padding:1rem;border-left:3px solid var(--gold)}
+.successActions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1.25rem}
+.textAction{appearance:none;border:0;background:transparent;color:var(--plum);font:inherit;font-size:.78rem;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:44px}
+.duplicateCard .textAction{display:block;margin-top:1rem}
+
+/* Returning registrant */
+.simpleHero{padding:clamp(3rem,7vw,5.5rem) 1.25rem;text-align:center;background:var(--plum2);color:#fff}
+.simpleHero h1{font-family:var(--font-title),var(--font-serif),Georgia,serif;color:#f0d198;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:400}
+.simpleHero p:last-child{max-width:720px;margin:0 auto;color:#f4e7df}
+.manageShell,.adminShell,.paymentPageShell{width:min(1180px,calc(100% - 2rem));margin:3rem auto 6rem}
+.accessCard,.balanceCard,.manageCard,.adminLoginCard,.adminSection,.paymentLeadCard,.paymentNote{background:#fffdf9;border:1px solid #e1d3c1;padding:clamp(1.4rem,3vw,2.4rem);box-shadow:0 14px 40px rgba(60,34,45,.055)}
+.accessCard{max-width:700px;margin:auto}.accessCard h2,.balanceCard h2,.adminLoginCard h2{color:var(--plum)}
+.recoveryAction{display:block;margin-top:.65rem}
+.lookupMessage,.successNotice{padding:.8rem 1rem;background:#f7f0e6;color:#5d4f55;font-size:.82rem}
+.manageGrid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.balanceCard{grid-column:1/-1}
+.manageTopline{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.confirmationPill{display:inline-block;background:var(--plum);color:#fff;padding:.4rem .7rem;font-size:.75rem;letter-spacing:.08em}
+.balanceStats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e4d4c1;margin:1.5rem 0}
+.balanceStats>div{background:#fff;padding:1rem}
+.balanceStats span{display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#86727a}.balanceStats strong{font-family:var(--font-serif),Georgia,serif;font-size:1.8rem;color:var(--plum)}
+.statusLine{margin-bottom:0}
+.manageCard h3{color:var(--plum);font-size:1.8rem}
+.paymentHistoryCard{grid-column:1/-1}
+.paymentHistory{border-top:1px solid #e7d9c8}
+.paymentRow{display:flex;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid #e7d9c8}
+.paymentRow>div{display:flex;flex-direction:column}.paymentRow>div:last-child{align-items:flex-end}
+.paymentRow span,.paymentRow small{font-size:.72rem;color:#7c6c73}
+.paymentStatus{text-transform:capitalize;font-weight:700}.paymentStatus.verified{color:#47704f}.paymentStatus.rejected{color:#963448}.paymentStatus.pending_verification{color:#946e2f}
+
+/* Admin */
+.adminPage{background:#f7f2eb}.adminShell{max-width:1400px}
+.adminLoginCard{max-width:620px;margin:5rem auto}
+.adminToolbar{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}.adminToolbar h2{color:var(--plum);font-size:3rem}.adminToolbar p{margin:.2rem 0}.adminToolbarActions{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.adminMetrics{display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem;margin-bottom:1.25rem}
+.adminMetrics>div{background:#fffdf9;border:1px solid #e1d3c1;padding:1rem}
+.adminMetrics span{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.09em;color:#806f77}.adminMetrics strong{display:block;font-family:var(--font-serif),Georgia,serif;color:var(--plum);font-size:1.8rem;margin-top:.25rem}
+.adminSection{margin-top:1rem}.adminSectionHead{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}.adminSectionHead h3{color:var(--plum);font-size:2rem}.countPill{background:var(--plum);color:white;border-radius:999px;padding:.2rem .65rem;font-size:.75rem}
+.adminSearch{max-width:360px}
+.adminTableWrap{overflow-x:auto;border:1px solid #e7d9c8}
+.adminTable{width:100%;border-collapse:collapse;min-width:800px;background:white;font-size:.78rem}
+.adminTable th{text-align:left;background:#f2e8dc;color:#5d4652;padding:.75rem;letter-spacing:.05em;text-transform:uppercase;font-size:.62rem}.adminTable td{padding:.8rem .75rem;border-top:1px solid #eee3d6;vertical-align:top}.adminTable small{color:#806f77}
+.rowActions{display:flex;gap:.4rem}.rowActions button{border:1px solid var(--plum);background:var(--plum);color:#fff;padding:.45rem .65rem;font-size:.7rem;cursor:pointer;min-height:38px}.rowActions .rejectButton{background:transparent;color:#8e3147;border-color:#a86777}
+
+/* Payment & privacy */
+.paymentPageShell{display:flex;flex-direction:column;gap:1.25rem}.paymentLeadCard{text-align:center}.paymentLeadCard h2{color:var(--plum)}
+.paymentCards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.paymentCards article{background:#fffdf9;border:1px solid #e1d3c1;padding:1.7rem}.paymentCards h2{color:var(--plum);font-size:2rem}
+.paymentNote{background:#f5eadb}.paymentNote h2{color:var(--plum)}
+.privacyPage{width:min(850px,calc(100% - 2rem));margin:3rem auto 6rem;background:#fffdf9;border:1px solid #e1d3c1;padding:clamp(1.5rem,5vw,4rem)}.privacyPage h2{color:var(--plum);font-size:2rem;margin-top:1.5rem}.privacyPage h2:first-child{margin-top:0}
+
+/* Responsive additions */
+@media(max-width:1100px){.outcomeGrid{grid-template-columns:repeat(3,1fr)}.adminMetrics{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.speakerCard{grid-template-columns:150px 1fr}.speakerMonogram{width:140px}.investmentSection{grid-template-columns:1fr}.investmentVisual{min-height:440px}.paymentChoiceGrid{grid-template-columns:1fr}.manageGrid{grid-template-columns:1fr}.paymentHistoryCard,.balanceCard{grid-column:auto}.paymentCards{grid-template-columns:1fr}.adminToolbar{flex-direction:column}.adminMetrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){
+  .outcomeGrid{grid-template-columns:1fr}.outcomeCard{min-height:0}
+  .speakerCard{grid-template-columns:1fr}.speakerMonogram{width:100%;max-width:260px;margin:auto}.speakerCard h3{font-size:2.4rem}
+  .investmentVisual{min-height:360px}.investmentCopy{padding:3rem 1.25rem}
+  .wizardSteps{grid-template-columns:1fr 1fr}.registrationWizard .twoCol,.registrationWizard .threeCol,.reviewGrid{grid-template-columns:1fr}.wizardActions{flex-direction:column-reverse}.wizardActions>*{width:100%}
+  .nightGrid{grid-template-columns:1fr 1fr}.balanceStats{grid-template-columns:1fr}.adminMetrics{grid-template-columns:1fr 1fr}.adminSection{padding:1rem}.adminSectionHead{align-items:stretch;flex-direction:column}.adminSearch{max-width:none}
+  .manageShell,.adminShell,.paymentPageShell{width:min(100% - 1rem,1180px);margin-top:1rem}
+}
+@media(prefers-reduced-motion:reduce){.wizardProgressBar span{transition:none}}

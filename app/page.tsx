@@ -4,24 +4,56 @@ import Gateway from "@/components/Gateway";
 
 const img = {
   castle: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523683/02_castle_sunset_balose.jpg",
-  cord: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523683/14_gold_cord_tassel_f52ul2.jpg",
   ballroom: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/03_royal_ballroom_cabvif.jpg",
   hotel: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523683/09_hotel_exterior_jywp3k.jpg",
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
+  rings: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523684/05_wedding_rings_velvet_yom92x.jpg",
 };
 
 export default function Home() {
+  const eventJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: "Once Upon a Covenant — 2027 Midwest Marriage Retreat",
+    startDate: "2027-10-08",
+    endDate: "2027-10-10",
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: "Embassy Suites Noblesville Indianapolis Conference Center",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "13700 Conference Center Drive South",
+        addressLocality: "Noblesville",
+        addressRegion: "IN",
+        postalCode: "46060",
+        addressCountry: "US",
+      },
+    },
+    offers: {
+      "@type": "Offer",
+      price: "600",
+      priceCurrency: "USD",
+      url: "https://onceuponacovenant.org/register",
+      availability: "https://schema.org/InStock",
+    },
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }} />
       <Gateway />
       <header className="siteHeader">
         <a className="brand" href="#experience"><span>♛</span> Once Upon a Covenant</a>
         <nav aria-label="Primary navigation">
           <a href="#experience">Experience</a>
           <a href="#schedule">Schedule</a>
+          <a href="#speakers">Speakers</a>
           <a href="#venue">Venue</a>
           <a href="#faq">FAQ</a>
-          <Link className="navCta" href="/register">Register</Link>
+          <Link href="/contact">Contact</Link>
+          <Link className="navCta" href="/register" data-track="register_cta" data-track-label="Header">Register</Link>
         </nav>
       </header>
 
@@ -32,8 +64,8 @@ export default function Home() {
             <h1>You’re Invited to an Extraordinary Weekend.</h1>
             <p>Step away from the ordinary and make room to strengthen your covenant, deepen your connection, and write the next chapter of your marriage with God at the center.</p>
             <div className="buttonRow">
-              <Link className="plumButton" href="/register">RESERVE OUR SPOT</Link>
-              <a className="textButton" href="#schedule">SEE THE EXPERIENCE →</a>
+              <Link className="plumButton" href="/register" data-track="register_cta" data-track-label="Hero">REGISTER NOW</Link>
+              <a className="textButton" href="#why">EXPLORE THE EXPERIENCE →</a>
             </div>
           </div>
           <div className="heroImage">
@@ -54,6 +86,23 @@ export default function Home() {
           <div><strong>October 8–10, 2027</strong><span>Friday–Sunday</span></div>
           <div><strong>Embassy Suites Noblesville</strong><span>Indianapolis Conference Center</span></div>
           <div><strong>$600 per couple</strong><span>Friday & Saturday lodging included</span></div>
+        </section>
+
+        <section id="why" className="section whySection">
+          <div className="sectionHeading">
+            <p className="eyebrow plum">WHY THIS WEEKEND MATTERS</p>
+            <h2>Come home with more than memories.</h2>
+            <p>This weekend is designed to give couples biblical grounding and practical ways to keep building long after the retreat ends.</p>
+          </div>
+          <div className="outcomeGrid">
+            {[
+              ["Biblical Grounding","Reconnect your marriage to covenant, purpose, and God at the center."],
+              ["Practical Tools","Leave with ideas you can actually use when real life resumes."],
+              ["Stronger Communication","Create room to listen, reconnect, and understand each other more clearly."],
+              ["Intentional Connection","Step away from routines and make space for the two of you."],
+              ["Renewed Purpose","Reflect on where your story has been and what you want to build next."],
+            ].map(([title,copy],i)=><article key={title} className="outcomeCard"><span>0{i+1}</span><h3>{title}</h3><p>{copy}</p></article>)}
+          </div>
         </section>
 
         <section id="schedule" className="section stack">
@@ -87,6 +136,22 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="speakers" className="section speakerSection">
+          <div className="sectionHeading">
+            <p className="eyebrow plum">CONFIRMED SPEAKER</p>
+            <h2>Meet David Wilson.</h2>
+          </div>
+          <article className="speakerCard">
+            <div className="speakerMonogram" aria-hidden="true">DW</div>
+            <div>
+              <p className="eyebrow plum">THE EXPOSITOR</p>
+              <h3>David Wilson</h3>
+              <p className="speakerRole">Minister · Kings Church of Christ · Brooklyn, New York</p>
+              <p>Affectionately known as “The Expositor,” David Wilson is the dynamic Minister of the Kings Church of Christ in Brooklyn, New York. He exhibits the trifecta of great gospel preaching: a love for God, a love for His people, and a love for the truth. David brings a unique blend of talents, passion, and experience that enables him to explain the Word of God in a way that is exciting, informative, and relevant.</p>
+            </div>
+          </article>
+        </section>
+
         <section id="venue" className="section split">
           <div className="venueImage"><Image src={img.hotel} alt="Embassy Suites Noblesville Indianapolis Conference Center entrance" fill quality={95} sizes="(max-width:800px) 100vw, 50vw" /></div>
           <div>
@@ -98,22 +163,46 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="investment" className="investmentSection">
+          <div className="investmentVisual"><Image src={img.rings} alt="Wedding rings on deep plum velvet" fill quality={95} sizes="(max-width:900px) 100vw, 45vw"/></div>
+          <div className="investmentCopy">
+            <p className="eyebrow gold">REGISTRATION & INVESTMENT</p>
+            <h2>$600 per couple.</h2>
+            <p>The first <strong>$100 is non-refundable</strong> and secures your registration after it is received and verified. Couples may pay the full balance immediately or make additional payments at any time up to the amount remaining.</p>
+            <ul>
+              <li>Friday and Saturday lodging included</li>
+              <li>Engaged couples are welcome</li>
+              <li>Additional hotel nights may be requested during registration</li>
+              <li>PushPay, Zelle, check, and money order options</li>
+            </ul>
+            <div className="buttonRow">
+              <Link className="goldButton" href="/register" data-track="register_cta" data-track-label="Investment">REGISTER & PAY DEPOSIT</Link>
+              <Link className="lightTextButton" href="/manage">MAKE A PAYMENT →</Link>
+            </div>
+          </div>
+        </section>
+
         <section id="faq" className="section faq">
           <div className="sectionHeading"><p className="eyebrow plum">FAQ</p><h2>Good to know.</h2></div>
           {[
             ["Is the $600 registration fee per person?", "No. The $600 registration fee is per couple."],
             ["Is lodging included?", "Yes. Friday and Saturday nights are included in the registration fee. Extra nights may be requested and are paid separately."],
-            ["Can we register before paying?", "Yes. Registration and payment are tracked separately. Your registration remains pending until the required $100 non-refundable deposit is verified."],
+            ["Can we register before paying?", "Registration and payment are recorded together in the new website flow. Your registration remains pending until at least the required $100 non-refundable deposit is verified."],
             ["Can we pay more than the suggested installment amount?", "Yes. Couples may pay any amount toward the remaining balance, including paying in full early."],
+            ["How do we make another payment later?", "Use the Make a Payment page. Enter your registration reference and one of the email addresses on your registration, then verify with a one-time email code."],
             ["Are children included?", "No. This retreat is designed for couples and children are not included."],
             ["Can engaged couples attend?", "Yes. Engaged couples are welcome to register."],
+            ["What if I lose my confirmation number?", "The Make a Payment page includes a secure confirmation-number recovery option using the email address on your registration."],
           ].map(([q,a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}
         </section>
 
         <section className="ctaSection">
           <p className="eyebrow gold">BEGIN YOUR NEXT CHAPTER</p>
           <h2>Ready to write the next chapter together?</h2>
-          <Link className="goldButton linkButton" href="/register">RESERVE OUR SPOT</Link>
+          <div className="buttonRow centeredButtons">
+            <Link className="goldButton linkButton" href="/register" data-track="register_cta" data-track-label="Final CTA">REGISTER NOW</Link>
+            <Link className="secondaryDarkLink" href="/manage">MAKE A PAYMENT</Link>
+          </div>
         </section>
       </main>
 
@@ -121,7 +210,7 @@ export default function Home() {
         <strong>Once Upon a Covenant</strong>
         <span>A Love Story Written by God · Ecclesiastes 4:12</span>
         <span>October 8–10, 2027 · Noblesville, Indiana</span>
-        <Link href="/contact">Contact Us</Link>
+        <div className="footerLinks"><Link href="/contact" data-track="contact_help">Contact Us</Link><Link href="/manage">Manage Registration</Link><Link href="/privacy">Privacy</Link></div>
       </footer>
     </>
   );

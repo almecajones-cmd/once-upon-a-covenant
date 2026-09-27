@@ -5,6 +5,7 @@ import {
   Great_Vibes,
   Montserrat,
 } from "next/font/google";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 import "./globals.css";
 
 const titleFont = Cinzel_Decorative({
@@ -40,6 +41,12 @@ export const metadata: Metadata = {
   title: "Once Upon a Covenant | 2027 Midwest Marriage Retreat",
   description: "A Love Story Written by God. October 8–10, 2027 in Noblesville, Indiana.",
   metadataBase: new URL("https://onceuponacovenant.org"),
+  openGraph: {
+    title: "Once Upon a Covenant | 2027 Midwest Marriage Retreat",
+    description: "A Love Story Written by God · October 8–10, 2027",
+    type: "website",
+    url: "https://onceuponacovenant.org",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -48,7 +55,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       lang="en"
       className={`${titleFont.variable} ${serifFont.variable} ${scriptFont.variable} ${bodyFont.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <AnalyticsTracker />
+        {children}
+      </body>
     </html>
   );
 }
