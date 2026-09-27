@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandMark from "@/components/BrandMark";
 
 export const metadata={title:"Payment Options | Once Upon a Covenant"};
 
