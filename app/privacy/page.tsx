@@ -4,7 +4,7 @@ export const metadata={title:"Privacy | Once Upon a Covenant"};
 
 export default function PrivacyPage(){
   return <main className="formPage">
-    <header className="formTopbar"><Link className="formBrand" href="/"><span className="formBrandMark">♛</span><span>Once Upon a Covenant</span></Link><Link className="formHomeLink" href="/">RETURN TO EXPERIENCE</Link></header>
+    <header className="formTopbar"><Link className="formBrand" href="/" aria-label="Once Upon a Covenant home"><BrandMark compact /></Link><Link className="formHomeLink" href="/">RETURN TO EXPERIENCE</Link></header>
     <section className="simpleHero"><p className="eyebrow gold">PRIVACY</p><h1>How We Use Your Information</h1><p>A concise privacy notice for the 2027 Midwest Marriage Retreat.</p></section>
     <article className="privacyPage">
       <h2>Registration information</h2><p>We collect the information needed to administer retreat registration, communicate with couples, coordinate lodging and additional-night requests, prepare for dietary and accessibility needs, reconcile payments, and provide retreat updates.</p>
