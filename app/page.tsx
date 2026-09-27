@@ -77,13 +77,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="covenant">
-          <div className="sectionNarrow">
-            <p className="eyebrow gold">THE COVENANT</p>
-            <h2>Two lives. One covenant. God at the center.</h2>
-            <div className="equation" aria-label="Husband plus Wife plus God">HUSBAND <span>+</span> WIFE <span>+</span> GOD</div>
-            <p>Ecclesiastes 4:12 reminds us that a marriage is strengthened when two people are joined with God. The fairytale is our creative language. Covenant is the substance.</p>
-          </div>
+        <section className="covenant covenantArtwork" aria-label="The Covenant">
+          <img
+            src="https://res.cloudinary.com/v78xwhwr/image/upload/v1790546681/ChatGPT_Image_Sep_27_2026_06_04_18_PM_uack9v.png"
+            alt="The Covenant — Two lives. One covenant. God at the center. Ecclesiastes 4:12."
+            loading="lazy"
+          />
         </section>
 
         <section className="facts section">

@@ -748,3 +748,17 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
     font-size:.78rem!important;
   }
 }
+
+/* Full-width Covenant artwork */
+.covenantArtwork{
+  padding:0!important;
+  background:#54143d;
+  line-height:0;
+  overflow:hidden;
+}
+.covenantArtwork img{
+  display:block;
+  width:100%;
+  height:auto;
+  margin:0;
+}
