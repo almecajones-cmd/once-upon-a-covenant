@@ -73,13 +73,13 @@ export async function POST(request: Request) {
         from: "Once Upon a Covenant <registration@onceuponacovenant.org>",
         to: [registration.husband_email, registration.wife_email].filter(Boolean),
         replyTo: "marriagebydesignministry@myeccoc.com",
-        subject: "Your retreat payment has been verified",
+        subject: "Payment receipt — Once Upon a Covenant",
         html: `<div style="font-family:Arial,sans-serif;max-width:620px;margin:auto;color:#2d2430">
-          <h1 style="color:#54143d">Payment verified</h1>
+          <h1 style="color:#54143d">Payment receipt</h1>
           <p>We verified your <strong>$${(payment.amount_cents/100).toFixed(2)}</strong> payment for Once Upon a Covenant.</p>
           <p><strong>Total paid:</strong> $${(verifiedPaid/100).toFixed(2)}<br/>
           <strong>Remaining balance:</strong> $${(balance/100).toFixed(2)}</p>
-          <p><strong>Registration status:</strong> ${registrationStatus === "confirmed" ? "Confirmed" : "Deposit Pending"}</p>
+          <p><strong>Registration status:</strong> ${registrationStatus === "confirmed" ? "Confirmed — Deposit Paid" : "Deposit Pending"}</p><p>${registrationStatus === "confirmed" ? "Your invitation is confirmed. We look forward to welcoming you October 8–10, 2027." : "Your registration remains pending until at least $100 has been verified."}</p>
           <p>Registration reference: <strong>${registration.confirmation_code}</strong></p>
         </div>`,
       });
