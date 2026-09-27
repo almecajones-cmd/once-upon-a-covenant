@@ -124,7 +124,7 @@ export default function RegistrationForm(){
 
   function dietarySummary(){
     if(draft.dietaryNone)return "None";
-    const selected=dietaryOptions
+    const selected:string[]=dietaryOptions
       .filter(([key])=>key!=="dietaryNone"&&Boolean(draft[key]))
       .map(([,label])=>label);
     const details=String(draft.dietaryDetails||"").trim();
