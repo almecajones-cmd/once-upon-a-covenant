@@ -1,18 +1,37 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import {
+  Cinzel_Decorative,
+  Cormorant_Garamond,
+  Great_Vibes,
+  Montserrat,
+} from "next/font/google";
 import "./globals.css";
 
-const displayFont = Cormorant_Garamond({
+const titleFont = Cinzel_Decorative({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-title",
+  display: "swap",
+});
+
+const serifFont = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
-  variable: "--font-display",
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const scriptFont = Great_Vibes({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-script",
   display: "swap",
 });
 
 const bodyFont = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-body",
   display: "swap",
 });
@@ -25,7 +44,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
+    <html
+      lang="en"
+      className={`${titleFont.variable} ${serifFont.variable} ${scriptFont.variable} ${bodyFont.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
