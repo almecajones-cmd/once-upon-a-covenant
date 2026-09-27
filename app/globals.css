@@ -715,3 +715,36 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
   .scheduleTimeline>div{grid-template-columns:1fr;gap:.25rem}
   .scheduleTimeline time{font-size:.66rem}
 }
+
+/* Luxury text-only header brand */
+.brandLockup--compact{
+  display:inline-flex;
+  align-items:center;
+  gap:0;
+}
+.brandLockup--compact .brandLockupTitle{
+  display:block!important;
+  font-family:var(--font-serif),Georgia,serif;
+  font-size:1.08rem!important;
+  font-weight:600;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+  color:#f3dfb8!important;
+  white-space:nowrap;
+}
+.siteHeader .brandLockup--compact .brandLockupTitle{
+  color:#f3dfb8!important;
+}
+.formBrand .brandLockup--compact .brandLockupTitle{
+  color:#f3dfb8!important;
+}
+@media(max-width:680px){
+  .siteHeader .brandLockup--compact .brandLockupTitle{
+    display:block!important;
+    font-size:.86rem!important;
+    letter-spacing:.045em;
+  }
+  .formBrand .brandLockup--compact .brandLockupTitle{
+    font-size:.78rem!important;
+  }
+}
