@@ -148,12 +148,10 @@ export default function Home() {
           <div className="speakerGrid">
             <article className="speakerProfileCard">
               <div className="speakerPhoto">
-                <Image
+                <img
                   src={img.speakerDavid}
                   alt="David Wilson, Minister at Kings Church of Christ in Brooklyn, New York"
-                  fill
-                  quality={95}
-                  sizes="(max-width: 760px) 100vw, 420px"
+                  loading="lazy"
                 />
               </div>
               <div className="speakerProfileBody">
@@ -187,7 +185,7 @@ export default function Home() {
         </section>
 
         <section id="venue" className="section split">
-          <div className="venueImage"><Image src={img.hotel} alt="Embassy Suites Noblesville Indianapolis Conference Center entrance" fill quality={95} sizes="(max-width:800px) 100vw, 50vw" /></div>
+          <div className="venueImage"><img src={img.hotel} alt="Embassy Suites Noblesville Indianapolis Conference Center entrance" loading="lazy" /></div>
           <div>
             <p className="eyebrow plum">VENUE & STAY</p>
             <h2>Everything in one place.</h2>
