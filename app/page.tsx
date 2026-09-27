@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import Gateway from "@/components/Gateway";
+import BrandMark from "@/components/BrandMark";
 
 const img = {
   castle: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523683/02_castle_sunset_balose.jpg",
   ballroom: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/03_royal_ballroom_cabvif.jpg",
-  hotel: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523683/09_hotel_exterior_jywp3k.jpg",
+  hotel: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540661/indnb-exterior-02_m2nsu5.avif",
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
   rings: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523684/05_wedding_rings_velvet_yom92x.jpg",
 };
@@ -45,7 +46,7 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }} />
       <Gateway />
       <header className="siteHeader">
-        <a className="brand" href="#experience"><span>♛</span> Once Upon a Covenant</a>
+        <a className="brand" href="#experience" aria-label="Once Upon a Covenant home"><BrandMark compact /></a>
         <nav aria-label="Primary navigation">
           <a href="#experience">Experience</a>
           <a href="#schedule">Schedule</a>
@@ -207,6 +208,7 @@ export default function Home() {
       </main>
 
       <footer>
+        <div className="footerBrand"><BrandMark /></div>
         <strong>Once Upon a Covenant</strong>
         <span>A Love Story Written by God · Ecclesiastes 4:12</span>
         <span>October 8–10, 2027 · Noblesville, Indiana</span>
