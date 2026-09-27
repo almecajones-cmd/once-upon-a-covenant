@@ -334,3 +334,25 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
   .footerBrand .brandLockupTitle{display:block}
   .footerBrand .brandEmblem{width:54px;height:54px}
 }
+
+/* Speaker profiles */
+.speakerGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
+.speakerProfileCard{display:grid;grid-template-columns:minmax(220px,.9fr) minmax(0,1.1fr);background:#fffdf9;border:1px solid #e1d1bc;min-height:520px;overflow:hidden;box-shadow:0 18px 55px rgba(58,31,43,.06)}
+.speakerPhoto{position:relative;min-height:100%;background:#3f1833}
+.speakerPhoto img{object-fit:cover;object-position:center top}
+.speakerProfileBody{padding:clamp(1.4rem,3vw,2.2rem);display:flex;flex-direction:column;justify-content:center}
+.speakerProfileBody h3{font-size:clamp(2.2rem,4vw,3.25rem);color:var(--plum);margin:.15rem 0 .55rem}
+.speakerTeaser{color:#5f5158;font-size:.92rem;line-height:1.75}
+.speakerBio{margin-top:1rem;border-top:1px solid #e6d9c8;padding-top:.85rem}
+.speakerBio summary{list-style:none;cursor:pointer;color:var(--plum);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.speakerBio summary::-webkit-details-marker{display:none}
+.speakerBio summary span{display:inline-block;margin-left:.2rem;transition:transform .2s ease}
+.speakerBio[open] summary span{transform:rotate(90deg)}
+.speakerBioContent{padding-top:.75rem;color:#62535a;font-size:.85rem}
+.speakerProfileCard--placeholder{background:linear-gradient(160deg,#f7efe4,#fffdf9)}
+.speakerPlaceholderVisual{min-height:100%;display:grid;place-items:center;background:linear-gradient(145deg,#4f173b,#2c0e23);color:#d9b36e;position:relative;overflow:hidden}
+.speakerPlaceholderVisual:before,.speakerPlaceholderVisual:after{content:"";position:absolute;width:240px;height:240px;border:1px solid rgba(218,181,110,.2);transform:rotate(45deg)}
+.speakerPlaceholderVisual:before{top:-120px;left:-120px}.speakerPlaceholderVisual:after{bottom:-120px;right:-120px}
+.speakerPlaceholderVisual span{font-family:var(--font-title),Georgia,serif;font-size:4.5rem;letter-spacing:.08em}
+@media(max-width:1100px){.speakerGrid{grid-template-columns:1fr}.speakerProfileCard{min-height:460px}}
+@media(max-width:760px){.speakerProfileCard{grid-template-columns:1fr}.speakerPhoto,.speakerPlaceholderVisual{min-height:360px}.speakerProfileBody{padding:1.4rem}}
