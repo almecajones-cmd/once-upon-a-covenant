@@ -1029,3 +1029,79 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
   .nextStepRibbon{margin-bottom:.75rem}
   .nextStepIcon{width:54px;height:54px;margin-bottom:.55rem}
 }
+
+
+/* ===== Editorial dining photography ===== */
+.restaurantCard{
+  padding:0;
+  overflow:hidden;
+  border:1px solid #decfbb;
+  background:#fffdf9;
+}
+.restaurantImage{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  background:#3d1730;
+}
+.restaurantCard--feature .restaurantImage{aspect-ratio:16/9}
+.restaurantImage img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .45s ease;
+}
+.restaurantCard:hover .restaurantImage img{transform:scale(1.025)}
+.restaurantImage:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 58%,rgba(24,7,18,.18));
+  pointer-events:none;
+}
+.restaurantImage--placeholder{
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(218,176,91,.18),transparent 34%),
+    linear-gradient(145deg,#3a102c,#591b42);
+}
+.restaurantImage--placeholder:after{display:none}
+.restaurantImage--placeholder span{
+  font-family:var(--font-serif),Georgia,serif;
+  color:#efd39b;
+  font-size:1.7rem;
+  letter-spacing:.03em;
+}
+.restaurantCardBody{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  padding:1.25rem 1.3rem 1.35rem;
+}
+.restaurantCard--feature .restaurantCardBody{padding:1.45rem 1.55rem 1.55rem}
+.restaurantCardBody .restaurantMeta{margin-top:0!important}
+.restaurantCardBody h4{font-size:1.85rem}
+.restaurantCard--feature .restaurantCardBody h4{font-size:2.15rem}
+.restaurantCardBody>p:not(.restaurantMeta){flex:1}
+.restaurantCardBody>a{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  margin-top:.8rem;
+  padding-bottom:.2rem;
+  border-bottom:1px solid rgba(84,20,61,.35);
+}
+.restaurantCardBody>a:hover{border-color:var(--plum);text-decoration:none}
+.restaurantGrid--three .restaurantCard{min-height:390px}
+.restaurantCard--wide{min-height:0}
+@media(max-width:1080px){
+  .restaurantGrid--three .restaurantCard{min-height:0}
+}
+@media(max-width:720px){
+  .restaurantImage,.restaurantCard--feature .restaurantImage{aspect-ratio:4/3}
+  .restaurantCardBody,.restaurantCard--feature .restaurantCardBody{padding:1.1rem}
+}
