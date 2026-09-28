@@ -137,12 +137,24 @@ export default function RegistrationForm(){
     e.preventDefault();
     if(!validateStep(3)){focusTop();return}
     setState("sending");setErrors([]);track("registration_submit",{amount_cents:paymentCents,method:draft.paymentMethod});
-    const payload={...draft,paymentAmount:(paymentCents/100).toFixed(2)};
-    const res=await fetch("/api/register",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
-    const data=await res.json();
-    if(res.status===409&&data.error==="possible_duplicate"){setState("duplicate");setResult(data);return}
-    if(!res.ok){setState("error");setErrors([data.error||"We could not complete registration. Please try again."]);return}
-    sessionStorage.removeItem(STORAGE_KEY);setResult(data);setState("success");track("registration_success",{method:data.paymentMethod,amount_cents:data.amountCents});focusTop();
+    const payload={...draft,paymentAmount:(paymentCents/100).toFixed(2),churchSelectionLabel:selectedChurchLabel};
+    try{
+      const res=await fetch("/api/register",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
+      const data=await res.json().catch(()=>({}));
+      if(res.status===409&&data.error==="possible_duplicate"){setState("duplicate");setResult(data);focusTop();return}
+      if(!res.ok){
+        setState("error");
+        setErrors([data.error||"We could not complete registration. Please try again."]);
+        focusTop();
+        return;
+      }
+      sessionStorage.removeItem(STORAGE_KEY);setResult(data);setState("success");track("registration_success",{method:data.paymentMethod,amount_cents:data.amountCents});focusTop();
+    }catch(error){
+      console.error("Registration submit failed",error);
+      setState("error");
+      setErrors(["We could not connect to the registration service. Your information is still saved in this browser tab. Please try again."]);
+      focusTop();
+    }
   }
 
   if(state==="success"&&result){
