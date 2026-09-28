@@ -49,6 +49,7 @@ export default function RegistrantAccess(){
   const [amount,setAmount]=useState("");
   const [method,setMethod]=useState("pushpay");
   const [paymentMessage,setPaymentMessage]=useState("");
+  const [pushPayUrl,setPushPayUrl]=useState("");
   const paymentRef=useRef("");
 
   async function loadSummary(){
@@ -88,7 +89,7 @@ export default function RegistrantAccess(){
   async function submitPayment(e:FormEvent){
     e.preventDefault();
     if(busy)return;
-    setBusy(true);setError("");setPaymentMessage("");
+    setBusy(true);setError("");setPaymentMessage("");setPushPayUrl("");
 
     if(!paymentRef.current) paymentRef.current=crypto.randomUUID();
 
@@ -109,9 +110,8 @@ export default function RegistrantAccess(){
     paymentRef.current="";
 
     if(method==="pushpay" && data.pushPayUrl){
-      setPaymentMessage("Your payment request has been recorded. You are being sent to secure PushPay. Your verified balance will update after the retreat finance team confirms the payment.");
-      window.setTimeout(()=>window.location.assign(data.pushPayUrl),900);
-      return;
+      setPaymentMessage("Your payment request has been recorded. Continue to PushPay when you are ready. Enter the same amount, choose Give one time, and confirm the fund is 2027 Midwest Marriage Retreat. Your verified balance will update after the retreat finance team confirms the payment.");
+      setPushPayUrl(data.pushPayUrl);
     }
 
     if(method==="zelle"){
@@ -119,7 +119,7 @@ export default function RegistrantAccess(){
     }
 
     if(method==="check"||method==="money_order"){
-      setPaymentMessage("Payment request recorded. Mail payment to Eagle Creek Church of Christ, c/o 2027 Midwest Marriage Retreat, 3025 W. 69th Street, Indianapolis, IN 46268. Put Midwest Marriage Retreat in the memo. Your balance will update after verification.");
+      setPaymentMessage("Payment request recorded. Make your check or money order payable to Eagle Creek Church of Christ with Midwest Marriage Retreat in the memo line. Mail it to Eagle Creek Church of Christ, c/o 2027 Midwest Marriage Retreat, 3025 W. 69th Street, Indianapolis, IN 46268. Checks must clear before verification. Your balance will update after the finance team verifies the payment.");
     }
 
     setAmount("");
@@ -188,15 +188,25 @@ export default function RegistrantAccess(){
 
           <div className="beforeYouPay">
             <strong>Before you continue</strong>
-            {method==="pushpay"&&<p>We’ll record the amount you selected, then send you to secure PushPay. The amount remains pending until the retreat finance team verifies the payment.</p>}
-            {method==="zelle"&&<p>We’ll record the amount you selected, then show the Zelle instructions. Your verified balance changes only after the finance team confirms receipt.</p>}
-            {(method==="check"||method==="money_order")&&<p>We’ll record the amount you selected, then show mailing instructions. Your verified balance changes only after the finance team confirms receipt.</p>}
+            {method==="pushpay"&&<div>
+              <p>We’ll record the amount you selected, then give you a button to Eagle Creek Church of Christ’s PushPay page.</p>
+              <p>On PushPay, enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. The payment stays pending here until the retreat finance team verifies it.</p>
+            </div>}
+            {method==="zelle"&&<p>Send the amount you selected to <strong>mbankhead@myeccoc.com</strong>. We record the intended payment first, then the finance team matches and verifies the Zelle payment before your balance changes.</p>}
+            {(method==="check"||method==="money_order")&&<div>
+              <p>Make payable to <strong>Eagle Creek Church of Christ</strong> with <strong>Midwest Marriage Retreat</strong> in the memo line.</p>
+              <address>Eagle Creek Church of Christ<br/>c/o 2027 Midwest Marriage Retreat<br/>3025 W. 69th Street<br/>Indianapolis, IN 46268</address>
+              <p>Checks must clear before verification. Checks are not accepted after August 31, 2027.</p>
+            </div>}
           </div>
 
           <button className="plumButton" disabled={busy}>{busy?"RECORDING…":"CONTINUE WITH PAYMENT"}</button>
         </form>}
 
-        {paymentMessage&&<p className="successNotice" aria-live="polite">{paymentMessage}</p>}
+        {paymentMessage&&<div className="successNotice" aria-live="polite">
+          <p>{paymentMessage}</p>
+          {pushPayUrl&&<a className="plumButton" href={pushPayUrl} target="_blank" rel="noreferrer">CONTINUE TO PUSHPAY</a>}
+        </div>}
         {error&&<p className="formError" role="alert">{error}</p>}
         <p className="paymentHelpLink">Need help with a payment? <Link href="/contact">Contact the retreat team.</Link></p>
       </section>
