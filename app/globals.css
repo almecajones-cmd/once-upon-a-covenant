@@ -2055,3 +2055,51 @@ footer,
   .speakerPhoto>img{min-height:360px!important}
   .speakerSectionHeading h2{font-size:2.7rem}
 }
+
+
+/* ===== Repair Contact & Help hero after sitewide texture pass ===== */
+.contactPage .contactHero{
+  position:relative;
+  isolation:isolate;
+  padding:clamp(4rem,7vw,6rem) 7vw;
+  background-color:#3b102e!important;
+  background-image:
+    linear-gradient(135deg,rgba(46,10,34,.94),rgba(84,20,61,.90)),
+    url("https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg")!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  color:#fff!important;
+}
+.contactPage .contactHero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(20,4,15,.20),transparent 62%);
+  pointer-events:none;
+  z-index:-1;
+}
+.contactPage .contactHero>div{
+  max-width:820px;
+  position:relative;
+  z-index:1;
+}
+.contactPage .contactHero .eyebrow{
+  color:#e6bf73!important;
+}
+.contactPage .contactHero h1{
+  color:#f1d49a!important;
+  text-shadow:0 2px 16px rgba(0,0,0,.18);
+}
+.contactPage .contactHero p:last-child{
+  color:#fff4eb!important;
+  font-size:1.02rem;
+  line-height:1.65;
+}
+
+/* The contact shell is a page container, not a card. */
+.contactPage .contactShell{
+  border:none!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
