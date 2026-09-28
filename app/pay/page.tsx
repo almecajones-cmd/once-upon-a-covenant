@@ -92,7 +92,8 @@ export default function PayPage(){
           <article>
             <span className="paymentMethodNumber">01</span>
             <h3>PushPay</h3>
-            <p>Use the secure Eagle Creek Church of Christ payment page after recording your payment through registration or the Make a Payment flow.</p>
+            <p>First record the payment through registration or the secure Make a Payment flow so the retreat team can tie it to your registration. Then open Eagle Creek Church of Christ’s PushPay page.</p>
+            <p><strong>On PushPay:</strong> enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. The retreat team verifies the payment before your website balance changes.</p>
             <a className="outlineButton" href="https://ppay.co/mJyvth1Pp-Y" target="_blank" rel="noreferrer">OPEN PUSHPAY</a>
           </article>
           <article>
@@ -107,6 +108,7 @@ export default function PayPage(){
             <h3>Check or Money Order</h3>
             <p>Payable to <strong>Eagle Creek Church of Christ</strong> with <strong>Midwest Marriage Retreat</strong> in the memo line.</p>
             <address>Eagle Creek Church of Christ<br/>c/o 2027 Midwest Marriage Retreat<br/>3025 W. 69th Street<br/>Indianapolis, IN 46268</address>
+            <p>Your registration and hotel room remain pending until at least the $100 deposit is received and verified. Checks must also clear before verification. Checks are not accepted after August 31, 2027.</p>
           </article>
         </div>
       </section>
