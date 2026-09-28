@@ -74,6 +74,11 @@ export default function Home() {
         <section id="experience" className="hero section">
           <div className="heroCopy">
             <p className="eyebrow plum">2027 MIDWEST MARRIAGE RETREAT</p>
+            <div className="heroOrnament" aria-hidden="true">
+              <span />
+              <b>♡</b>
+              <span />
+            </div>
             <h1>You’re Invited to an Extraordinary Weekend.</h1>
             <p>Step away from the ordinary and make room to strengthen your covenant, deepen your connection, and write the next chapter of your marriage with God at the center.</p>
             <div className="buttonRow">
