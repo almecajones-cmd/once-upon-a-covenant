@@ -12,6 +12,7 @@ const img = {
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
   rings: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790548053/ChatGPT_Image_Sep_27_2026_06_27_16_PM_rvyr0g.png",
   speakerDavid: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540868/ChatGPT_Image_Sep_27_2026_04_26_37_PM_up6w3b.jpg",
+  speakerBailey: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790558856/IMG_0077_yvmx1f.jpg",
   diningAspen: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547186/revised_aspen_creek_cxqgxo.jpg",
   diningLivery: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546105/Livery_itmkr6.webp",
   diningFord: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547186/Ford_revised_image_yf4pcx.jpg",
@@ -222,15 +223,19 @@ export default function Home() {
               </div>
             </article>
 
-            <article className="speakerProfileCard speakerProfileCard--placeholder" aria-label="Second speaker details coming soon">
-              <div className="speakerPlaceholderVisual" aria-hidden="true">
-                <span>02</span>
+            <article className="speakerProfileCard">
+              <div className="speakerPhoto speakerPhoto--bailey">
+                <img
+                  src={img.speakerBailey}
+                  alt="Minister Samuel D. Bailey"
+                  loading="lazy"
+                />
               </div>
               <div className="speakerProfileBody">
-                <p className="eyebrow plum">SECOND SPEAKER</p>
-                <h3>Details Coming Soon</h3>
-                <p className="speakerRole">Speaker announcement in progress</p>
-                <p className="speakerTeaser">Our second speaker will be added here as soon as the final bio, image, and session information are confirmed.</p>
+                <p className="eyebrow plum">FEATURED SPEAKER</p>
+                <h3>Samuel D. Bailey</h3>
+                <p className="speakerRole">Minister</p>
+                <p className="speakerTeaser"><strong>Biography coming soon.</strong> Additional speaker and session details will be added as they are finalized.</p>
               </div>
             </article>
           </div>
