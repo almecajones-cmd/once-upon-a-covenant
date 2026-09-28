@@ -162,7 +162,7 @@ export default function Home() {
                 <div className="scheduleLunch"><time>12:15 PM</time><span><strong>Our Own Chapter</strong><small>Lunch & Couple Time — lunch is on your own. Explore nearby dining or enjoy intentional time together before the evening celebration.</small><a href="#dining">EXPLORE NEARBY DINING →</a></span></div>
                 <div><time>5:00 PM</time><span><strong>A Moment in the Story</strong><small>Photo Experience Opens</small></span></div>
                 <div><time>6:00 PM</time><span><strong>The Royal Ball</strong><small>Doors Open</small></span></div>
-                <div><time>6:30 PM</time><span><strong>The Royal Ball</strong><small>An Evening of Enchantment</small></span></div>
+                <div className="scheduleRoyalBall"><time>6:30 PM</time><span><strong>The Royal Ball</strong><small>An Evening of Enchantment</small><span className="scheduleAttire">Attire: Regal Formal · Any Color</span></span></div>
               </div>
             </article>
 
@@ -434,6 +434,11 @@ export default function Home() {
             <details>
               <summary>Can engaged couples attend?</summary>
               <p>Yes. Engaged couples are welcome to register for the retreat. <Link className="faqLink" href="/register">Click here to begin registration →</Link></p>
+            </details>
+
+            <details>
+              <summary>What should we wear to the Royal Ball?</summary>
+              <p>The Royal Ball is a formal evening, and couples may wear <strong>any color</strong>. We encourage <strong>regal formal attire</strong> appropriate for an elegant ball. Women may wear floor-length evening gowns, ball gowns, or other elegant formal dresses. Men may wear tuxedos, formal suits, or similarly polished evening attire. Royal-inspired touches such as statement jewelry, elegant accessories, crowns, or other tasteful details are welcome but completely optional. <strong>There is no required color palette.</strong></p>
             </details>
 
             <details>
