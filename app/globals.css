@@ -1510,31 +1510,15 @@ button,.plumButton,.goldButton,.outlineButton,.navCta{min-height:48px}
 }
 
 
-/* ===== Sitewide Once Upon a Covenant visual system ===== */
+/* ===== Safe sitewide cream texture + luxury depth ===== */
 :root{
-  --cream-texture:url("https://res.cloudinary.com/v78xwhwr/image/upload/v1790557006/ivory-texture-seamless-2560x1600_xi85cp.jpg");
-  --parchment-texture:url("https://res.cloudinary.com/v78xwhwr/image/upload/v1790557006/ivory-texture-seamless-2560x1600_xi85cp.jpg");
-  --cream-bg:#fbf5ea;
-  --cream-card:rgba(255,251,244,.94);
-  --ink-strong:#302530;
-  --ink-body:#51424b;
-  --gold-line:#c69a4d;
-  --gold-soft:rgba(198,154,77,.55);
-  --warm-shadow:0 16px 38px rgba(72,42,48,.085),0 3px 10px rgba(112,76,42,.045);
-  --warm-shadow-feature:0 24px 58px rgba(72,31,53,.16),0 6px 16px rgba(112,76,42,.07);
+  --site-cream-texture:url("https://res.cloudinary.com/v78xwhwr/image/upload/v1790557006/ivory-texture-seamless-2560x1600_xi85cp.jpg");
+  --site-card-cream:rgba(255,252,246,.94);
+  --site-gold-border:rgba(198,154,77,.58);
+  --site-warm-shadow:0 14px 34px rgba(70,42,48,.075),0 3px 9px rgba(113,76,43,.04);
 }
 
-/* One consistent cream/parchment surface across all light experiences */
-body{
-  background-color:var(--cream-bg);
-  background-image:
-    linear-gradient(rgba(251,245,234,.90),rgba(251,245,234,.90)),
-    var(--cream-texture);
-  background-repeat:repeat;
-  background-size:auto,1280px auto;
-  color:var(--ink-body);
-}
-
+/* Apply the supplied texture directly to light sections only. */
 #experience.hero,
 .whySection,
 .scheduleExperience,
@@ -1544,15 +1528,13 @@ body{
 .faq,
 .nextStepSection,
 .formPage{
-  background-color:var(--cream-bg)!important;
-  background-image:
-    linear-gradient(rgba(251,245,234,.88),rgba(251,245,234,.88)),
-    var(--cream-texture)!important;
-  background-repeat:repeat!important;
-  background-size:auto,1280px auto!important;
+  background-color:#fbf5ea;
+  background-image:var(--site-cream-texture);
+  background-repeat:repeat;
+  background-size:1280px auto;
 }
 
-/* Keep dark feature moments dark and cinematic */
+/* Keep dark/cinematic sections untouched. */
 .covenant,
 .ball,
 .investmentSection,
@@ -1567,41 +1549,28 @@ footer,
   background-image:none;
 }
 
-/* Darker, richer typography on light surfaces */
-#experience .heroCopy h1,
+/* Darker, stronger typography on cream sections without changing fonts. */
 .whySection h2,
 .scheduleExperience h2,
 .speakerSection h2,
 .split h2,
 .diningSection h2,
 .faq h2,
-.nextStepSection h2,
-.formPage .registrationMain h1,
-.formPage .registrationMain h2,
-.formPage .registrationMain h3,
-.paymentExperienceShell h2,
-.paymentExperienceShell h3,
-.contactHelpSection h2,
-.privacyPage h1,
-.privacyPage h2{
-  color:var(--ink-strong);
+.nextStepSection h2{
+  color:#302530;
   font-weight:600;
 }
-
-#experience .heroCopy>p:not(.eyebrow),
-.whySection .sectionHeading>p:not(.eyebrow),
-.scheduleTocHeading>p:not(.eyebrow),
-.speakerTeaser,
-.speakerBioContent,
+.whySection p,
+.scheduleExperience p,
+.speakerSection p,
 .split p,
-.diningIntro>p:not(.eyebrow),
-.faq details,
-.nextStepHeading>p,
-.formPage p{
-  color:var(--ink-body);
+.diningSection p,
+.faq p,
+.nextStepSection p{
+  color:#51434b;
 }
 
-/* Shared elevated cream card treatment */
+/* Shared gold border + warm shadow system. */
 .outcomeCard,
 .scheduleDayCard,
 .speakerProfileCard,
@@ -1613,116 +1582,21 @@ footer,
 .wizardPanel,
 .paymentPathCard,
 .scheduleCard,
-.contactShell,
-.contactQuickFacts,
-.manageShell,
-.privacyPage,
-.adminShell{
-  background:var(--cream-card);
-  border-color:var(--gold-soft);
-  box-shadow:var(--warm-shadow);
+.contactShell{
+  border-color:var(--site-gold-border);
+  box-shadow:var(--site-warm-shadow);
 }
 
-/* Gold-framed cards feel like pages from the same story */
-.outcomeCard,
-.scheduleDayCard,
-.restaurantCard,
-.nextStepCard{
-  border:1px solid var(--gold-soft);
-}
-.outcomeCard{
-  border-top:2px solid var(--gold-line);
-}
-.speakerProfileCard{
-  border:1px solid rgba(198,154,77,.64);
-}
-.restaurantCard,
-.outcomeCard,
-.nextStepCard{
-  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
-}
-@media(hover:hover){
-  .restaurantCard:hover,
-  .outcomeCard:hover,
-  .nextStepCard:hover{
-    transform:translateY(-2px);
-    border-color:rgba(198,154,77,.8);
-    box-shadow:0 20px 44px rgba(72,42,48,.11),0 5px 14px rgba(112,76,42,.055);
-  }
-}
-
-/* Schedule: Saturday is the visual centerpiece */
-.scheduleDayCard{
-  position:relative;
-  overflow:visible;
-}
+/* Saturday remains the visual centerpiece, without altering layout geometry. */
 .scheduleDayCard--featured{
-  z-index:2;
-  border:2px solid var(--gold-line)!important;
-  box-shadow:var(--warm-shadow-feature)!important;
-  transform:translateY(-10px);
-}
-.scheduleDayCard--featured:before{
-  inset:8px;
-  border-color:rgba(224,188,113,.46);
+  border:2px solid #c69a4d;
+  box-shadow:0 18px 42px rgba(72,31,53,.12),0 4px 12px rgba(112,76,42,.06);
 }
 .scheduleDayCard--featured .scheduleChapterHead{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(143,57,105,.32),transparent 58%),
-    linear-gradient(180deg,#65204d 0%,#451333 100%)!important;
-  border-bottom:1px solid rgba(226,188,113,.72);
-  box-shadow:inset 0 -1px 0 rgba(255,255,255,.05);
-}
-.scheduleDayCard--featured .scheduleChapterLabel{
-  color:#efcf8d;
-}
-.scheduleDayCard--featured .scheduleChapterHead h3{
-  color:#fff6e8;
-  text-shadow:0 1px 12px rgba(0,0,0,.18);
-}
-.scheduleDayCard--featured .scheduleChapterVerse{
-  color:#e8c987;
-}
-.scheduleDayCard:not(.scheduleDayCard--featured) .scheduleChapterHead{
-  background:linear-gradient(180deg,rgba(255,251,244,.96),rgba(250,241,226,.92));
-}
-.scheduleChapterHead h3{
-  font-weight:600;
-  color:#4a1738;
-}
-.scheduleChapterLabel{
-  color:#70425d;
-  font-weight:800;
-}
-.scheduleContents strong{
-  color:#432e3b;
-  font-weight:600;
-}
-.scheduleContents small{
-  color:#6b5963;
-}
-.scheduleLunch{
-  background:linear-gradient(135deg,rgba(249,238,216,.97),rgba(255,249,239,.96));
-  border:1px solid rgba(198,154,77,.72)!important;
-  box-shadow:inset 0 0 0 4px rgba(198,154,77,.045);
+  border-bottom:1px solid rgba(198,154,77,.56);
 }
 
-/* Stronger gold linework and warm dimensionality */
-.sectionHeading .eyebrow:after,
-.heroOrnament span{
-  background-color:var(--gold-line);
-}
-.outcomeCard:after{
-  background:var(--gold-line);
-}
-.outcomeCard>span,
-.scheduleContents time,
-.restaurantMeta,
-.diningCategoryHead>span{
-  color:#9c6d25;
-}
-
-/* Dining keeps photography supportive, not dominant */
+/* Dining proportions: curated guide rather than oversized photo gallery. */
 .diningSection{
   padding-left:max(5vw,calc((100vw - 1480px)/2));
   padding-right:max(5vw,calc((100vw - 1480px)/2));
@@ -1732,9 +1606,7 @@ footer,
   height:280px;
   aspect-ratio:auto;
 }
-.restaurantGrid--three .restaurantImage{
-  height:235px;
-}
+.restaurantGrid--three .restaurantImage{height:235px}
 .restaurantCardBody,
 .restaurantCard--feature .restaurantCardBody{
   padding:1.7rem 1.8rem 1.85rem;
@@ -1745,55 +1617,29 @@ footer,
   font-size:1.82rem;
   font-weight:600;
 }
-.restaurantArea{
-  color:#725f68;
-  font-size:.88rem;
-}
+.restaurantArea{font-size:.88rem;color:#725f68}
 .restaurantCardBody>p:not(.restaurantMeta){
-  color:#51444b;
   font-size:1rem;
   line-height:1.62;
+  color:#51444b;
 }
 .restaurantCardBody>a{
-  color:#5a183f;
   font-size:.86rem;
   font-weight:800;
 }
 
-/* Functional pages: same brand system, less ornament */
+/* Functional pages get texture and light depth only; no decorative layout changes. */
 .formPage{
-  background-color:var(--cream-bg)!important;
+  background-color:#fbf5ea;
+  background-image:var(--site-cream-texture);
+  background-repeat:repeat;
+  background-size:1280px auto;
 }
 .formTopbar{
   background:linear-gradient(90deg,#35102a,#551842);
-  border-bottom:1px solid rgba(217,178,106,.56);
-}
-.registrationSummary,
-.registrationIntroCard,
-.wizardHeader,
-.wizardPanel,
-.paymentPathCard,
-.scheduleCard,
-.contactShell,
-.manageShell,
-.privacyPage,
-.adminShell{
-  border:1px solid rgba(198,154,77,.40);
-}
-.registrationSummary,
-.wizardHeader,
-.wizardPanel,
-.paymentPathCard,
-.scheduleCard{
-  background:rgba(255,251,244,.96);
+  border-bottom:1px solid rgba(217,178,106,.5);
 }
 
-/* Preserve usability on tablets/phones */
-@media(max-width:1080px){
-  .scheduleDayCard--featured{
-    transform:none;
-  }
-}
 @media(max-width:720px){
   #experience.hero,
   .whySection,
@@ -1804,14 +1650,11 @@ footer,
   .faq,
   .nextStepSection,
   .formPage{
-    background-size:auto,900px auto!important;
+    background-size:900px auto;
   }
   .restaurantImage,
   .restaurantCard--feature .restaurantImage,
   .restaurantGrid--three .restaurantImage{
     height:220px;
-  }
-  .scheduleDayCard--featured{
-    border-width:1.5px!important;
   }
 }
