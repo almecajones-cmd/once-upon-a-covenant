@@ -2215,3 +2215,30 @@ footer,
     text-align:center;
   }
 }
+
+
+/* ===== Royal Ball attire callout ===== */
+.scheduleRoyalBall{
+  background:linear-gradient(90deg,rgba(89,20,63,.045),rgba(198,154,77,.075));
+}
+.scheduleAttire{
+  display:inline-block;
+  margin-top:.38rem;
+  padding:.28rem .5rem;
+  border:1px solid rgba(198,154,77,.58);
+  background:rgba(255,248,235,.86);
+  color:#6a3a52;
+  font-size:.69rem;
+  font-weight:800;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+.scheduleDayCard--featured .scheduleAttire{
+  color:#5a153f;
+}
+@media(max-width:520px){
+  .scheduleAttire{
+    font-size:.66rem;
+    line-height:1.35;
+  }
+}
