@@ -367,8 +367,8 @@ export default function Home() {
         <section id="stay-updated" className="homepageInterest">
           <div className="homepageInterestCopy">
             <p className="eyebrow gold">STAY UPDATED</p>
-            <h2>Not ready to register yet?</h2>
-            <p>Join the interest list for retreat updates, speaker announcements, important dates, and special messages. No commitment and no registration required.</p>
+            <h2>Not ready to secure your place yet?</h2>
+            <p>Stay connected while you decide. Join the interest list for retreat updates, speaker announcements, important dates, and special messages. No deposit or registration is required.</p>
           </div>
           <StayUpdatedForm/>
         </section>
@@ -393,7 +393,7 @@ export default function Home() {
 
             <details>
               <summary>Can we register now if we are not ready to make the deposit?</summary>
-              <p>If you are not ready to make the $100 deposit, we recommend joining the retreat interest list instead of relying on an unpaid registration to hold your space. <Link className="faqLink" href="/contact#stay-updated">Click here to stay informed →</Link></p>
+              <p>If you are not ready to make the $100 deposit, we recommend joining the retreat interest list instead of relying on an unpaid registration to hold your space. <Link className="faqLink" href="/#stay-updated">Click here to stay informed →</Link></p>
             </details>
 
             <details>
