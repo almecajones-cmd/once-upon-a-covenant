@@ -103,7 +103,7 @@ export default function Home() {
         <section id="why" className="section whySection">
           <div className="sectionHeading">
             <p className="eyebrow plum">WHY THIS WEEKEND MATTERS</p>
-            <h2>Come home with more than memories.</h2>
+            <h2>Return home with more than memories.</h2>
             <p>This weekend is designed to give couples biblical grounding and practical ways to keep building long after the retreat ends.</p>
           </div>
           <div className="outcomeGrid">
