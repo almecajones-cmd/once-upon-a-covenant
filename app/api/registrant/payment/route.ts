@@ -77,6 +77,12 @@ export async function POST(request: Request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
     const recipients = [registration.husband_email, registration.wife_email].filter(Boolean);
+    const amountText="$"+(amountCents/100).toFixed(2);
+    const paymentInstructionsHtml=method==="pushpay"
+      ? `<div style="padding:16px;border:1px solid #d6b56d;background:#fffaf0"><p><strong>Complete your PushPay payment</strong></p><p>Open PushPay, enter ${amountText}, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>.</p><p><a href="https://ppay.co/mJyvth1Pp-Y" style="display:inline-block;padding:12px 18px;background:#54143d;color:white;text-decoration:none;font-weight:bold">CONTINUE TO PUSHPAY</a></p></div>`
+      : method==="zelle"
+      ? `<div style="padding:16px;border:1px solid #d6b56d;background:#fffaf0"><p><strong>Complete your Zelle payment</strong></p><p>Send ${amountText} to <strong>mbankhead@myeccoc.com</strong>. The finance team will verify it before your balance changes.</p></div>`
+      : `<div style="padding:16px;border:1px solid #d6b56d;background:#fffaf0"><p><strong>Mail your ${method==="check"?"check":"money order"}</strong></p><p>Make it payable to <strong>Eagle Creek Church of Christ</strong> with <strong>Midwest Marriage Retreat</strong> in the memo line.</p><p>Eagle Creek Church of Christ<br>c/o 2027 Midwest Marriage Retreat<br>3025 W. 69th Street<br>Indianapolis, IN 46268</p><p>Checks must clear before verification. Checks are not accepted after August 31, 2027.</p></div>`;
     await resend.emails.send({
       from: "Once Upon a Covenant <registration@onceuponacovenant.org>",
       to: recipients,
@@ -87,6 +93,7 @@ export async function POST(request: Request) {
         <p>We recorded your request to make a <strong>$${(amountCents/100).toFixed(2)}</strong> payment by <strong>${method.replace("_"," ")}</strong>.</p>
         <p>This payment is <strong>pending verification</strong>. Your verified balance will update after the retreat finance team confirms the payment.</p>
         <p>Registration reference: <strong>${registration.confirmation_code}</strong></p>
+        ${paymentInstructionsHtml}
       </div>`,
     });
 
