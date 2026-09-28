@@ -2242,3 +2242,158 @@ footer,
     line-height:1.35;
   }
 }
+
+
+/* ===== Stay Updated section: premium split-panel treatment ===== */
+.homepageInterest{
+  position:relative;
+  isolation:isolate;
+  width:min(1320px,calc(100% - 2rem));
+  margin:clamp(3rem,6vw,5.5rem) auto;
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:0;
+  align-items:stretch;
+  padding:0!important;
+  background:transparent!important;
+  background-image:none!important;
+  border:1px solid rgba(198,154,77,.66);
+  border-radius:0 14px 0 14px;
+  overflow:hidden;
+  box-shadow:0 22px 54px rgba(65,31,47,.12),0 5px 14px rgba(117,78,42,.05);
+}
+.homepageInterest:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(242,209,143,.16);
+  pointer-events:none;
+  z-index:3;
+}
+.homepageInterestCopy{
+  position:relative;
+  padding:clamp(2.6rem,5vw,4.5rem);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 20% 15%,rgba(133,50,97,.28),transparent 42%),
+    linear-gradient(145deg,#5b1b45 0%,#351028 100%);
+  color:#fff;
+}
+.homepageInterestCopy:after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:12%;
+  bottom:12%;
+  width:1px;
+  background:linear-gradient(180deg,transparent,rgba(229,190,112,.75),transparent);
+}
+.homepageInterestCopy .eyebrow{
+  color:#e5bd70!important;
+  margin-bottom:.65rem;
+}
+.homepageInterestCopy h2{
+  color:#fff4e2!important;
+  font-size:clamp(2.7rem,4.5vw,4.5rem)!important;
+  line-height:1.02!important;
+  font-weight:600!important;
+  margin:0 0 1rem!important;
+  max-width:620px;
+  text-shadow:0 2px 18px rgba(0,0,0,.14);
+}
+.homepageInterestCopy p:last-child{
+  color:#f4e9e2!important;
+  max-width:590px!important;
+  font-size:1rem!important;
+  line-height:1.7!important;
+}
+.homepageInterest .interestForm{
+  margin:0;
+  padding:clamp(2rem,4vw,3.4rem)!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:
+    linear-gradient(rgba(255,251,244,.94),rgba(255,251,244,.94)),
+    var(--site-cream-texture)!important;
+  background-size:auto,1000px auto!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.homepageInterest .interestFields{
+  gap:1rem!important;
+}
+.homepageInterest .field span{
+  display:block;
+  margin-bottom:.45rem;
+  color:#45343e;
+  font-size:.82rem;
+  font-weight:700;
+}
+.homepageInterest .interestForm input{
+  min-height:54px!important;
+  border:1px solid rgba(139,105,85,.48)!important;
+  background:rgba(255,255,255,.88)!important;
+  color:#302530;
+  font-size:.95rem;
+}
+.homepageInterest .interestForm input:focus{
+  border-color:#6a1b4c!important;
+  box-shadow:0 0 0 3px rgba(84,20,61,.09);
+  outline:none;
+}
+.homepageInterest .interestForm .goldButton{
+  min-height:54px;
+  margin-top:1.1rem!important;
+  background:linear-gradient(180deg,#d2ad63 0%,#bd9348 100%);
+  color:#341027;
+  border:1px solid #ad8039;
+  font-weight:800;
+  letter-spacing:.08em;
+  box-shadow:0 8px 20px rgba(124,87,38,.12);
+}
+.homepageInterest .interestForm .goldButton:hover{
+  background:linear-gradient(180deg,#dfbf7d 0%,#c59b4f 100%);
+}
+.homepageInterest .interestSuccess{
+  margin:0;
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:clamp(2.3rem,4vw,3.6rem)!important;
+  background:
+    linear-gradient(rgba(255,251,244,.94),rgba(255,251,244,.94)),
+    var(--site-cream-texture)!important;
+  background-size:auto,1000px auto!important;
+}
+.homepageInterest .interestSuccess h3{
+  color:#4a1738!important;
+}
+.homepageInterest .interestSuccess p{
+  color:#51434b!important;
+}
+@media(max-width:900px){
+  .homepageInterest{
+    grid-template-columns:1fr!important;
+    width:min(100% - 1.5rem,900px);
+  }
+  .homepageInterestCopy:after{display:none}
+}
+@media(max-width:600px){
+  .homepageInterest{
+    width:calc(100% - 1rem);
+    margin:2.5rem auto 3.5rem;
+  }
+  .homepageInterestCopy{
+    padding:2.2rem 1.35rem;
+  }
+  .homepageInterestCopy h2{
+    font-size:2.5rem!important;
+  }
+  .homepageInterest .interestForm{
+    padding:1.35rem!important;
+  }
+}
