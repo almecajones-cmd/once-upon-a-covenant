@@ -1858,3 +1858,74 @@ footer,
   .scheduleContents strong{font-size:.98rem!important}
   .scheduleContents small{font-size:.82rem!important}
 }
+
+
+/* ===== Speaker pair: consistent portrait framing ===== */
+.speakerGrid{
+  gap:1.35rem;
+  align-items:stretch;
+}
+.speakerProfileCard{
+  background:rgba(255,251,244,.96)!important;
+  border:1.5px solid rgba(198,154,77,.62)!important;
+  box-shadow:0 18px 44px rgba(67,36,48,.095),0 4px 12px rgba(118,79,44,.05)!important;
+}
+.speakerPhoto{
+  position:relative;
+  overflow:hidden;
+  padding:12px;
+  background:
+    linear-gradient(rgba(251,245,234,.9),rgba(251,245,234,.9)),
+    var(--site-cream-texture);
+  background-size:auto,900px auto;
+}
+.speakerPhoto:after{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid rgba(198,154,77,.58);
+  pointer-events:none;
+  z-index:2;
+}
+.speakerPhoto>img{
+  width:100%!important;
+  height:100%!important;
+  min-height:520px!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+  filter:saturate(.94) contrast(1.025) sepia(.025);
+}
+.speakerPhoto--bailey>img{
+  height:118%!important;
+  min-height:0!important;
+  object-position:center 58%!important;
+  transform:translateY(-8%);
+}
+.speakerProfileBody{
+  padding:clamp(1.7rem,3vw,2.4rem)!important;
+}
+.speakerProfileBody h3{
+  font-size:clamp(2.2rem,3.5vw,3.15rem)!important;
+  line-height:1.05!important;
+  color:#451533!important;
+}
+.speakerRole{
+  color:#5f4655!important;
+  font-size:.8rem!important;
+  font-weight:700!important;
+}
+.speakerTeaser{
+  color:#4e4248!important;
+  font-size:.95rem!important;
+  line-height:1.68!important;
+}
+@media(max-width:900px){
+  .speakerPhoto>img{min-height:420px!important}
+  .speakerPhoto--bailey>img{height:116%!important;min-height:0!important;transform:translateY(-7%)}
+}
+@media(max-width:760px){
+  .speakerPhoto{min-height:360px!important}
+  .speakerPhoto>img{min-height:360px!important}
+  .speakerPhoto--bailey>img{height:116%!important;min-height:0!important}
+}
