@@ -17,7 +17,8 @@ export async function POST(request:Request){
     const churchType=clean(b.churchAffiliationType);
     const churchId=clean(b.churchId);
     const churchNameOther=clean(b.churchNameOther);
-    if(churchType==="midwest_church_of_christ"&&!churchId&&!churchNameOther){
+    const parsedChurchId=/^\d+$/.test(churchId)?Number(churchId):null;
+    if(churchType==="midwest_church_of_christ"&&!parsedChurchId&&!churchNameOther){
       return NextResponse.json({error:"Please select or enter a congregation."},{status:400});
     }
 
@@ -42,11 +43,6 @@ export async function POST(request:Request){
       return NextResponse.json({error:"possible_duplicate",manageUrl:"/manage"},{status:409});
     }
 
-    if(churchId){
-      const {data:church}=await supabase.from("churches").select("id").eq("id",Number(churchId)).maybeSingle();
-      if(!church)return NextResponse.json({error:"The selected congregation could not be verified. Please search again."},{status:400});
-    }
-
     const confirmationCode="OUC-"+crypto.randomUUID().slice(0,8).toUpperCase();
     const extraNights=["Wednesday","Thursday","Sunday","Monday"].filter(n=>b["extra"+n]===true).map(n=>n.toLowerCase());
 
@@ -57,14 +53,20 @@ export async function POST(request:Request){
       wife_first_name:clean(b.wifeFirstName),wife_last_name:clean(b.wifeLastName),wife_email:wifeEmail,wife_phone:clean(b.wifePhone),
       address_line1:clean(b.addressLine1),address_line2:clean(b.addressLine2)||null,city:clean(b.city),state:clean(b.state),postal_code:clean(b.postalCode),
       wedding_anniversary:clean(b.relationshipStatus)==="married"?clean(b.weddingAnniversary)||null:null,
-      church_affiliation_type:churchType,church_id:churchId?Number(churchId):null,church_name_other:churchNameOther||null,
+      church_affiliation_type:churchType,church_id:parsedChurchId,church_name_other:churchNameOther||null,
       referred_by:clean(b.referredBy)||null,how_heard:clean(b.howHeard)||null,
       dietary_restrictions:clean(b.dietaryRestrictions)||null,accessibility_needs:clean(b.accessibilityNeeds)||null,accessible_room_requested:b.accessibleRoomRequested===true,
       extra_nights:extraNights,no_children_acknowledged:true,deposit_policy_acknowledged:true,
       source:"website",utm_source:clean(b.utmSource)||null,utm_medium:clean(b.utmMedium)||null,utm_campaign:clean(b.utmCampaign)||null,
       payment_status:"pending_verification",registration_status:"pending_payment_verification"
     }).select("id").single();
-    if(error||!registration)throw error||new Error("Unable to create registration");
+    if(error||!registration){
+      console.error("Registration insert failed",error);
+      if(error?.code==="23503"&&String(error.message||"").includes("church")){
+        return NextResponse.json({error:"The selected congregation is no longer available in the directory. Please go back to Retreat Needs, search for your congregation again, and reselect it."},{status:400});
+      }
+      throw error||new Error("Unable to create registration");
+    }
 
     const clientReference=randomUUID();
     const {error:paymentError}=await supabase.from("payments").insert({
