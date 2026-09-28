@@ -80,12 +80,18 @@ export async function POST(request:Request){
 
     if(process.env.RESEND_API_KEY){
       const resend=new Resend(process.env.RESEND_API_KEY);
+      const amountText="$"+(amountCents/100).toFixed(2);
+      const paymentInstructionsHtml=method==="pushpay"
+        ? `<div style="padding:16px;border:1px solid #d6b56d;background:#fffaf0"><p><strong>Complete your PushPay payment</strong></p><p>We recorded ${amountText} as your selected payment. Open PushPay, enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>.</p><p><a href="https://ppay.co/mJyvth1Pp-Y" style="display:inline-block;padding:12px 18px;background:#54143d;color:white;text-decoration:none;font-weight:bold">CONTINUE TO PUSHPAY</a></p></div>`
+        : method==="zelle"
+        ? `<div style="padding:16px;border:1px solid #d6b56d;background:#fffaf0"><p><strong>Complete your Zelle payment</strong></p><p>Send ${amountText} to <strong>mbankhead@myeccoc.com</strong>. The retreat finance team will match and verify the payment before your balance and registration status update.</p></div>`
+        : `<div style="padding:16px;border:1px solid #d6b56d;background:#fffaf0"><p><strong>Mail your ${method==="check"?"check":"money order"}</strong></p><p>Make it payable to <strong>Eagle Creek Church of Christ</strong> with <strong>Midwest Marriage Retreat</strong> in the memo line.</p><p>Eagle Creek Church of Christ<br>c/o 2027 Midwest Marriage Retreat<br>3025 W. 69th Street<br>Indianapolis, IN 46268</p><p>Checks must clear before verification. Checks are not accepted after August 31, 2027.</p></div>`;
       await resend.emails.send({
         from:"Once Upon a Covenant <registration@onceuponacovenant.org>",
         to:[husbandEmail,wifeEmail],
         replyTo:"marriagebydesignministry@myeccoc.com",
         subject:"We received your 2027 retreat registration",
-        html:`<div style="font-family:Arial,sans-serif;max-width:620px;margin:auto;color:#2d2430"><h1 style="color:#54143d">Once Upon a Covenant</h1><p>Thank you for registering for the 2027 Midwest Marriage Retreat.</p><p><strong>Registration reference:</strong> ${confirmationCode}</p><p><strong>Registration status:</strong> Pending payment verification</p><p><strong>Payment selected:</strong> $${(amountCents/100).toFixed(2)} by ${method.replace("_"," ")}</p><p>Your registration becomes confirmed after at least the $100 non-refundable deposit is received and verified.</p><p>Total registration is $600 per couple. You may make additional payments at any time up to the remaining balance.</p><p><a href="https://onceuponacovenant.org/manage">Manage registration and payments</a></p><p>October 8–10, 2027<br>Embassy Suites Noblesville Indianapolis Conference Center</p></div>`
+        html:`<div style="font-family:Arial,sans-serif;max-width:620px;margin:auto;color:#2d2430"><h1 style="color:#54143d">Once Upon a Covenant</h1><p>Thank you for registering for the 2027 Midwest Marriage Retreat.</p><p><strong>Registration reference:</strong> ${confirmationCode}</p><p><strong>Registration status:</strong> Pending payment verification</p><p><strong>Payment selected:</strong> $${(amountCents/100).toFixed(2)} by ${method.replace("_"," ")}</p><p>Your registration and hotel room are not secured until at least the $100 non-refundable deposit is received and verified.</p>${paymentInstructionsHtml}<p>Total registration is $600 per couple. You may make additional payments at any time up to the remaining balance.</p><p><a href="https://onceuponacovenant.org/manage">Manage registration and payments</a></p><p>October 8–10, 2027<br>Embassy Suites Noblesville Indianapolis Conference Center</p></div>`
       });
       await resend.emails.send({
         from:"Once Upon a Covenant <registration@onceuponacovenant.org>",
