@@ -164,10 +164,22 @@ export default function RegistrationForm(){
       <h2>Your next chapter has begun.</h2>
       <p>Registration reference: <strong>{result.confirmationCode}</strong></p>
       <div className="successPaymentSummary"><span>Payment planned</span><strong>{new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(result.amountCents/100)} · {method}</strong></div>
-      <p>Your registration remains <strong>pending payment verification</strong> until at least the $100 non-refundable deposit is received and verified.</p>
-      {result.paymentMethod==="pushpay"&&<a className="plumButton" href={result.pushPayUrl} target="_blank" rel="noreferrer">OPEN PUSHPAY</a>}
-      {result.paymentMethod==="zelle"&&<p className="paymentInstruction">Send payment by Zelle to <strong>mbankhead@myeccoc.com</strong>.</p>}
-      {(result.paymentMethod==="check"||result.paymentMethod==="money_order")&&<p className="paymentInstruction">Mail payment to <strong>Eagle Creek Church of Christ</strong>, c/o 2027 Midwest Marriage Retreat, 3025 W. 69th Street, Indianapolis, IN 46268. Put <strong>Midwest Marriage Retreat</strong> in the memo.</p>}
+      <p>Your registration and hotel room remain <strong>pending</strong> until at least the $100 non-refundable deposit is received and verified.</p>
+      {result.paymentMethod==="pushpay"&&<div className="paymentInstruction">
+        <strong>Next step: complete your PushPay payment.</strong>
+        <p>We have recorded your selected payment amount and linked it to registration <strong>{result.confirmationCode}</strong>. On PushPay, enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. Do not set up a recurring gift unless you intentionally want a recurring church donation.</p>
+        <a className="plumButton" href={result.pushPayUrl} target="_blank" rel="noreferrer">CONTINUE TO PUSHPAY</a>
+      </div>}
+      {result.paymentMethod==="zelle"&&<div className="paymentInstruction">
+        <strong>Next step: send your Zelle payment.</strong>
+        <p>Send <strong>{new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(result.amountCents/100)}</strong> to <strong>mbankhead@myeccoc.com</strong>. The retreat finance team will match and verify the payment before your registration status and balance are updated.</p>
+      </div>}
+      {(result.paymentMethod==="check"||result.paymentMethod==="money_order")&&<div className="paymentInstruction">
+        <strong>Next step: mail your {result.paymentMethod==="check"?"check":"money order"}.</strong>
+        <p>Make it payable to <strong>Eagle Creek Church of Christ</strong> with <strong>Midwest Marriage Retreat</strong> in the memo line.</p>
+        <address>Eagle Creek Church of Christ<br/>c/o 2027 Midwest Marriage Retreat<br/>3025 W. 69th Street<br/>Indianapolis, IN 46268</address>
+        <p>Your registration and hotel room remain pending until at least the $100 deposit is received and verified. Checks must also clear before verification. Checks are not accepted after August 31, 2027.</p>
+      </div>}
       <div className="successActions"><a className="outlineButton" href="/manage">MANAGE REGISTRATION</a><a className="textAction" href="/">Return to retreat site</a></div>
     </section>
   }
@@ -263,9 +275,21 @@ export default function RegistrationForm(){
       {draft.paymentChoice==="other"&&<label className="field fieldMedium"><span>Payment amount</span><input type="number" min="100" max="600" step=".01" value={String(draft.paymentAmount)} onChange={e=>setField("paymentAmount",e.target.value)} placeholder="100.00"/></label>}
       <label className="field"><span>Payment method <b>*</b></span><select value={String(draft.paymentMethod)} onChange={e=>setField("paymentMethod",e.target.value)}><option value="pushpay">PushPay</option><option value="zelle">Zelle</option><option value="check">Check</option><option value="money_order">Money Order</option></select></label>
       <div className="paymentMethodNotice">
-        {draft.paymentMethod==="pushpay"&&<p>After registration is created, you’ll receive a secure PushPay button. The payment remains pending until the retreat team verifies it.</p>}
-        {draft.paymentMethod==="zelle"&&<p>After registration is created, send your selected amount to <strong>mbankhead@myeccoc.com</strong>. The retreat team will verify it and update your balance.</p>}
-        {(draft.paymentMethod==="check"||draft.paymentMethod==="money_order")&&<p>After registration is created, you’ll receive the mailing instructions. Checks are not accepted after August 31, 2027.</p>}
+        {draft.paymentMethod==="pushpay"&&<div>
+          <strong>PushPay — secure online payment</strong>
+          <p>After you complete registration, we will record this selected amount against your registration and show you the Eagle Creek Church of Christ PushPay button.</p>
+          <p>On PushPay: enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. Your registration remains pending until the retreat finance team verifies the payment.</p>
+        </div>}
+        {draft.paymentMethod==="zelle"&&<div>
+          <strong>Zelle</strong>
+          <p>Send your selected amount to <strong>mbankhead@myeccoc.com</strong>. The website records your intended payment first; the finance team then matches the Zelle payment to your registration and updates your verified balance.</p>
+        </div>}
+        {(draft.paymentMethod==="check"||draft.paymentMethod==="money_order")&&<div>
+          <strong>{draft.paymentMethod==="check"?"Check":"Money Order"} — mailing instructions</strong>
+          <p>Make payable to <strong>Eagle Creek Church of Christ</strong> with <strong>Midwest Marriage Retreat</strong> in the memo line.</p>
+          <address>Eagle Creek Church of Christ<br/>c/o 2027 Midwest Marriage Retreat<br/>3025 W. 69th Street<br/>Indianapolis, Indiana 46268</address>
+          <p>Your registration and hotel room remain pending until at least the $100 deposit is received and verified. Checks must also clear before verification. <strong>No checks are accepted after August 31, 2027.</strong></p>
+        </div>}
       </div>
       <div className="paymentTotalLine"><span>Payment selected today</span><strong>{new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(paymentCents/100)}</strong></div>
       <p className="paymentScheduleLink">Prefer to budget over time? <a href="/pay" target="_blank">View the suggested payment plan and payment methods.</a></p>
