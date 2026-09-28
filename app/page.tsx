@@ -374,17 +374,88 @@ export default function Home() {
         </section>
 
         <section id="faq" className="section faq">
-          <div className="sectionHeading"><p className="eyebrow plum">FAQ</p><h2>Good to know.</h2></div>
-          {[
-            ["Is the $600 registration fee per person?", "No. The $600 registration fee is per couple."],
-            ["Is lodging included?", "Yes. Friday and Saturday nights are included in the registration fee. Extra nights may be requested and are paid separately."],
-            ["Can we register before paying?", "Registration and payment are recorded together in the new website flow. Your registration remains pending until at least the required $100 non-refundable deposit is verified."],
-            ["Can we pay more than the suggested installment amount?", "Yes. Couples may pay any amount toward the remaining balance, including paying in full early."],
-            ["How do we make another payment later?", "Use the Make a Payment page. Enter your registration reference and one of the email addresses on your registration, then verify with a one-time email code."],
-            ["Are children included?", "No. This retreat is designed for couples and children are not included."],
-            ["Can engaged couples attend?", "Yes. Engaged couples are welcome to register."],
-            ["What if I lose my confirmation number?", "The Make a Payment page includes a secure confirmation-number recovery option using the email address on your registration."],
-          ].map(([q,a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}
+          <div className="sectionHeading">
+            <p className="eyebrow plum">FAQ</p>
+            <h2>Good to know.</h2>
+            <p>Quick answers about registration, lodging, payments, and the retreat experience.</p>
+          </div>
+
+          <div className="faqList">
+            <details>
+              <summary>Is the $600 registration fee per person?</summary>
+              <p>No. The <strong>$600 registration fee is per couple</strong>. Friday and Saturday lodging are included in the retreat package.</p>
+            </details>
+
+            <details>
+              <summary>When is our registration and hotel room actually secured?</summary>
+              <p>Your registration form may be submitted before payment is completed, but <strong>your registration and hotel room are not secured until at least the required $100 non-refundable deposit has been received and verified</strong>.</p>
+            </details>
+
+            <details>
+              <summary>Can we register now if we are not ready to make the deposit?</summary>
+              <p>If you are not ready to make the $100 deposit, we recommend joining the retreat interest list instead of relying on an unpaid registration to hold your space. <Link className="faqLink" href="/contact#stay-updated">Click here to stay informed →</Link></p>
+            </details>
+
+            <details>
+              <summary>Is lodging included?</summary>
+              <p>Yes. <strong>Friday and Saturday nights are included</strong> in the $600 registration fee. Additional nights may be requested during registration and are paid separately.</p>
+            </details>
+
+            <details>
+              <summary>What do additional hotel nights cost?</summary>
+              <p>The committee is confirming the <strong>all-in additional-night rate, including applicable taxes</strong>. We will update this FAQ with the final nightly amount as soon as it is confirmed. During registration, couples may request Wednesday, Thursday, Sunday, and/or Monday nights.</p>
+            </details>
+
+            <details>
+              <summary>Can we pay more than the suggested installment amount or pay in full early?</summary>
+              <p>Yes. The payment schedule is budgeting guidance, not a locked installment plan. You may pay more than the suggested amount, make an early payment, or pay the remaining balance in full at any time. <Link className="faqLink" href="/pay">Click here to view the suggested payment plan and payment methods →</Link></p>
+            </details>
+
+            <details>
+              <summary>How do we make another payment after the deposit?</summary>
+              <p>Use the secure returning-registrant page to view your verified total paid, remaining balance, and payment history. You will enter your registration reference and one of the email addresses on the registration, then verify with a one-time email code. <Link className="faqLink" href="/manage">Click here to view your balance and make another payment →</Link></p>
+            </details>
+
+            <details>
+              <summary>What payment methods are accepted?</summary>
+              <p>Approved methods include PushPay, Zelle, check, and money order. Offline payments remain pending until the retreat finance team verifies them. <Link className="faqLink" href="/pay">Click here for payment instructions and approved methods →</Link></p>
+            </details>
+
+            <details>
+              <summary>Are there late-payment or check fees?</summary>
+              <p>Yes. A <strong>$50 late fee applies after August 31, 2027</strong>. Checks are not accepted after August 31, 2027, and a <strong>$30 returned-check fee</strong> will be assessed.</p>
+            </details>
+
+            <details>
+              <summary>What if I lose my confirmation number?</summary>
+              <p>The returning-registrant page includes a secure confirmation-number recovery option using the email address on your registration. <Link className="faqLink" href="/manage">Click here to recover your registration and continue →</Link></p>
+            </details>
+
+            <details>
+              <summary>Can engaged couples attend?</summary>
+              <p>Yes. Engaged couples are welcome to register for the retreat. <Link className="faqLink" href="/register">Click here to begin registration →</Link></p>
+            </details>
+
+            <details>
+              <summary>Are children included in the retreat?</summary>
+              <p>No. This retreat is designed for couples, and children are not included in the retreat experience.</p>
+            </details>
+
+            <details>
+              <summary>Can we request an accessible room or share dietary/accessibility needs?</summary>
+              <p>Yes. The registration form includes fields for dietary restrictions, accessibility or accommodation needs, and an accessible hotel-room request. <Link className="faqLink" href="/register">Click here to register and provide those details →</Link></p>
+            </details>
+
+            <details>
+              <summary>What if our plans change after we register?</summary>
+              <p>The first <strong>$100 is non-refundable</strong>. If you have a registration or cancellation question, <Link className="faqLink" href="/contact">click here to contact the retreat team →</Link></p>
+            </details>
+          </div>
+
+          <div className="faqHelp">
+            <p><strong>Still have a question?</strong> You do not have to search for the right person.</p>
+            <Link className="outlineButton" href="/contact">CONTACT THE RETREAT TEAM</Link>
+          </div>
         </section>
 
         <section className="ctaSection">
