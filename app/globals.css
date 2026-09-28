@@ -1658,3 +1658,203 @@ footer,
     height:220px;
   }
 }
+
+
+/* ===== Schedule fidelity pass: match approved storybook reference ===== */
+.scheduleExperience{
+  scroll-margin-top:78px;
+}
+.scheduleTocHeading h2{
+  color:#2f2630!important;
+  font-weight:600!important;
+}
+.scheduleTocHeading p{
+  color:#4d4148!important;
+  font-size:1.02rem!important;
+  line-height:1.62!important;
+}
+
+.scheduleDayGrid{
+  grid-template-columns:minmax(0,1fr) minmax(0,1.28fr) minmax(0,1fr)!important;
+  gap:1.15rem!important;
+  align-items:start!important;
+}
+
+.scheduleDayCard{
+  background:rgba(255,251,244,.96)!important;
+  border:1.5px solid rgba(193,145,67,.72)!important;
+  box-shadow:0 17px 38px rgba(73,43,49,.10),0 4px 10px rgba(118,79,44,.05)!important;
+  overflow:hidden!important;
+  position:relative!important;
+}
+.scheduleDayCard:before{
+  content:"";
+  position:absolute;
+  inset:8px!important;
+  border:1px solid rgba(196,151,76,.20)!important;
+  pointer-events:none;
+  z-index:3;
+}
+.scheduleDayCard:not(.scheduleDayCard--featured){
+  border-radius:0 10px 0 10px;
+}
+
+/* Friday + Sunday: bright storybook pages */
+.scheduleDayCard:not(.scheduleDayCard--featured) .scheduleChapterHead{
+  background:linear-gradient(180deg,#fffdf7 0%,#fbf2e4 100%)!important;
+  border-bottom:1px solid rgba(194,148,73,.48)!important;
+}
+.scheduleDayCard:not(.scheduleDayCard--featured) .scheduleChapterLabel{
+  color:#513046!important;
+  font-size:.72rem!important;
+  font-weight:800!important;
+  letter-spacing:.15em!important;
+}
+.scheduleDayCard:not(.scheduleDayCard--featured) .scheduleChapterHead h3{
+  color:#5a153f!important;
+  font-size:clamp(2rem,2.25vw,2.55rem)!important;
+  font-weight:600!important;
+  line-height:1.03!important;
+}
+.scheduleDayCard:not(.scheduleDayCard--featured) .scheduleChapterVerse{
+  color:#8f6528!important;
+  font-size:.92rem!important;
+  font-weight:600!important;
+}
+
+/* Saturday: make the main retreat day unmistakably featured */
+.scheduleDayCard--featured{
+  border:2px solid #c79b4d!important;
+  box-shadow:0 24px 54px rgba(64,24,48,.19),0 7px 18px rgba(111,74,42,.08)!important;
+  transform:translateY(-14px)!important;
+  border-radius:0 12px 0 12px!important;
+  z-index:4!important;
+}
+.scheduleDayCard--featured:before{
+  inset:7px!important;
+  border:1px solid rgba(239,205,137,.42)!important;
+}
+.scheduleDayCard--featured .scheduleChapterHead{
+  background:
+    radial-gradient(circle at 50% -15%,rgba(160,62,115,.35),transparent 58%),
+    linear-gradient(180deg,#68204f 0%,#471334 100%)!important;
+  border-bottom:1px solid #d2a95f!important;
+  padding-top:1.35rem!important;
+  padding-bottom:1.25rem!important;
+  text-align:center!important;
+}
+.scheduleDayCard--featured .scheduleChapterLabel{
+  color:#efcf8e!important;
+  font-size:.72rem!important;
+  font-weight:800!important;
+  letter-spacing:.17em!important;
+}
+.scheduleDayCard--featured .scheduleChapterHead h3{
+  color:#fff7ea!important;
+  font-size:clamp(2.05rem,2.4vw,2.7rem)!important;
+  font-weight:600!important;
+  line-height:1.02!important;
+  text-shadow:0 2px 16px rgba(0,0,0,.2)!important;
+}
+.scheduleDayCard--featured .scheduleChapterVerse{
+  color:#e7c98b!important;
+  font-size:.92rem!important;
+  font-weight:600!important;
+}
+
+/* Larger, darker and better-balanced schedule rows */
+.scheduleContents{
+  padding:.35rem 1.35rem 1.35rem!important;
+}
+.scheduleContents>div{
+  grid-template-columns:118px minmax(0,1fr)!important;
+  gap:1rem!important;
+  min-height:66px;
+  padding:1rem .15rem!important;
+  align-items:start!important;
+}
+.scheduleContents time{
+  color:#9b681f!important;
+  font-size:.78rem!important;
+  line-height:1.35!important;
+  font-weight:800!important;
+  letter-spacing:.025em!important;
+}
+.scheduleContents strong{
+  color:#352a32!important;
+  font-size:1rem!important;
+  line-height:1.28!important;
+  font-weight:600!important;
+}
+.scheduleContents small{
+  color:#5e5058!important;
+  font-size:.82rem!important;
+  line-height:1.42!important;
+  font-weight:500!important;
+}
+.scheduleContents>div:not(.scheduleLunch):after{
+  border-bottom:1px solid rgba(160,124,82,.24)!important;
+}
+.scheduleLunch{
+  margin:.45rem -.35rem!important;
+  padding:1rem .5rem!important;
+  background:linear-gradient(135deg,#fbefd9 0%,#fff9ef 100%)!important;
+  border:1.5px solid rgba(194,145,66,.72)!important;
+  box-shadow:inset 0 0 0 4px rgba(196,151,76,.035)!important;
+}
+.scheduleLunch strong{
+  color:#59143f!important;
+  font-size:1.02rem!important;
+}
+.scheduleLunch a{
+  color:#59143f!important;
+  font-size:.72rem!important;
+  font-weight:800!important;
+}
+
+/* Stronger copy contrast across other cream/light cards */
+.outcomeCard h3,
+.restaurantCardBody h4,
+.nextStepCard h3,
+.speakerProfileBody h3{
+  color:#451533!important;
+  font-weight:600!important;
+}
+.outcomeCard p,
+.restaurantCardBody>p:not(.restaurantMeta),
+.nextStepCard>p:not(.nextStepKicker),
+.speakerTeaser,
+.speakerBioContent{
+  color:#4f4249!important;
+  font-weight:500;
+}
+.outcomeCard p{font-size:.98rem!important}
+.nextStepCard>p:not(.nextStepKicker){font-size:.9rem!important}
+
+/* Tablet/mobile: keep the featured Saturday treatment, remove the vertical lift */
+@media(max-width:1080px){
+  .scheduleDayGrid{
+    grid-template-columns:1fr!important;
+  }
+  .scheduleDayCard--featured{
+    transform:none!important;
+  }
+  .scheduleContents>div{
+    grid-template-columns:108px minmax(0,1fr)!important;
+  }
+}
+@media(max-width:520px){
+  .scheduleChapterHead h3,
+  .scheduleDayCard--featured .scheduleChapterHead h3,
+  .scheduleDayCard:not(.scheduleDayCard--featured) .scheduleChapterHead h3{
+    font-size:1.85rem!important;
+  }
+  .scheduleContents>div{
+    grid-template-columns:1fr!important;
+    min-height:0;
+    gap:.3rem!important;
+  }
+  .scheduleContents time{font-size:.75rem!important}
+  .scheduleContents strong{font-size:.98rem!important}
+  .scheduleContents small{font-size:.82rem!important}
+}
