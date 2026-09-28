@@ -11,8 +11,8 @@ const img = {
   hotel: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540661/indnb-exterior-02_m2nsu5.avif",
   florals: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790523682/15_candles_and_florals_zcmyje.jpg",
   rings: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790548053/ChatGPT_Image_Sep_27_2026_06_27_16_PM_rvyr0g.png",
-  speakerDavid: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790540868/ChatGPT_Image_Sep_27_2026_04_26_37_PM_up6w3b.jpg",
-  speakerBailey: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790558856/IMG_0077_yvmx1f.jpg",
+  speakerDavid: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790559469/8101acf5-e2ef-4108-8c33-82fde8e47be9_a04uen.png",
+  speakerBailey: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790559469/bd06445e-301d-4ee2-8a07-843bdf5b220e_t4g2vo.png",
   diningAspen: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547186/revised_aspen_creek_cxqgxo.jpg",
   diningLivery: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790546105/Livery_itmkr6.webp",
   diningFord: "https://res.cloudinary.com/v78xwhwr/image/upload/v1790547186/Ford_revised_image_yf4pcx.jpg",
@@ -191,14 +191,38 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="speakers" className="section speakerSection">
-          <div className="sectionHeading">
-            <p className="eyebrow plum">OUR SPEAKERS</p>
-            <h2>Voices for the journey.</h2>
-            <p>Two speakers will guide couples through biblical truth, practical reflection, and meaningful conversation throughout the weekend.</p>
+        <section id="speakers" className="section speakerSection speakerSection--refined">
+          <div className="sectionHeading speakerSectionHeading">
+            <p className="eyebrow plum">MEET OUR SPEAKERS</p>
+            <div className="speakerHeadingOrnament" aria-hidden="true"><span/><b>✦</b><span/></div>
+            <h2>Wisdom for the Journey.</h2>
+            <p>Two voices will guide couples through biblical truth, practical reflection, and meaningful conversation throughout the weekend.</p>
           </div>
 
           <div className="speakerGrid">
+            <article className="speakerProfileCard">
+              <div className="speakerPhoto">
+                <img
+                  src={img.speakerBailey}
+                  alt="Minister Samuel D. Bailey"
+                  loading="lazy"
+                />
+              </div>
+              <div className="speakerProfileBody">
+                <p className="eyebrow plum">FEATURED SPEAKER</p>
+                <h3>Samuel D. Bailey</h3>
+                <p className="speakerRole">Minister</p>
+                <p className="speakerTeaser">Minister Samuel D. Bailey joins us as a featured speaker for the 2027 retreat.</p>
+
+                <details className="speakerBio">
+                  <summary>Meet Samuel <span aria-hidden="true">→</span></summary>
+                  <div className="speakerBioContent">
+                    <p><strong>Biography coming soon.</strong> Additional biography and session details will be added as they are finalized.</p>
+                  </div>
+                </details>
+              </div>
+            </article>
+
             <article className="speakerProfileCard">
               <div className="speakerPhoto">
                 <img
@@ -220,22 +244,6 @@ export default function Home() {
                     <p>David brings a unique blend of talents, passion, and experience that enables him to explain the Word of God in a way that is <strong>exciting, informative, and relevant</strong>.</p>
                   </div>
                 </details>
-              </div>
-            </article>
-
-            <article className="speakerProfileCard">
-              <div className="speakerPhoto speakerPhoto--bailey">
-                <img
-                  src={img.speakerBailey}
-                  alt="Minister Samuel D. Bailey"
-                  loading="lazy"
-                />
-              </div>
-              <div className="speakerProfileBody">
-                <p className="eyebrow plum">FEATURED SPEAKER</p>
-                <h3>Samuel D. Bailey</h3>
-                <p className="speakerRole">Minister</p>
-                <p className="speakerTeaser"><strong>Biography coming soon.</strong> Additional speaker and session details will be added as they are finalized.</p>
               </div>
             </article>
           </div>
