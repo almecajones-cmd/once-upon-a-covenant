@@ -2103,3 +2103,115 @@ footer,
   box-shadow:none!important;
   background:transparent!important;
 }
+
+
+/* ===== Strengthened FAQ experience ===== */
+.faq{
+  max-width:1120px!important;
+}
+.faq .sectionHeading{
+  max-width:760px;
+  margin-bottom:1.9rem;
+}
+.faq .sectionHeading>p:last-child{
+  color:#51434b!important;
+  font-size:1rem;
+  line-height:1.6;
+}
+.faqList{
+  border-bottom:1px solid rgba(198,154,77,.38);
+}
+.faqList details{
+  border-top:1px solid rgba(198,154,77,.42)!important;
+  padding:0!important;
+}
+.faqList summary{
+  position:relative;
+  list-style:none;
+  cursor:pointer;
+  padding:1.25rem 3.2rem 1.25rem .2rem;
+  color:#42162f!important;
+  font-family:var(--font-serif),Georgia,serif;
+  font-size:1.16rem;
+  line-height:1.35;
+  font-weight:600!important;
+}
+.faqList summary::-webkit-details-marker{display:none}
+.faqList summary:after{
+  content:"+";
+  position:absolute;
+  right:.3rem;
+  top:50%;
+  transform:translateY(-50%);
+  width:30px;
+  height:30px;
+  border:1px solid rgba(198,154,77,.68);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#8e6225;
+  font-family:Arial,sans-serif;
+  font-size:1rem;
+  line-height:1;
+}
+.faqList details[open] summary:after{content:"–"}
+.faqList details[open] summary{
+  color:#5a153f!important;
+}
+.faqList details>p{
+  margin:0;
+  padding:0 3.2rem 1.35rem .2rem;
+  color:#4b3e45!important;
+  font-size:.96rem;
+  line-height:1.72;
+  max-width:980px;
+}
+.faqList details>p strong{
+  color:#382832;
+  font-weight:700;
+}
+.faqLink{
+  color:#5a153f!important;
+  font-weight:800;
+  text-decoration:underline;
+  text-decoration-color:rgba(198,154,77,.8);
+  text-underline-offset:4px;
+}
+.faqLink:hover{
+  color:#8b5f24!important;
+}
+.faqHelp{
+  margin-top:2rem;
+  padding:1.5rem 1.6rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  background:rgba(255,251,244,.92);
+  border:1px solid rgba(198,154,77,.52);
+  box-shadow:0 12px 28px rgba(72,42,48,.055);
+}
+.faqHelp p{
+  margin:0;
+  color:#493b43!important;
+}
+.faqHelp .outlineButton{
+  flex:0 0 auto;
+}
+@media(max-width:700px){
+  .faqList summary{
+    font-size:1.05rem;
+    padding-right:2.8rem;
+  }
+  .faqList details>p{
+    padding-right:.2rem;
+  }
+  .faqHelp{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .faqHelp .outlineButton{
+    width:100%;
+    text-align:center;
+  }
+}
