@@ -2397,3 +2397,55 @@ footer,
     padding:1.35rem!important;
   }
 }
+
+
+/* ===== Admin registration/payment reporting center ===== */
+.adminPortal--reports{padding-bottom:2rem}
+.adminMetrics--reporting>div{min-height:118px;display:flex;flex-direction:column;justify-content:center}
+.adminMetrics--reporting small{display:block;margin-top:.35rem;color:#8a777f;font-size:.67rem;line-height:1.35}
+.adminVerificationSection .adminSectionHead p:last-child,
+.adminReportHeader p:last-child{margin:.25rem 0 0;color:#66565e;font-size:.86rem}
+.adminEmptyState{padding:1.4rem;background:#fbf4e9;border:1px dashed #d9c4a5;color:#6d5a63}
+.adminReportSection{margin-top:1.5rem!important;padding:clamp(1.3rem,2.4vw,2rem)!important}
+.adminReportHeader{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:1.1rem}
+.adminReportHeader h3{font-size:2.25rem;color:var(--plum);margin:.1rem 0}
+.adminReportTabs{display:inline-flex;border:1px solid #cfb99d;background:#f5eadc;padding:4px;gap:4px}
+.adminReportTabs button{border:0;background:transparent;color:#654e5a;padding:.7rem 1rem;font-size:.68rem;letter-spacing:.08em;font-weight:800;cursor:pointer}
+.adminReportTabs button.active{background:var(--plum);color:#fff;box-shadow:0 4px 12px rgba(84,20,61,.14)}
+.adminReportFilters{display:grid;grid-template-columns:minmax(210px,1.6fr) repeat(5,minmax(130px,1fr));gap:.65rem;padding:1rem;background:#f7f0e6;border:1px solid #e2d2be;margin-bottom:1rem}
+.adminReportFilters label{display:flex;flex-direction:column;gap:.3rem}
+.adminReportFilters label>span{font-size:.62rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#745f69}
+.adminReportFilters input,.adminReportFilters select{width:100%;min-height:43px;border:1px solid #d8c8b5;background:#fff;padding:.65rem .7rem;font:inherit;font-size:.8rem;color:#3e3038}
+.adminReportFilters input:focus,.adminReportFilters select:focus{outline:none;border-color:var(--plum);box-shadow:0 0 0 3px rgba(84,20,61,.08)}
+.adminClearFilters{align-self:end;min-height:43px;border:1px solid #bea581;background:transparent;color:#5a153f;font-weight:800;font-size:.7rem;letter-spacing:.05em;cursor:pointer;padding:.55rem .8rem}
+.adminReportSummary{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr)) auto;border:1px solid #e1d3c1;background:#fffdf9;margin-bottom:1rem}
+.adminReportSummary>div{padding:.85rem 1rem;border-right:1px solid #eadfce}
+.adminReportSummary span{display:block;font-size:.6rem;text-transform:uppercase;letter-spacing:.09em;color:#836f78}
+.adminReportSummary strong{display:block;margin-top:.2rem;color:var(--plum);font-family:var(--font-serif),Georgia,serif;font-size:1.5rem}
+.adminReportSummary .plumButton{margin:.7rem;align-self:center;white-space:nowrap}
+.adminReportTable{min-width:1150px!important}
+.adminReportTable td{line-height:1.45}
+.adminReportTable .balanceDue strong{color:#8c3c50}
+.adminStatusBadge{display:inline-block;border-radius:999px;padding:.25rem .52rem;font-size:.62rem;font-weight:800;text-transform:capitalize;background:#eee5da;color:#654e5a}
+.adminStatusBadge.status-confirmed,.adminStatusBadge.payment-verified{background:#e8f2e7;color:#426148}
+.adminStatusBadge.status-pending_payment_verification,.adminStatusBadge.payment-pending_verification{background:#fff2d7;color:#7a5a20}
+.adminStatusBadge.status-cancelled,.adminStatusBadge.payment-rejected,.adminStatusBadge.payment-failed{background:#f8e4e7;color:#8b3147}
+.adminStatusBadge.method-pushpay{background:#eee6f1;color:#5a2e62}
+.adminStatusBadge.method-zelle{background:#e8eef7;color:#39557d}
+.adminStatusBadge.method-check,.adminStatusBadge.method-money_order{background:#f4eadc;color:#73562d}
+.adminNeedTags{display:flex;flex-wrap:wrap;gap:.3rem;max-width:250px}
+.adminNeedTags span{display:inline-block;background:#f6eee4;border:1px solid #e1d1bc;color:#624d58;padding:.2rem .42rem;font-size:.62rem;font-weight:700}
+@media(max-width:1200px){
+  .adminReportFilters{grid-template-columns:repeat(3,minmax(160px,1fr))}
+  .adminReportSummary{grid-template-columns:repeat(2,1fr)}
+  .adminReportSummary .plumButton{grid-column:1/-1;margin:0 .8rem .8rem}
+}
+@media(max-width:760px){
+  .adminReportHeader{align-items:stretch;flex-direction:column}
+  .adminReportTabs{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .adminReportFilters{grid-template-columns:1fr}
+  .adminReportSummary{grid-template-columns:1fr 1fr}
+  .adminToolbarActions{width:100%}
+  .adminToolbarActions .outlineButton{width:100%;text-align:center}
+}
+@media(max-width:520px){.adminReportSummary{grid-template-columns:1fr}}
