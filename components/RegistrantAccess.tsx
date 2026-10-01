@@ -190,7 +190,7 @@ export default function RegistrantAccess(){
             <strong>Before you continue</strong>
             {method==="pushpay"&&<div>
               <p>We’ll record the amount you selected, then give you a button to Eagle Creek Church of Christ’s PushPay page.</p>
-              <p>On PushPay, enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. The payment stays pending here until the retreat finance team verifies it.</p>
+              <p>On PushPay, enter the same amount and choose <strong>Give one time</strong>. Under Fund, select <strong>2027 Midwest Marriage Retreat</strong>. The payment stays pending here until the retreat finance team verifies it.</p>
             </div>}
             {method==="zelle"&&<p>Send the amount you selected to <strong>mbankhead@myeccoc.com</strong>. We record the intended payment first, then the finance team matches and verifies the Zelle payment before your balance changes.</p>}
             {(method==="check"||method==="money_order")&&<div>
