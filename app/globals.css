@@ -2449,3 +2449,120 @@ footer,
   .adminToolbarActions .outlineButton{width:100%;text-align:center}
 }
 @media(max-width:520px){.adminReportSummary{grid-template-columns:1fr}}
+
+
+/* ===== Registration hero editorial cleanup =====
+   Light hero: dark ink for display type, gold only for labels/accents.
+   Also explicitly resets the earlier dark-hero/background rules so hidden
+   light text cannot overlap or disappear on the cream surface. */
+.registrationPage .registrationHero{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:0!important;
+  padding:clamp(2.25rem,4vw,3.5rem) 1.25rem clamp(2.35rem,4vw,3.75rem)!important;
+  background-color:#fbf5ea!important;
+  background-image:
+    linear-gradient(rgba(255,250,242,.86),rgba(251,245,234,.90)),
+    var(--site-cream-texture)!important;
+  background-repeat:repeat!important;
+  background-size:auto,1280px auto!important;
+  color:#342b32!important;
+  text-align:center;
+}
+
+/* Decorative corners stay decorative — they no longer intrude into content. */
+.registrationPage .registrationHero:before,
+.registrationPage .registrationHero:after{
+  width:220px!important;
+  height:220px!important;
+  top:-165px!important;
+  border-color:rgba(198,154,77,.24)!important;
+  z-index:0!important;
+}
+.registrationPage .registrationHero:before{left:-105px!important}
+.registrationPage .registrationHero:after{right:-105px!important}
+
+.registrationPage .registrationHeroInner{
+  position:relative;
+  z-index:2;
+  max-width:820px;
+  margin:0 auto!important;
+  padding:0!important;
+}
+
+.registrationPage .registrationHero .eyebrow.gold{
+  color:#b98732!important;
+  margin:0 0 .55rem!important;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.18em;
+}
+
+.registrationPage .registrationHero h1{
+  margin:0 auto .65rem!important;
+  color:#302730!important;
+  font-family:var(--font-title),var(--font-serif),Georgia,serif;
+  font-size:clamp(3rem,5vw,4.35rem)!important;
+  line-height:.98!important;
+  font-weight:500!important;
+  letter-spacing:.005em!important;
+  text-shadow:none!important;
+}
+
+.registrationPage .registrationHeroSub{
+  margin:.35rem auto 0!important;
+  max-width:760px;
+  color:#5a4b53!important;
+  font-size:.9rem!important;
+  line-height:1.5!important;
+  letter-spacing:.025em!important;
+  font-weight:500;
+}
+
+.registrationPage .registrationRule{
+  width:92px!important;
+  margin:.9rem auto .8rem!important;
+  background:linear-gradient(90deg,transparent,#c69a4d,transparent)!important;
+}
+
+.registrationPage .registrationHeroCopy{
+  max-width:690px!important;
+  margin:0 auto!important;
+  color:#51434b!important;
+  font-size:.94rem!important;
+  line-height:1.55!important;
+}
+
+/* Pull the registration content up into a natural reading rhythm. */
+.registrationPage .registrationShell{
+  margin-top:clamp(1.4rem,2.5vw,2.25rem)!important;
+}
+
+/* Keep gold as an accent throughout this opening area, never large display text. */
+.registrationPage .registrationSummary h2,
+.registrationPage .registrationIntroCard h2{
+  color:#4b1738!important;
+}
+
+@media(max-width:680px){
+  .registrationPage .registrationHero{
+    padding:2rem 1rem 2.15rem!important;
+  }
+  .registrationPage .registrationHero h1{
+    font-size:2.65rem!important;
+  }
+  .registrationPage .registrationHeroSub{
+    font-size:.8rem!important;
+  }
+  .registrationPage .registrationHeroCopy{
+    font-size:.88rem!important;
+    line-height:1.5!important;
+  }
+  .registrationPage .registrationRule{
+    margin:.75rem auto!important;
+  }
+  .registrationPage .registrationShell{
+    margin-top:1rem!important;
+  }
+}
