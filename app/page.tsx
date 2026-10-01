@@ -83,8 +83,8 @@ export default function Home() {
             <h1>You’re Invited to an Extraordinary Weekend.</h1>
             <p>Step away from the ordinary and make room to strengthen your covenant, deepen your connection, and write the next chapter of your marriage with God at the center.</p>
             <div className="buttonRow">
-              <Link className="plumButton" href="/register" data-track="register_cta" data-track-label="Hero">REGISTER NOW</Link>
-              <a className="textButton" href="#why">EXPLORE THE EXPERIENCE →</a>
+              <Link className="plumButton" href="/register" data-track="register_cta" data-track-label="Hero">RESERVE YOUR PLACE</Link>
+              <a className="textButton" href="#covenant">EXPLORE THE EXPERIENCE →</a>
             </div>
           </div>
           <div className="heroImage">
@@ -92,7 +92,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="covenant covenantArtwork" aria-label="The Covenant">
+        <section id="covenant" className="covenant covenantArtwork" aria-label="The Covenant">
           <img
             src="https://res.cloudinary.com/v78xwhwr/image/upload/v1790546681/ChatGPT_Image_Sep_27_2026_06_04_18_PM_uack9v.png"
             alt="The Covenant — Two lives. One covenant. God at the center. Ecclesiastes 4:12."
@@ -100,10 +100,13 @@ export default function Home() {
           />
         </section>
 
+        <div className="covenantContinue"><a href="#why">CONTINUE THE STORY ↓</a></div>
+
         <section className="facts section">
           <div><strong>October 8–10, 2027</strong><span>Friday–Sunday</span></div>
           <div><strong>Embassy Suites Noblesville</strong><span>Indianapolis Conference Center</span></div>
-          <div><strong>$600 per couple</strong><span>Friday & Saturday lodging included</span></div>
+          <div><strong>$600 per couple</strong><span>$100 secures your place after verification · Pay over time</span></div>
+          <div><strong>Friday + Saturday nights</strong><span>Included in the retreat package</span></div>
         </section>
 
         <section id="why" className="section whySection">
@@ -178,6 +181,44 @@ export default function Home() {
                 <div><time>11:00 AM</time><span><strong>Ever After Begins Now</strong><small>Departure</small></span></div>
               </div>
             </article>
+          </div>
+
+          <div className="mobileScheduleAccordion" aria-label="Mobile weekend schedule">
+            <details>
+              <summary><span><b>FRIDAY — CHAPTER ONE</b><strong>The Invitation to the Ball</strong></span><em>View Friday</em></summary>
+              <div className="mobileScheduleBody">
+                <div><time>6:00 PM</time><span><strong>The Invitation</strong><small>Welcome & Opening</small></span></div>
+                <div><time>6:15 PM</time><span><strong>The Royal Introduction</strong><small>Icebreaker</small></span></div>
+                <div><time>7:00 PM</time><span><strong>The Opening Feast</strong><small>Dinner</small></span></div>
+                <div><time>7:30 PM</time><span><strong>Every Fairytale Has a Villain</strong><small>Opening Message</small></span></div>
+                <div><time>9:00 PM</time><span><strong>Battle of the Kingdoms</strong><small>Optional Fellowship</small></span></div>
+              </div>
+            </details>
+
+            <details open className="mobileScheduleFeatured">
+              <summary><span><b>SATURDAY — CHAPTER TWO</b><strong>Happily Ever After Is a Journey</strong></span><em>View Saturday</em></summary>
+              <div className="mobileScheduleBody">
+                <div><time>7:00–8:30 AM</time><span><strong>Morning at the Kingdom</strong><small>Breakfast</small></span></div>
+                <div><time>8:45 AM</time><span><strong>Divine Purpose</strong><small>General Session</small></span></div>
+                <div><time>9:15 AM</time><span><strong>Intermission</strong></span></div>
+                <div><time>9:30 AM</time><span><strong>The Plot Twists</strong><small>Breakout I</small></span></div>
+                <div><time>10:45 AM</time><span><strong>Intermission</strong></span></div>
+                <div><time>11:00 AM</time><span><strong>The Plot Twists</strong><small>Breakout II</small></span></div>
+                <div className="mobileScheduleLunch"><time>12:15 PM</time><span><strong>Our Own Chapter</strong><small>Lunch & Couple Time — on your own.</small><a href="#dining">EXPLORE NEARBY DINING →</a></span></div>
+                <div><time>5:00 PM</time><span><strong>A Moment in the Story</strong><small>Photo Experience Opens</small></span></div>
+                <div><time>6:00 PM</time><span><strong>The Royal Ball</strong><small>Doors Open</small></span></div>
+                <div><time>6:30 PM</time><span><strong>The Royal Ball</strong><small>An Evening of Enchantment</small><small className="mobileAttire">Attire: Regal Formal · Any Color</small></span></div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span><b>SUNDAY — THE FINAL CHAPTER</b><strong>The Story Continues</strong></span><em>View Sunday</em></summary>
+              <div className="mobileScheduleBody">
+                <div><time>7:00–8:30 AM</time><span><strong>Breakfast Together</strong></span></div>
+                <div><time>9:00 AM</time><span><strong>The Story Continues</strong><small>Worship & Reflection</small></span></div>
+                <div><time>11:00 AM</time><span><strong>Ever After Begins Now</strong><small>Departure</small></span></div>
+              </div>
+            </details>
           </div>
         </section>
 
@@ -348,15 +389,17 @@ export default function Home() {
           <div className="investmentCopy">
             <p className="eyebrow gold">REGISTRATION & INVESTMENT</p>
             <h2>$600 per couple.</h2>
-            <p>The first <strong>$100 is non-refundable</strong> and secures your registration after it is received and verified. Couples may pay the full balance immediately or make additional payments at any time up to the amount remaining.</p>
+            <div className="investmentDepositCallout"><strong>$100 secures your place after verification.</strong><span>Pay the remaining balance over time or in full.</span></div>
+            <p>Your registration and hotel room are not secured until the <strong>$100 non-refundable deposit</strong> is received and verified. Room-block availability is limited, so the deposit—not the form alone—is what holds your place.</p>
             <ul>
               <li>Friday and Saturday lodging included</li>
+              <li>Flexible payments toward the remaining balance</li>
               <li>Engaged couples are welcome</li>
-              <li>Additional hotel nights may be requested during registration</li>
+              <li>Additional hotel nights may be requested during registration and billed by the hotel</li>
               <li>PushPay, Zelle, check, and money order options</li>
             </ul>
             <div className="buttonRow">
-              <Link className="goldButton" href="/register" data-track="register_cta" data-track-label="Investment">REGISTER & PAY DEPOSIT</Link>
+              <Link className="goldButton" href="/register" data-track="register_cta" data-track-label="Investment">RESERVE YOUR PLACE</Link>
               <Link className="lightTextButton" href="/manage">MAKE A PAYMENT →</Link>
             </div>
           </div>
@@ -398,7 +441,7 @@ export default function Home() {
 
             <details>
               <summary>Is lodging included?</summary>
-              <p>Yes. <strong>Friday and Saturday nights are included</strong> in the $600 registration fee. Additional nights may be requested during registration and are paid separately.</p>
+              <p>Yes. <strong>Friday and Saturday nights are included</strong> in the $600 registration fee. Additional nights may be requested during registration; the retreat team coordinates the request and the hotel bills those extra nights directly to you at checkout.</p>
             </details>
 
             <details>
@@ -467,7 +510,7 @@ export default function Home() {
           <p className="eyebrow gold">BEGIN YOUR NEXT CHAPTER</p>
           <h2>Ready to write the next chapter together?</h2>
           <div className="buttonRow centeredButtons">
-            <Link className="goldButton linkButton" href="/register" data-track="register_cta" data-track-label="Final CTA">REGISTER NOW</Link>
+            <Link className="goldButton linkButton" href="/register" data-track="register_cta" data-track-label="Final CTA">RESERVE YOUR PLACE</Link>
             <Link className="secondaryDarkLink" href="/manage">MAKE A PAYMENT</Link>
           </div>
         </section>
@@ -480,6 +523,11 @@ export default function Home() {
         <span>October 8–10, 2027 · Noblesville, Indiana</span>
         <div className="footerLinks"><Link href="/contact" data-track="contact_help">Contact Us</Link><Link href="/manage">Manage Registration</Link><Link href="/privacy">Privacy</Link></div>
       </footer>
+
+      <div className="mobileReserveBar" role="region" aria-label="Reserve your place">
+        <div><strong>$600 per couple</strong><span>Secure your place with $100 after verification</span></div>
+        <Link href="/register" data-track="register_cta" data-track-label="Mobile Sticky">RESERVE</Link>
+      </div>
     </>
   );
 }
