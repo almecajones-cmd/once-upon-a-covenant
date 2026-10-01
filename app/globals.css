@@ -2566,3 +2566,163 @@ footer,
     margin-top:1rem!important;
   }
 }
+
+
+/* ===== Registration needs structure + required acknowledgments ===== */
+.needsGrid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:1.25rem;
+  align-items:start;
+}
+.dietaryFieldset{
+  min-width:0;
+  margin:0;
+  padding:1rem;
+  border:1px solid #dfcfbb;
+  background:#fffdf9;
+}
+.dietaryFieldset legend{
+  padding:0 .35rem;
+  color:#4b1738;
+  font-family:var(--font-serif),Georgia,serif;
+  font-size:1.15rem;
+  font-weight:600;
+}
+.dietaryFieldset .fieldHelp{margin:.1rem 0 .85rem}
+.dietaryOptionGrid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.5rem;
+}
+.dietaryOption{
+  display:flex;
+  align-items:center;
+  gap:.55rem;
+  min-height:44px;
+  padding:.65rem .7rem;
+  border:1px solid #e2d4c2;
+  background:#fbf6ee;
+  color:#4e4048;
+  font-size:.82rem;
+  cursor:pointer;
+}
+.dietaryOption:has(input:checked){
+  border-color:#a67737;
+  background:#f5ead8;
+  color:#491535;
+  font-weight:700;
+}
+.dietaryOption input{accent-color:#54143d}
+.dietaryOption--other{grid-column:1/-1}
+.dietaryOtherField{margin-top:.8rem}
+.accessibilityField textarea{min-height:160px}
+.fieldSupport{
+  display:block;
+  margin-top:.35rem;
+  color:#76666e;
+  font-size:.74rem;
+  line-height:1.45;
+}
+.acknowledgementGroup{
+  display:grid;
+  gap:.65rem;
+}
+.acknowledgementHeading{margin-bottom:.25rem}
+.acknowledgementHeading .eyebrow{margin-bottom:.2rem}
+.acknowledgementHeading h4{
+  margin:0;
+  color:#4b1738;
+  font-family:var(--font-serif),Georgia,serif;
+  font-size:1.45rem;
+}
+.acknowledgementHeading p:last-child{
+  margin:.2rem 0 0;
+  color:#716169;
+  font-size:.78rem;
+}
+.acknowledgementCard.hasError{
+  border-color:#a94a59!important;
+  background:#fff4f5!important;
+}
+.inlineFieldError{
+  display:block;
+  margin-top:.35rem;
+  color:#9b3449;
+  font-size:.72rem;
+  font-style:normal;
+  font-weight:800;
+}
+
+/* Returning registrant payment instructions: keep inline emphasis inline. */
+.beforeYouPay>strong,
+.beforeYouGo>strong{
+  display:block;
+  color:#4a3540;
+  font-size:.76rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:.35rem;
+}
+.beforeYouPay p strong,
+.beforeYouGo span strong{
+  display:inline!important;
+  margin:0!important;
+  color:#4b1738!important;
+  font-size:inherit!important;
+  line-height:inherit!important;
+  text-transform:none!important;
+  letter-spacing:normal!important;
+}
+.beforeYouPay p{
+  margin:.28rem 0!important;
+  color:#62545b!important;
+  line-height:1.58!important;
+}
+
+/* Payment landing hero follows the same light editorial hierarchy as registration. */
+.paymentExperiencePage .paymentHero{
+  min-height:0!important;
+  padding:clamp(2.4rem,4.5vw,3.8rem) 1.25rem!important;
+  background-color:#fbf5ea!important;
+  background-image:
+    linear-gradient(rgba(255,250,242,.86),rgba(251,245,234,.90)),
+    var(--site-cream-texture)!important;
+  background-repeat:repeat!important;
+  background-size:auto,1280px auto!important;
+  color:#342b32!important;
+}
+.paymentExperiencePage .paymentHero .eyebrow.gold{
+  color:#b98732!important;
+  margin-bottom:.55rem!important;
+}
+.paymentExperiencePage .paymentHero h1{
+  max-width:900px!important;
+  margin:0 auto .7rem!important;
+  color:#302730!important;
+  font-size:clamp(3rem,5vw,4.5rem)!important;
+  line-height:1!important;
+  font-weight:500!important;
+  text-shadow:none!important;
+}
+.paymentExperiencePage .paymentHero p:last-child{
+  max-width:760px!important;
+  margin:0 auto!important;
+  color:#51434b!important;
+  font-size:.95rem!important;
+  line-height:1.6!important;
+}
+.paymentExperiencePage .paymentExperienceShell{
+  margin-top:0!important;
+}
+.paymentExperiencePage .paymentPathSection{
+  padding-top:clamp(2.5rem,4vw,3.8rem)!important;
+}
+
+@media(max-width:760px){
+  .needsGrid{grid-template-columns:1fr}
+  .dietaryOptionGrid{grid-template-columns:1fr}
+  .dietaryOption--other{grid-column:auto}
+  .paymentExperiencePage .paymentHero{padding:2.1rem 1rem 2.35rem!important}
+  .paymentExperiencePage .paymentHero h1{font-size:2.65rem!important}
+}
