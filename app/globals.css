@@ -2726,3 +2726,13 @@ footer,
   .paymentExperiencePage .paymentHero{padding:2.1rem 1rem 2.35rem!important}
   .paymentExperiencePage .paymentHero h1{font-size:2.65rem!important}
 }
+
+
+/* ===== Homepage hero CTA cleanup ===== */
+#experience .plumButton{
+  box-shadow:none!important;
+}
+#experience .plumButton:hover{
+  box-shadow:0 4px 12px rgba(84,20,61,.10)!important;
+  transform:none!important;
+}
