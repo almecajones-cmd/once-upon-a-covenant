@@ -36,9 +36,14 @@ export default function RegisterPage() {
             <span>Registration</span>
             <strong>$600 per couple</strong>
           </div>
+          <div className="summaryItem summaryItem--emphasis">
+            <span>Secure your place</span>
+            <strong>$100 non-refundable deposit</strong>
+            <small>Registration and your hotel room are secured after the deposit is received and verified.</small>
+          </div>
           <div className="summaryItem">
-            <span>Deposit</span>
-            <strong>$100 non-refundable</strong>
+            <span>Payment flexibility</span>
+            <strong>Pay over time or in full</strong>
           </div>
           <div className="summaryItem">
             <span>Included stay</span>
@@ -47,9 +52,14 @@ export default function RegisterPage() {
           <div className="summaryItem">
             <span>Additional nights</span>
             <strong>Wed · Thu · Sun · Mon</strong>
+            <small>Billed directly by the hotel at checkout.</small>
           </div>
 
           <div className="summaryNote">
+            <strong>Room-block availability is limited.</strong>
+            <p>Your registration form alone does not hold a room. The $100 deposit must be received and verified.</p>
+          </div>
+          <div className="summaryNote summaryNote--soft">
             <strong>Engaged couples are welcome.</strong>
             <p>Children are not included in the retreat experience.</p>
           </div>
