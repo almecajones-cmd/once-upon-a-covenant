@@ -2736,3 +2736,223 @@ footer,
   box-shadow:0 4px 12px rgba(84,20,61,.10)!important;
   transform:none!important;
 }
+
+
+/* ===== Conversion path polish for committee testing ===== */
+#covenant{scroll-margin-top:74px}
+.covenantContinue{
+  background:#f3e7d5;
+  text-align:center;
+  padding:.7rem 1rem;
+  border-bottom:1px solid rgba(198,154,77,.38);
+}
+.covenantContinue a{
+  color:#6a3d51;
+  font-size:.68rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-decoration:none;
+}
+.covenantContinue a:hover{text-decoration:underline;text-underline-offset:4px}
+
+.facts{grid-template-columns:repeat(4,1fr)!important}
+.facts strong{color:#302730}
+.facts span{margin-top:.25rem;line-height:1.45}
+
+.investmentDepositCallout{
+  margin:1rem 0 1.2rem;
+  padding:1rem 1.1rem;
+  border:1px solid rgba(222,181,101,.64);
+  background:rgba(255,248,229,.08);
+}
+.investmentDepositCallout strong{
+  display:block;
+  color:#f0d39b;
+  font-family:var(--font-serif),Georgia,serif;
+  font-size:1.3rem;
+  line-height:1.2;
+}
+.investmentDepositCallout span{
+  display:block;
+  margin-top:.3rem;
+  color:#f4e7df;
+  font-size:.86rem;
+}
+
+/* Mobile schedule becomes scannable instead of one long page. */
+.mobileScheduleAccordion{display:none}
+@media(max-width:720px){
+  .scheduleDayGrid{display:none!important}
+  .mobileScheduleAccordion{
+    display:grid;
+    gap:.75rem;
+  }
+  .mobileScheduleAccordion details{
+    background:#fffaf3;
+    border:1px solid rgba(198,154,77,.58);
+    box-shadow:0 10px 24px rgba(67,36,48,.07);
+  }
+  .mobileScheduleAccordion details.mobileScheduleFeatured{
+    border:2px solid #c69a4d;
+  }
+  .mobileScheduleAccordion summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:.8rem;
+    padding:1rem;
+    color:#4b1738;
+  }
+  .mobileScheduleAccordion summary::-webkit-details-marker{display:none}
+  .mobileScheduleAccordion summary span{
+    display:flex;
+    flex-direction:column;
+    gap:.18rem;
+  }
+  .mobileScheduleAccordion summary b{
+    font-size:.62rem;
+    letter-spacing:.12em;
+  }
+  .mobileScheduleAccordion summary strong{
+    font-family:var(--font-serif),Georgia,serif;
+    font-size:1.25rem;
+    line-height:1.08;
+  }
+  .mobileScheduleAccordion summary em{
+    flex:0 0 auto;
+    color:#8c652c;
+    font-size:.68rem;
+    font-style:normal;
+    font-weight:800;
+  }
+  .mobileScheduleAccordion details[open] summary{
+    border-bottom:1px solid rgba(198,154,77,.38);
+  }
+  .mobileScheduleAccordion details[open] summary em:before{content:"Hide "}
+  .mobileScheduleBody{padding:.35rem 1rem .8rem}
+  .mobileScheduleBody>div{
+    display:grid;
+    grid-template-columns:84px minmax(0,1fr);
+    gap:.65rem;
+    padding:.72rem 0;
+    border-bottom:1px dotted rgba(155,118,56,.22);
+  }
+  .mobileScheduleBody>div:last-child{border-bottom:0}
+  .mobileScheduleBody time{
+    color:#946a2c;
+    font-size:.68rem;
+    font-weight:800;
+  }
+  .mobileScheduleBody span{
+    display:flex;
+    flex-direction:column;
+    gap:.15rem;
+  }
+  .mobileScheduleBody strong{
+    color:#4a2f3d;
+    font-family:var(--font-serif),Georgia,serif;
+    font-size:.95rem;
+  }
+  .mobileScheduleBody small{
+    color:#75666e;
+    font-size:.76rem;
+    line-height:1.4;
+  }
+  .mobileScheduleBody a{
+    margin-top:.25rem;
+    color:#5a153f;
+    font-size:.66rem;
+    font-weight:800;
+    text-decoration:none;
+  }
+  .mobileScheduleLunch{
+    background:#f7eedf;
+    margin:.2rem -.35rem;
+    padding:.78rem .35rem!important;
+  }
+  .mobileAttire{
+    margin-top:.2rem;
+    color:#5a153f!important;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+}
+
+/* Sticky mobile conversion action. */
+.mobileReserveBar{display:none}
+@media(max-width:720px){
+  body{padding-bottom:78px}
+  .mobileReserveBar{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:90;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:.8rem;
+    padding:.7rem .8rem;
+    background:rgba(58,15,43,.97);
+    border-top:1px solid rgba(224,181,104,.68);
+    box-shadow:0 -8px 24px rgba(31,10,24,.18);
+    backdrop-filter:blur(10px);
+  }
+  .mobileReserveBar>div{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .mobileReserveBar strong{
+    color:#fff5e9;
+    font-size:.82rem;
+  }
+  .mobileReserveBar span{
+    color:#dfc99f;
+    font-size:.66rem;
+    line-height:1.25;
+  }
+  .mobileReserveBar>a{
+    flex:0 0 auto;
+    background:#d3aa58;
+    color:#35102a;
+    min-height:42px;
+    display:inline-flex;
+    align-items:center;
+    padding:0 .95rem;
+    text-decoration:none;
+    font-size:.72rem;
+    font-weight:900;
+    letter-spacing:.06em;
+  }
+}
+
+.summaryItem small{
+  display:block;
+  margin-top:.35rem;
+  color:#76666e;
+  font-size:.72rem;
+  line-height:1.45;
+}
+.summaryItem--emphasis{
+  margin:.15rem -.55rem 0;
+  padding:1rem .55rem;
+  background:#fbf2df;
+  border-top:1px solid #d8b36b;
+  border-bottom:1px solid #d8b36b;
+}
+.summaryItem--emphasis span{color:#815e28}
+.summaryItem--emphasis strong{color:#4b1738}
+.summaryNote--soft{
+  margin-top:-.65rem;
+  background:#f7f0e6;
+}
+
+@media(max-width:900px){
+  .facts{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:560px){
+  .facts{grid-template-columns:1fr!important}
+  .mobileScheduleBody>div{grid-template-columns:1fr;gap:.2rem}
+}
