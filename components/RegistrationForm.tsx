@@ -16,7 +16,11 @@ const initialDraft:Draft={
   addressLine1:"",addressLine2:"",city:"",state:"",postalCode:"",
   churchAffiliationType:"",churchId:"",churchNameOther:"",
   howHeard:"",referredBy:"",
-  dietaryRestrictions:"",accessibilityNeeds:"",
+  dietaryRestrictions:"",dietaryOtherText:"",
+  dietaryVegetarian:false,dietaryVegan:false,dietaryGlutenFree:false,dietaryDairyFree:false,
+  dietaryNutAllergy:false,dietaryShellfishAllergy:false,dietaryDiabeticLowSugar:false,
+  dietaryKosher:false,dietaryHalal:false,dietaryOther:false,
+  accessibilityNeeds:"",
   accessibleRoomRequested:false,
   extraWednesday:false,extraThursday:false,extraSunday:false,extraMonday:false,
   noChildrenAcknowledged:false,depositPolicyAcknowledged:false,
@@ -87,6 +91,21 @@ export default function RegistrationForm(){
   },[draft.paymentChoice,draft.paymentAmount]);
 
   function setField(name:string,value:string|boolean){setDraft(d=>({...d,[name]:value}));setErrors([])}
+  function dietarySummary(){
+    const selected=[
+      draft.dietaryVegetarian&&"Vegetarian",
+      draft.dietaryVegan&&"Vegan",
+      draft.dietaryGlutenFree&&"Gluten-free",
+      draft.dietaryDairyFree&&"Dairy-free",
+      draft.dietaryNutAllergy&&"Nut allergy",
+      draft.dietaryShellfishAllergy&&"Shellfish allergy",
+      draft.dietaryDiabeticLowSugar&&"Diabetic / low-sugar",
+      draft.dietaryKosher&&"Kosher",
+      draft.dietaryHalal&&"Halal",
+      draft.dietaryOther&&String(draft.dietaryOtherText||"").trim()&&`Other: ${String(draft.dietaryOtherText).trim()}`
+    ].filter(Boolean);
+    return selected.join("; ");
+  }
   function focusTop(){window.setTimeout(()=>topRef.current?.focus(),0)}
   function validEmail(v:any){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||""))}
 
@@ -106,6 +125,7 @@ export default function RegistrationForm(){
       if(draft.churchAffiliationType==="midwest_church_of_christ"&&manualChurch&&!String(draft.churchNameOther||"").trim())e.push("Enter your congregation name.");
       if(!draft.noChildrenAcknowledged)e.push("Acknowledge the couples-only retreat policy.");
       if(!draft.depositPolicyAcknowledged)e.push("Acknowledge the deposit policy.");
+      if(draft.dietaryOther&&!String(draft.dietaryOtherText||"").trim())e.push("Please specify the other dietary restriction or allergy.");
     }
     if(index===3){
       if(!draft.paymentMethod)e.push("Choose a payment method.");
@@ -137,7 +157,7 @@ export default function RegistrationForm(){
     e.preventDefault();
     if(!validateStep(3)){focusTop();return}
     setState("sending");setErrors([]);track("registration_submit",{amount_cents:paymentCents,method:draft.paymentMethod});
-    const payload={...draft,paymentAmount:(paymentCents/100).toFixed(2),churchSelectionLabel:selectedChurchLabel};
+    const payload={...draft,dietaryRestrictions:dietarySummary(),paymentAmount:(paymentCents/100).toFixed(2),churchSelectionLabel:selectedChurchLabel};
     try{
       const res=await fetch("/api/register",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
       const data=await res.json().catch(()=>({}));
@@ -237,16 +257,41 @@ export default function RegistrationForm(){
       {draft.churchAffiliationType==="guest_of_church_of_christ_member"&&<label className="field"><span>Church or congregation you are connected with <small>optional</small></span><input value={String(draft.churchNameOther)} onChange={e=>setField("churchNameOther",e.target.value)}/></label>}
 
       <div className="twoCol"><label className="field"><span>How did you hear about the retreat?</span><select value={String(draft.howHeard)} onChange={e=>setField("howHeard",e.target.value)}><option value="">Select</option><option value="church">Church announcement</option><option value="friend_family">Friend or family</option><option value="previous_attendee">Previous attendee</option><option value="social_media">Social media</option><option value="other">Other</option></select></label>{(draft.howHeard==="friend_family"||draft.howHeard==="previous_attendee")&&<label className="field"><span>Who invited or referred you?</span><input value={String(draft.referredBy)} onChange={e=>setField("referredBy",e.target.value)}/></label>}</div>
-      <div className="twoCol"><label className="field"><span>Dietary restrictions or allergies</span><textarea rows={4} value={String(draft.dietaryRestrictions)} onChange={e=>setField("dietaryRestrictions",e.target.value)}/></label><label className="field"><span>Accessibility or accommodation needs</span><textarea rows={4} value={String(draft.accessibilityNeeds)} onChange={e=>setField("accessibilityNeeds",e.target.value)}/></label></div>
+      <div className="needsGrid">
+        <fieldset className="dietaryFieldset">
+          <legend>Dietary restrictions or allergies</legend>
+          <p className="fieldHelp">Select all that apply. This helps us provide the venue with an accurate catering count.</p>
+          <div className="dietaryOptionGrid">
+            {[
+              ["dietaryVegetarian","Vegetarian"],
+              ["dietaryVegan","Vegan"],
+              ["dietaryGlutenFree","Gluten-free"],
+              ["dietaryDairyFree","Dairy-free"],
+              ["dietaryNutAllergy","Nut allergy"],
+              ["dietaryShellfishAllergy","Shellfish allergy"],
+              ["dietaryDiabeticLowSugar","Diabetic / low-sugar"],
+              ["dietaryKosher","Kosher"],
+              ["dietaryHalal","Halal"],
+            ].map(([key,label])=><label className="dietaryOption" key={key}><input type="checkbox" checked={Boolean(draft[key])} onChange={e=>setField(key,e.target.checked)}/><span>{label}</span></label>)}
+            <label className="dietaryOption dietaryOption--other"><input type="checkbox" checked={Boolean(draft.dietaryOther)} onChange={e=>{setField("dietaryOther",e.target.checked);if(!e.target.checked)setField("dietaryOtherText","")}}/><span>Other (please specify)</span></label>
+          </div>
+          {draft.dietaryOther&&<label className="field dietaryOtherField"><span>Other dietary restriction or allergy <b>*</b></span><input value={String(draft.dietaryOtherText)} onChange={e=>setField("dietaryOtherText",e.target.value)} placeholder="Please specify"/></label>}
+        </fieldset>
+
+        <label className="field accessibilityField"><span>Accessibility or accommodation needs</span><textarea rows={5} value={String(draft.accessibilityNeeds)} onChange={e=>setField("accessibilityNeeds",e.target.value)}/><small className="fieldSupport">A member of our team will follow up directly to coordinate.</small></label>
+      </div>
       <label className="checkCard"><input type="checkbox" checked={Boolean(draft.accessibleRoomRequested)} onChange={e=>setField("accessibleRoomRequested",e.target.checked)}/><span><strong>Accessible hotel room requested</strong><small>We will include this in room coordination information.</small></span></label>
 
       <div className="sectionDivider"/>
-      <p className="fieldHelp"><strong>Additional hotel nights:</strong> Friday and Saturday are included in the retreat package. Select any additional nights you want the retreat team to coordinate; extra nights are paid separately.</p>
+      <p className="fieldHelp"><strong>Additional hotel nights:</strong> Friday and Saturday are included in the retreat package. Select any additional nights you'd like us to coordinate with the hotel — these nights are billed directly to you at checkout, separate from your retreat registration.</p>
       <div className="nightGrid">{[["extraWednesday","Wednesday"],["extraThursday","Thursday"],["extraSunday","Sunday"],["extraMonday","Monday"]].map(([key,label])=><label className="nightChoice" key={key}><input type="checkbox" checked={Boolean(draft[key])} onChange={e=>setField(key,e.target.checked)}/><span>{label}</span></label>)}</div>
 
       <div className="sectionDivider"/>
-      <label className="checkCard"><input type="checkbox" checked={Boolean(draft.noChildrenAcknowledged)} onChange={e=>setField("noChildrenAcknowledged",e.target.checked)}/><span><strong>Couples-only retreat</strong><small>I understand children are not included in the retreat.</small></span></label>
-      <label className="checkCard"><input type="checkbox" checked={Boolean(draft.depositPolicyAcknowledged)} onChange={e=>setField("depositPolicyAcknowledged",e.target.checked)}/><span><strong>Deposit requirement</strong><small>I understand my registration remains pending until the $100 non-refundable deposit is received and verified.</small></span></label>
+      <div className="acknowledgementGroup">
+        <div className="acknowledgementHeading"><p className="eyebrow plum">REQUIRED</p><h4>Acknowledgments</h4><p>Confirm both items before continuing.</p></div>
+        <label className={"checkCard acknowledgementCard"+(!draft.noChildrenAcknowledged&&errors.includes("Acknowledge the couples-only retreat policy.")?" hasError":"")}><input type="checkbox" required checked={Boolean(draft.noChildrenAcknowledged)} onChange={e=>setField("noChildrenAcknowledged",e.target.checked)}/><span><strong>Couples-only retreat</strong><small>We ask every couple to prayerfully commit to attending without children, so the weekend can be focused entirely on your marriage.</small>{!draft.noChildrenAcknowledged&&errors.includes("Acknowledge the couples-only retreat policy.")&&<em className="inlineFieldError">Required before continuing.</em>}</span></label>
+        <label className={"checkCard acknowledgementCard"+(!draft.depositPolicyAcknowledged&&errors.includes("Acknowledge the deposit policy.")?" hasError":"")}><input type="checkbox" required checked={Boolean(draft.depositPolicyAcknowledged)} onChange={e=>setField("depositPolicyAcknowledged",e.target.checked)}/><span><strong>Deposit requirement</strong><small>I understand my registration remains pending until the $100 non-refundable deposit is received and verified.</small>{!draft.depositPolicyAcknowledged&&errors.includes("Acknowledge the deposit policy.")&&<em className="inlineFieldError">Required before continuing.</em>}</span></label>
+      </div>
     </section>}
 
     {step===2&&<section className="wizardPanel reviewPanel">
@@ -259,7 +304,8 @@ export default function RegistrationForm(){
         <div><span>Church</span><strong>{selectedChurchLabel||String(draft.churchNameOther)||String(draft.churchAffiliationType).replaceAll("_"," ")}</strong></div>
         <div><span>Accessible room</span><strong>{draft.accessibleRoomRequested?"Yes":"No"}</strong></div>
         <div><span>Additional nights</span><strong>{[draft.extraWednesday&&"Wednesday",draft.extraThursday&&"Thursday",draft.extraSunday&&"Sunday",draft.extraMonday&&"Monday"].filter(Boolean).join(", ")||"None"}</strong></div>
-        <div><span>Dietary / accessibility</span><strong>{draft.dietaryRestrictions||draft.accessibilityNeeds?"Information provided":"None provided"}</strong></div>
+        <div><span>Dietary</span><strong>{dietarySummary()||"None selected"}</strong></div>
+        <div><span>Accessibility</span><strong>{draft.accessibilityNeeds?String(draft.accessibilityNeeds):"None noted"}</strong></div>
       </div>
       <button type="button" className="textAction editLink" onClick={()=>{setStep(0);focusTop()}}>Edit couple information</button>
       <button type="button" className="textAction editLink" onClick={()=>{setStep(1);focusTop()}}>Edit retreat needs</button>
