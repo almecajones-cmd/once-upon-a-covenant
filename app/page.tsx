@@ -252,13 +252,16 @@ export default function Home() {
               <div className="speakerProfileBody">
                 <p className="eyebrow plum">FEATURED SPEAKER</p>
                 <h3>Samuel D. Bailey</h3>
-                <p className="speakerRole">Minister</p>
-                <p className="speakerTeaser">Minister Samuel D. Bailey joins us as a featured speaker for the 2027 retreat.</p>
+                <p className="speakerRole">Minister, Cedar Valley Church of Christ</p>
+                <p className="speakerTeaser">Minister, educator, and licensed marriage and family therapist Sam Bailey brings more than 17 years of ministry leadership and a heart for helping couples grow.</p>
 
                 <details className="speakerBio">
                   <summary>Meet Samuel <span aria-hidden="true">→</span></summary>
                   <div className="speakerBioContent">
-                    <p><strong>Biography coming soon.</strong> Additional biography and session details will be added as they are finalized.</p>
+                    <p>Sam Bailey is originally from Corsicana, Texas, and has served as minister at Cedar Valley Church of Christ for more than 17 years. He and his wife, Lori, have been married for 24 years and have two daughters, Reagan and Madison, along with a beloved German Shepherd.</p>
+                    <p>A graduate of SWCC and Abilene Christian University, Sam earned his bachelor’s degree in secondary education with a minor in youth and family ministry. He also holds a master’s degree in education, with an emphasis in curriculum and instruction, from Southern California, as well as a master’s degree in marriage and family therapy. He is currently pursuing a Doctor of Education (EdD) in organizational leadership.</p>
+                    <p>Before entering full-time ministry, Sam spent many years as a high school teacher and coach. He is also a licensed marriage and family therapist (LMFT), serving couples from diverse backgrounds.</p>
+                    <p>Whether teaching, counseling, or preaching, Sam brings a heart for people and a commitment to helping others grow. He remains grateful and humbled by the privilege of serving in God’s kingdom.</p>
                   </div>
                 </details>
               </div>
@@ -297,6 +300,7 @@ export default function Home() {
             <h2>Everything in one place.</h2>
             <p><strong>Embassy Suites Noblesville Indianapolis Conference Center</strong><br/>13700 Conference Center Drive South<br/>Noblesville, IN 46060</p>
             <p>Your $600 couple registration includes Friday and Saturday lodging. Additional nights may be requested during registration for Wednesday, Thursday, Sunday, or Monday and are paid separately by the couple.</p>
+            <p className="venueAmenity"><strong>Complimentary on-site parking</strong> is available at the hotel for retreat attendees.</p>
             <p>Accessible-room requests can also be submitted with your registration.</p>
           </div>
         </section>
@@ -394,7 +398,7 @@ export default function Home() {
             <ul>
               <li>Friday and Saturday lodging included</li>
               <li>Flexible payments toward the remaining balance</li>
-              <li>Engaged couples are welcome</li>
+              <li>Designed exclusively for married couples</li>
               <li>Additional hotel nights may be requested during registration and billed by the hotel</li>
               <li>PushPay, Zelle, check, and money order options</li>
             </ul>
@@ -450,6 +454,11 @@ export default function Home() {
             </details>
 
             <details>
+              <summary>Is parking available at the hotel?</summary>
+              <p>Yes. <strong>Complimentary on-site parking</strong> is available at Embassy Suites Noblesville Indianapolis Conference Center for retreat attendees.</p>
+            </details>
+
+            <details>
               <summary>Can we pay more than the suggested installment amount or pay in full early?</summary>
               <p>Yes. The payment schedule is budgeting guidance, not a locked installment plan. You may pay more than the suggested amount, make an early payment, or pay the remaining balance in full at any time. <Link className="faqLink" href="/pay">Click here to view the suggested payment plan and payment methods →</Link></p>
             </details>
@@ -475,8 +484,8 @@ export default function Home() {
             </details>
 
             <details>
-              <summary>Can engaged couples attend?</summary>
-              <p>Yes. Engaged couples are welcome to register for the retreat. <Link className="faqLink" href="/register">Click here to begin registration →</Link></p>
+              <summary>Who is eligible to attend the retreat?</summary>
+              <p>The 2027 Midwest Marriage Retreat is designed <strong>exclusively for married couples</strong>. Engaged couples are not eligible to register.</p>
             </details>
 
             <details>
