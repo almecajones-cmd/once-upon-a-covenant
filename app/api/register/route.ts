@@ -14,6 +14,10 @@ export async function POST(request:Request){
       return NextResponse.json({error:"Please complete all required fields and acknowledgements."},{status:400});
     }
 
+    if(clean(b.relationshipStatus)!=="married"){
+      return NextResponse.json({error:"The 2027 Midwest Marriage Retreat is available to married couples only."},{status:400});
+    }
+
     const churchType=clean(b.churchAffiliationType);
     const churchId=clean(b.churchId);
     const churchNameOther=clean(b.churchNameOther);
