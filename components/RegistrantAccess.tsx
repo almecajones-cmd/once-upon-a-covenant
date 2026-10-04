@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { track } from "@/lib/analytics";
+import { paymentConfig } from "@/lib/paymentConfig";
 
 type Summary = {
   registration: {
@@ -191,8 +192,9 @@ export default function RegistrantAccess(){
             {method==="pushpay"&&<div>
               <p>We’ll record the amount you selected, then give you a button to Eagle Creek Church of Christ’s PushPay page.</p>
               <p>On PushPay, enter the same amount and choose <strong>Give one time</strong>. Under Fund, select <strong>2027 Midwest Marriage Retreat</strong>. The payment stays pending here until the retreat finance team verifies it.</p>
+              {paymentConfig.pushPayQrUrl&&<div className="paymentQr"><img src={paymentConfig.pushPayQrUrl} alt="PushPay payment QR code"/><small>Scan from another device to open PushPay.</small></div>}
             </div>}
-            {method==="zelle"&&<p>Send the amount you selected to <strong>mbankhead@myeccoc.com</strong>. We record the intended payment first, then the finance team matches and verifies the Zelle payment before your balance changes.</p>}
+            {method==="zelle"&&<div><p>Send the amount you selected to <strong>{paymentConfig.zelleRecipient}</strong>. We record the intended payment first, then the finance team matches and verifies the Zelle payment before your balance changes.</p>{paymentConfig.zelleQrUrl&&<div className="paymentQr"><img src={paymentConfig.zelleQrUrl} alt="Zelle payment QR code"/><small>Scan the official Zelle QR code from another device.</small></div>}</div>}
             {(method==="check"||method==="money_order")&&<div>
               <p>Make payable to <strong>Eagle Creek Church of Christ</strong> with <strong>Midwest Marriage Retreat</strong> in the memo line.</p>
               <address>Eagle Creek Church of Christ<br/>c/o 2027 Midwest Marriage Retreat<br/>3025 W. 69th Street<br/>Indianapolis, IN 46268</address>
