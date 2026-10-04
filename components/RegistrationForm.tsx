@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { track } from "@/lib/analytics";
+import { paymentConfig } from "@/lib/paymentConfig";
 
 type Church = { id:number; name:string; location:string; state:string };
 type Draft = Record<string,string|boolean>;
@@ -9,7 +10,7 @@ type Draft = Record<string,string|boolean>;
 const STORAGE_KEY="ouc_registration_draft_v2";
 
 const initialDraft:Draft={
-  relationshipStatus:"",
+  relationshipStatus:"married",
   husbandFirstName:"",husbandLastName:"",husbandEmail:"",husbandPhone:"",
   wifeFirstName:"",wifeLastName:"",wifeEmail:"",wifePhone:"",
   weddingAnniversary:"",
@@ -49,7 +50,7 @@ export default function RegistrationForm(){
       const saved=sessionStorage.getItem(STORAGE_KEY);
       if(saved){
         const parsed=JSON.parse(saved);
-        setDraft({...initialDraft,...(parsed.draft||{})});
+        setDraft({...initialDraft,...(parsed.draft||{}),relationshipStatus:"married"});
         setStep(Math.min(Math.max(Number(parsed.step)||0,0),3));
         setChurchQuery(parsed.churchQuery||"");
         setSelectedChurchLabel(parsed.selectedChurchLabel||"");
@@ -112,7 +113,7 @@ export default function RegistrationForm(){
   function validateStep(index:number){
     const e:string[]=[];
     if(index===0){
-      if(!draft.relationshipStatus)e.push("Select Married or Engaged.");
+      if(draft.relationshipStatus!=="married")e.push("This retreat is available to married couples only.");
       for(const [key,label] of [["husbandFirstName","Husband first name"],["husbandLastName","Husband last name"],["wifeFirstName","Wife first name"],["wifeLastName","Wife last name"],["husbandPhone","Husband mobile"],["wifePhone","Wife mobile"],["addressLine1","Street address"],["city","City"],["state","State"],["postalCode","ZIP code"]] as const){
         if(!String(draft[key]||"").trim())e.push(`${label} is required.`);
       }
@@ -189,10 +190,12 @@ export default function RegistrationForm(){
         <strong>Next step: complete your PushPay payment.</strong>
         <p>We have recorded your selected payment amount and linked it to registration <strong>{result.confirmationCode}</strong>. On PushPay, enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. Do not set up a recurring gift unless you intentionally want a recurring church donation.</p>
         <a className="plumButton" href={result.pushPayUrl} target="_blank" rel="noreferrer">CONTINUE TO PUSHPAY</a>
+        {paymentConfig.pushPayQrUrl&&<div className="paymentQr paymentQr--success"><img src={paymentConfig.pushPayQrUrl} alt="PushPay payment QR code"/><small>Or scan from another device.</small></div>}
       </div>}
       {result.paymentMethod==="zelle"&&<div className="paymentInstruction">
         <strong>Next step: send your Zelle payment.</strong>
-        <p>Send <strong>{new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(result.amountCents/100)}</strong> to <strong>mbankhead@myeccoc.com</strong>. The retreat finance team will match and verify the payment before your registration status and balance are updated.</p>
+        <p>Send <strong>{new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(result.amountCents/100)}</strong> to <strong>{paymentConfig.zelleRecipient}</strong>. The retreat finance team will match and verify the payment before your registration status and balance are updated.</p>
+        {paymentConfig.zelleQrUrl&&<div className="paymentQr paymentQr--success"><img src={paymentConfig.zelleQrUrl} alt="Zelle payment QR code"/><small>Or scan the official Zelle QR code from another device.</small></div>}
       </div>}
       {(result.paymentMethod==="check"||result.paymentMethod==="money_order")&&<div className="paymentInstruction">
         <strong>Next step: mail your {result.paymentMethod==="check"?"check":"money order"}.</strong>
@@ -229,13 +232,13 @@ export default function RegistrationForm(){
 
     {step===0&&<section className="wizardPanel">
       <div className="fieldsetHeading"><span className="fieldsetNumber">01</span><div><h3>Couple Information</h3><p>Tell us who is attending and how to reach you.</p></div></div>
-      <label className="field fieldMedium"><span>Relationship status <b>*</b></span><select value={String(draft.relationshipStatus)} onChange={e=>setField("relationshipStatus",e.target.value)}><option value="">Select relationship status</option><option value="married">Married</option><option value="engaged">Engaged</option></select></label>
+      <div className="eligibilityNotice"><strong>Married Couples Retreat</strong><p>Registration is available to married couples only.</p></div>
       <div className="twoCol"><label className="field"><span>Husband first name <b>*</b></span><input value={String(draft.husbandFirstName)} onChange={e=>setField("husbandFirstName",e.target.value)}/></label><label className="field"><span>Husband last name <b>*</b></span><input value={String(draft.husbandLastName)} onChange={e=>setField("husbandLastName",e.target.value)}/></label></div>
       <div className="twoCol"><label className="field"><span>Husband email <b>*</b></span><input type="email" value={String(draft.husbandEmail)} onChange={e=>setField("husbandEmail",e.target.value)}/></label><label className="field"><span>Husband mobile <b>*</b></span><input type="tel" value={String(draft.husbandPhone)} onChange={e=>setField("husbandPhone",e.target.value)}/></label></div>
       <div className="personDivider"><span>AND</span></div>
       <div className="twoCol"><label className="field"><span>Wife first name <b>*</b></span><input value={String(draft.wifeFirstName)} onChange={e=>setField("wifeFirstName",e.target.value)}/></label><label className="field"><span>Wife last name <b>*</b></span><input value={String(draft.wifeLastName)} onChange={e=>setField("wifeLastName",e.target.value)}/></label></div>
       <div className="twoCol"><label className="field"><span>Wife email <b>*</b></span><input type="email" value={String(draft.wifeEmail)} onChange={e=>setField("wifeEmail",e.target.value)}/></label><label className="field"><span>Wife mobile <b>*</b></span><input type="tel" value={String(draft.wifePhone)} onChange={e=>setField("wifePhone",e.target.value)}/></label></div>
-      {draft.relationshipStatus==="married"&&<label className="field fieldMedium"><span>Wedding anniversary</span><input type="date" value={String(draft.weddingAnniversary)} onChange={e=>setField("weddingAnniversary",e.target.value)}/></label>}
+      <label className="field fieldMedium"><span>Wedding anniversary</span><input type="date" value={String(draft.weddingAnniversary)} onChange={e=>setField("weddingAnniversary",e.target.value)}/></label>
       <div className="sectionDivider"/>
       <label className="field"><span>Street address <b>*</b></span><input value={String(draft.addressLine1)} onChange={e=>setField("addressLine1",e.target.value)}/></label>
       <label className="field"><span>Address line 2</span><input value={String(draft.addressLine2)} onChange={e=>setField("addressLine2",e.target.value)}/></label>
@@ -298,7 +301,7 @@ export default function RegistrationForm(){
       <div className="fieldsetHeading"><span className="fieldsetNumber">03</span><div><h3>Review Your Registration</h3><p>Confirm the details below before choosing your payment.</p></div></div>
       <div className="reviewGrid">
         <div><span>Couple</span><strong>{draft.husbandFirstName} {draft.husbandLastName} & {draft.wifeFirstName} {draft.wifeLastName}</strong></div>
-        <div><span>Relationship</span><strong>{String(draft.relationshipStatus)}</strong></div>
+        <div><span>Relationship</span><strong>Married</strong></div>
         <div><span>Primary emails</span><strong>{draft.husbandEmail}<br/>{draft.wifeEmail}</strong></div>
         <div><span>Location</span><strong>{draft.city}, {draft.state} {draft.postalCode}</strong></div>
         <div><span>Church</span><strong>{selectedChurchLabel||String(draft.churchNameOther)||String(draft.churchAffiliationType).replaceAll("_"," ")}</strong></div>
@@ -325,10 +328,12 @@ export default function RegistrationForm(){
           <strong>PushPay — secure online payment</strong>
           <p>After you complete registration, we will record this selected amount against your registration and show you the Eagle Creek Church of Christ PushPay button.</p>
           <p>On PushPay: enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. Your registration remains pending until the retreat finance team verifies the payment.</p>
+          {paymentConfig.pushPayQrUrl&&<div className="paymentQr"><img src={paymentConfig.pushPayQrUrl} alt="PushPay payment QR code"/><small>On another device? Scan to open PushPay.</small></div>}
         </div>}
         {draft.paymentMethod==="zelle"&&<div>
           <strong>Zelle</strong>
-          <p>Send your selected amount to <strong>mbankhead@myeccoc.com</strong>. The website records your intended payment first; the finance team then matches the Zelle payment to your registration and updates your verified balance.</p>
+          <p>Send your selected amount to <strong>{paymentConfig.zelleRecipient}</strong>. The website records your intended payment first; the finance team then matches the Zelle payment to your registration and updates your verified balance.</p>
+          {paymentConfig.zelleQrUrl&&<div className="paymentQr"><img src={paymentConfig.zelleQrUrl} alt="Zelle payment QR code"/><small>On another device? Scan the official Zelle QR code.</small></div>}
         </div>}
         {(draft.paymentMethod==="check"||draft.paymentMethod==="money_order")&&<div>
           <strong>{draft.paymentMethod==="check"?"Check":"Money Order"} — mailing instructions</strong>
