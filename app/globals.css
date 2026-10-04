@@ -2956,3 +2956,54 @@ footer,
   .facts{grid-template-columns:1fr!important}
   .mobileScheduleBody>div{grid-template-columns:1fr;gap:.2rem}
 }
+
+
+/* ===== Committee QA feedback: eligibility, venue amenity, payment QR readiness ===== */
+.eligibilityNotice{
+  margin:0 0 1.2rem;
+  padding:.9rem 1rem;
+  border-left:3px solid var(--gold);
+  background:#fbf3e7;
+}
+.eligibilityNotice strong{
+  display:block;
+  color:#4b1738;
+  font-family:var(--font-serif),Georgia,serif;
+  font-size:1.05rem;
+}
+.eligibilityNotice p{
+  margin:.25rem 0 0;
+  color:#685961;
+  font-size:.8rem;
+}
+.venueAmenity{
+  padding:.8rem 1rem;
+  border-left:3px solid var(--gold);
+  background:#fbf3e7;
+}
+.paymentQr{
+  width:min(180px,100%);
+  margin:1rem 0 .2rem;
+  padding:.7rem;
+  background:#fff;
+  border:1px solid #dfcfba;
+  text-align:center;
+}
+.paymentQr img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1/1;
+  object-fit:contain;
+}
+.paymentQr small{
+  display:block;
+  margin-top:.45rem;
+  color:#6d5d65;
+  font-size:.68rem;
+  line-height:1.35;
+}
+.paymentQr--success{margin-top:1rem}
+@media(max-width:680px){
+  .paymentQr{width:150px}
+}
