@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BrandMark from "@/components/BrandMark";
+import { paymentConfig } from "@/lib/paymentConfig";
 
 export const metadata={title:"Payment Experience | Once Upon a Covenant"};
 
@@ -94,14 +95,16 @@ export default function PayPage(){
             <h3>PushPay</h3>
             <p>First record the payment through registration or the secure Make a Payment flow so the retreat team can tie it to your registration. Then open Eagle Creek Church of Christ’s PushPay page.</p>
             <p><strong>On PushPay:</strong> enter the same amount, choose <strong>Give one time</strong>, and confirm the fund is <strong>2027 Midwest Marriage Retreat</strong>. The retreat team verifies the payment before your website balance changes.</p>
-            <a className="outlineButton" href="https://ppay.co/mJyvth1Pp-Y" target="_blank" rel="noreferrer">OPEN PUSHPAY</a>
+            <a className="outlineButton" href={paymentConfig.pushPayUrl} target="_blank" rel="noreferrer">OPEN PUSHPAY</a>
+            {paymentConfig.pushPayQrUrl&&<div className="paymentQr"><img src={paymentConfig.pushPayQrUrl} alt="PushPay payment QR code"/><small>Scan from another device to open PushPay.</small></div>}
           </article>
           <article>
             <span className="paymentMethodNumber">02</span>
             <h3>Zelle</h3>
             <p>Send payment to:</p>
-            <p className="methodHighlight">mbankhead@myeccoc.com</p>
+            <p className="methodHighlight">{paymentConfig.zelleRecipient}</p>
             <p>Record the payment amount in the website flow first so the committee can reconcile it to your registration.</p>
+            {paymentConfig.zelleQrUrl&&<div className="paymentQr"><img src={paymentConfig.zelleQrUrl} alt="Zelle payment QR code"/><small>Scan the official Zelle QR code from another device.</small></div>}
           </article>
           <article>
             <span className="paymentMethodNumber">03</span>
