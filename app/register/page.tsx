@@ -21,8 +21,8 @@ export default function RegisterPage() {
           </p>
           <div className="registrationRule" aria-hidden="true" />
           <p className="registrationHeroCopy">
-            Complete one registration for your couple. Your registration is received immediately and
-            becomes confirmed after the $100 non-refundable deposit is received and verified.
+            Complete one registration for you and your spouse. This retreat is for married couples.
+            Your registration becomes confirmed after the $100 non-refundable deposit is received and verified.
           </p>
         </div>
       </section>
@@ -60,8 +60,8 @@ export default function RegisterPage() {
             <p>Your registration form alone does not hold a room. The $100 deposit must be received and verified.</p>
           </div>
           <div className="summaryNote summaryNote--soft">
-            <strong>Engaged couples are welcome.</strong>
-            <p>Children are not included in the retreat experience.</p>
+            <strong>Married couples only.</strong>
+            <p>The retreat is designed exclusively for married couples. Children are not included in the retreat experience.</p>
           </div>
 
           <Link className="summaryPaymentLink" href="/pay">
