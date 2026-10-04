@@ -3007,3 +3007,34 @@ footer,
 @media(max-width:680px){
   .paymentQr{width:150px}
 }
+
+
+/* ===== Speaker bio expansion: keep portraits fixed while copy expands ===== */
+.speakerProfileCard{
+  align-items:start;
+}
+.speakerProfileCard .speakerPhoto{
+  align-self:start;
+  height:520px;
+  min-height:520px;
+}
+.speakerProfileCard .speakerPhoto>img{
+  height:520px;
+  min-height:0;
+  object-fit:cover;
+  object-position:center top;
+}
+@media(max-width:900px){
+  .speakerProfileCard .speakerPhoto,
+  .speakerProfileCard .speakerPhoto>img{
+    height:420px;
+    min-height:420px;
+  }
+}
+@media(max-width:760px){
+  .speakerProfileCard .speakerPhoto,
+  .speakerProfileCard .speakerPhoto>img{
+    height:360px;
+    min-height:360px;
+  }
+}
