@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { hashValue, normalizeEmail, oneTimeCode, serviceClient } from "@/lib/server";
+import { logAppEvent, sendTrackedEmail } from "@/lib/emailAudit";
 
 export async function POST(request: Request) {
   try {
@@ -20,9 +20,8 @@ export async function POST(request: Request) {
       expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
     });
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from: "Once Upon a Covenant <registration@onceuponacovenant.org>",
+    const sent = await sendTrackedEmail({
+      purpose: "admin_login_code",
       to: email,
       replyTo: "marriagebydesignministry@myeccoc.com",
       subject: "Your retreat admin sign-in code",
@@ -32,7 +31,17 @@ export async function POST(request: Request) {
         <p style="font-size:32px;font-weight:700;letter-spacing:8px;color:#54143d">${code}</p>
         <p>This code expires in 10 minutes.</p>
       </div>`,
+      metadata: { purpose: "admin_login" }
     });
+
+    if (!sent.ok) {
+      await logAppEvent({
+        eventType: "admin_login_email_failed",
+        route: "/api/admin/request-code",
+        severity: "error",
+        message: sent.error || "Admin sign-in code was not accepted by email provider."
+      });
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
