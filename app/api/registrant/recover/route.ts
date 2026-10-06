@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { normalizeEmail, serviceClient } from "@/lib/server";
+import { sendTrackedEmail } from "@/lib/emailAudit";
 
 export async function POST(request: Request) {
   try {
@@ -19,9 +19,8 @@ export async function POST(request: Request) {
       .maybeSingle();
 
     if (data) {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: "Once Upon a Covenant <registration@onceuponacovenant.org>",
+      await sendTrackedEmail({
+        purpose: "registration_reference_recovery",
         to: email,
         replyTo: "marriagebydesignministry@myeccoc.com",
         subject: "Your Once Upon a Covenant registration reference",
@@ -30,7 +29,7 @@ export async function POST(request: Request) {
           <p>Your 2027 Midwest Marriage Retreat confirmation/reference number is:</p>
           <p style="font-size:24px;font-weight:700;color:#54143d">${data.confirmation_code}</p>
           <p>Use this number with this email address at <strong>Make a Payment</strong> to securely view your registration.</p>
-        </div>`,
+        </div>`
       });
     }
 
