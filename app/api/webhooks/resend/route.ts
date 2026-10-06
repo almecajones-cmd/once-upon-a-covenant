@@ -1,73 +1,90 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { serviceClient } from "@/lib/server";
 import { logAppEvent } from "@/lib/emailAudit";
 
-export async function POST(req: NextRequest) {
-  const secret = process.env.RESEND_WEBHOOK_SECRET;
-  if (!secret || !process.env.RESEND_API_KEY) {
-    return NextResponse.json({ error: "Webhook not configured." }, { status: 503 });
+export const runtime = "nodejs";
+
+const trackedTypes = new Set([
+  "email.sent",
+  "email.delivered",
+  "email.delivery_delayed",
+  "email.bounced",
+  "email.complained",
+  "email.failed",
+  "email.suppressed",
+]);
+
+function statusFromType(type:string){
+  return type.replace("email.","");
+}
+
+export async function POST(request:Request){
+  const secret=process.env.RESEND_WEBHOOK_SECRET;
+  if(!secret){
+    await logAppEvent({
+      eventType:"resend_webhook_configuration_error",
+      route:"/api/webhooks/resend",
+      severity:"error",
+      message:"RESEND_WEBHOOK_SECRET is not configured."
+    });
+    return new NextResponse("Webhook not configured",{status:503});
   }
 
-  try {
-    const payload = await req.text();
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    const event:any = resend.webhooks.verify({
+  try{
+    const payload=await request.text();
+    const resend=new Resend(process.env.RESEND_API_KEY);
+    const event:any=resend.webhooks.verify({
       payload,
-      headers: {
-        id: req.headers.get("svix-id") || "",
-        timestamp: req.headers.get("svix-timestamp") || "",
-        signature: req.headers.get("svix-signature") || "",
+      headers:{
+        id:request.headers.get("svix-id")||"",
+        timestamp:request.headers.get("svix-timestamp")||"",
+        signature:request.headers.get("svix-signature")||"",
       },
-      webhookSecret: secret,
+      webhookSecret:secret,
     });
 
-    const emailId = String(event?.data?.email_id || "");
-    const type = String(event?.type || "");
-    const recipient = Array.isArray(event?.data?.to) ? String(event.data.to[0] || "") : null;
-    const eventAt = event?.created_at || new Date().toISOString();
+    if(!trackedTypes.has(event.type)){
+      return NextResponse.json({ok:true});
+    }
 
-    if (emailId && type) {
-      const supabase = serviceClient();
+    const providerEmailId=String(event?.data?.email_id||"");
+    const recipient=Array.isArray(event?.data?.to) ? String(event.data.to[0]||"") : null;
+    const eventAt=event?.created_at||new Date().toISOString();
+    const supabase=serviceClient();
+
+    if(providerEmailId){
       await supabase.from("email_delivery_events").insert({
-        provider_email_id: emailId,
-        event_type: type,
-        recipient,
-        event_at: eventAt,
-        payload: event,
+        provider_email_id:providerEmailId,
+        event_type:event.type,
+        recipient:recipient||null,
+        event_at:eventAt,
+        payload:event,
       });
 
-      const normalized = type.replace("email.", "");
-      const update:any = {
-        delivery_status: normalized,
-        updated_at: new Date().toISOString(),
-      };
-      if (["failed","bounced","suppressed","complained"].includes(normalized)) {
-        update.error_message =
-          event?.data?.bounce?.message ||
-          event?.data?.suppression?.message ||
-          event?.data?.error?.message ||
-          `Resend reported ${normalized}.`;
-      }
-      await supabase.from("email_communications")
-        .update(update)
-        .eq("provider_email_id", emailId);
+      const deliveryStatus=statusFromType(event.type);
+      await supabase.from("email_communications").update({
+        delivery_status:deliveryStatus,
+        updated_at:new Date().toISOString(),
+        ...(event.type==="email.failed"||event.type==="email.bounced"||event.type==="email.suppressed"
+          ? {error_message:event?.data?.bounce?.message||event?.data?.error?.message||deliveryStatus}
+          : {})
+      }).eq("provider_email_id",providerEmailId);
 
-      if (["failed","bounced","suppressed","complained"].includes(normalized)) {
+      if(["email.failed","email.bounced","email.suppressed","email.complained","email.delivery_delayed"].includes(event.type)){
         await logAppEvent({
-          eventType: "email_delivery_issue",
-          route: "/api/webhooks/resend",
-          severity: "error",
-          message: update.error_message,
-          details: { providerEmailId: emailId, eventType: type, recipient }
+          eventType:"email_delivery_issue",
+          route:"/api/webhooks/resend",
+          severity:event.type==="email.delivery_delayed"?"warning":"error",
+          message:`Email provider reported ${deliveryStatus}.`,
+          details:{providerEmailId,recipient,eventType:event.type}
         });
       }
     }
 
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error("Invalid Resend webhook", error);
-    return NextResponse.json({ error: "Invalid webhook." }, { status: 400 });
+    return NextResponse.json({ok:true});
+  }catch(error){
+    console.error("Invalid Resend webhook",error);
+    return new NextResponse("Invalid webhook",{status:400});
   }
 }
