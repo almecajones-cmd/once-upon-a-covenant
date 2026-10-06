@@ -80,14 +80,18 @@ export async function sendTrackedEmail(args: EmailArgs) {
 
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const { data, error } = await resend.emails.send({
+    const emailPayload:any = {
       from: "Once Upon a Covenant <registration@onceuponacovenant.org>",
       to: recipients,
       replyTo: args.replyTo,
       subject: args.subject,
-      html: args.html,
-      text: args.text,
-    });
+    };
+    if (args.html) emailPayload.html = args.html;
+    if (args.text) emailPayload.text = args.text;
+    if (!args.html && !args.text) {
+      throw new Error("Tracked email requires html or text content.");
+    }
+    const { data, error } = await resend.emails.send(emailPayload);
 
     if (error || !data?.id) {
       const message = errorText(error || "Resend did not return an email ID.");
