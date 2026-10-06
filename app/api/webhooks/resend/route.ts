@@ -54,22 +54,30 @@ export async function POST(request:Request){
     const supabase=serviceClient();
 
     if(providerEmailId){
-      await supabase.from("email_delivery_events").insert({
+      const { error: eventError } = await supabase.from("email_delivery_events").upsert({
         provider_email_id:providerEmailId,
         event_type:event.type,
-        recipient:recipient||null,
+        recipient:recipient||"",
         event_at:eventAt,
         payload:event,
-      });
+      }, {onConflict:"provider_email_id,event_type,event_at,recipient",ignoreDuplicates:true});
+      if(eventError){
+        console.error("Unable to save delivery event",eventError);
+        return new NextResponse("Delivery event could not be saved",{status:503});
+      }
 
       const deliveryStatus=statusFromType(event.type);
-      await supabase.from("email_communications").update({
+      const { error: updateError } = await supabase.from("email_communications").update({
         delivery_status:deliveryStatus,
         updated_at:new Date().toISOString(),
         ...(event.type==="email.failed"||event.type==="email.bounced"||event.type==="email.suppressed"
           ? {error_message:event?.data?.bounce?.message||event?.data?.error?.message||deliveryStatus}
           : {})
       }).eq("provider_email_id",providerEmailId);
+      if(updateError){
+        console.error("Unable to update delivery status",updateError);
+        return new NextResponse("Delivery status could not be saved",{status:503});
+      }
 
       if(["email.failed","email.bounced","email.suppressed","email.complained","email.delivery_delayed"].includes(event.type)){
         await logAppEvent({

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import CommunicationDashboard from "@/components/CommunicationDashboard";
 
 type Dashboard = any;
 const money=(c:number)=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format((c||0)/100);
@@ -22,6 +23,7 @@ function downloadCsv(filename:string, headers:string[], rows:any[][]){
 }
 
 export default function AdminPortal(){
+  const [communicationId,setCommunicationId]=useState<string|null>(null);
   const [dashboard,setDashboard]=useState<Dashboard|null>(null);
   const [loginStage,setLoginStage]=useState<"email"|"code">("email");
   const [email,setEmail]=useState("");
@@ -197,6 +199,8 @@ export default function AdminPortal(){
       <div><span>Outstanding</span><strong>{money(m.outstandingCents)}</strong><small>Remaining balances</small></div>
     </div>
 
+    <CommunicationDashboard selectedId={communicationId} onSelect={setCommunicationId}/>
+
     <section className="adminSection adminVerificationSection">
       <div className="adminSectionHead">
         <div><p className="eyebrow plum">ACTION QUEUE</p><h3>Payments Pending Verification</h3><p>Verify only after the payment has actually been received or a check has cleared.</p></div>
@@ -245,7 +249,7 @@ export default function AdminPortal(){
         </div>
         <div className="adminTableWrap"><table className="adminTable adminReportTable"><thead><tr><th>Couple & Contact</th><th>Church / Location</th><th>Status</th><th>Paid</th><th>Balance</th><th>Lodging / Needs</th><th>Registered</th></tr></thead><tbody>
           {filteredRegistrations.length===0?<tr><td colSpan={7}>No registrations match these filters.</td></tr>:filteredRegistrations.map((r:any)=><tr key={r.id}>
-            <td><strong>{r.husband_first_name} {r.husband_last_name}</strong><br/><span>{r.wife_first_name} {r.wife_last_name}</span><br/><small>{r.confirmation_code} · {r.husband_email}</small></td>
+            <td><strong>{r.husband_first_name} {r.husband_last_name}</strong><br/><span>{r.wife_first_name} {r.wife_last_name}</span><br/><small>{r.confirmation_code} · {r.husband_email}</small><br/><button className="commLink" onClick={()=>setCommunicationId(r.id)}>Communication status</button></td>
             <td><strong>{r.church_display||"—"}</strong><br/><small>{r.city}, {r.state}</small></td>
             <td><span className={"adminStatusBadge status-"+r.registration_status}>{clean(r.registration_status)}</span><br/><small>{clean(r.payment_status)}</small></td>
             <td><strong>{money(r.verified_paid_cents)}</strong></td>

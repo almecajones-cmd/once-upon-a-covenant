@@ -3,6 +3,7 @@ import { serviceClient } from "@/lib/server";
 
 type EmailArgs = {
   purpose: string;
+  auditId?: string;
   to: string | string[];
   subject: string;
   html?: string;
@@ -28,7 +29,7 @@ export async function logAppEvent(args: {
 }) {
   try {
     const supabase = serviceClient();
-    await supabase.from("app_event_log").insert({
+    const { error } = await supabase.from("app_event_log").insert({
       event_type: args.eventType,
       route: args.route || null,
       registration_id: args.registrationId || null,
@@ -36,16 +37,19 @@ export async function logAppEvent(args: {
       message: args.message || null,
       details: args.details || {},
     });
+    if (error) console.error("Unable to write app event log", error);
   } catch (error) {
     console.error("Unable to write app event log", error);
   }
 }
 
 export async function sendTrackedEmail(args: EmailArgs) {
-  const recipients = (Array.isArray(args.to) ? args.to : [args.to]).filter(Boolean);
+  const recipients = [...new Set((Array.isArray(args.to) ? args.to : [args.to]).map(e => e.trim().toLowerCase()).filter(Boolean))];
   const supabase = serviceClient();
 
-  const { data: row } = await supabase
+  const { data: row, error: auditError } = args.auditId
+    ? await supabase.from("email_communications").select("id").eq("id",args.auditId).eq("registration_id",args.registrationId!).eq("send_status","attempted").single()
+    : await supabase
     .from("email_communications")
     .insert({
       registration_id: args.registrationId || null,
@@ -57,6 +61,11 @@ export async function sendTrackedEmail(args: EmailArgs) {
     })
     .select("id")
     .single();
+
+  if (auditError || !row) {
+    console.error("Email audit could not be saved", auditError);
+    return { ok: false as const, id: null, error: "Email audit unavailable; no email was sent." };
+  }
 
   if (!process.env.RESEND_API_KEY) {
     const message = "RESEND_API_KEY is not configured.";
@@ -91,7 +100,7 @@ export async function sendTrackedEmail(args: EmailArgs) {
     if (!args.html && !args.text) {
       throw new Error("Tracked email requires html or text content.");
     }
-    const { data, error } = await resend.emails.send(emailPayload);
+    const { data, error } = await resend.emails.send(emailPayload, { idempotencyKey: `communication-${row.id}` });
 
     if (error || !data?.id) {
       const message = errorText(error || "Resend did not return an email ID.");
@@ -114,13 +123,17 @@ export async function sendTrackedEmail(args: EmailArgs) {
     }
 
     if (row?.id) {
-      await supabase.from("email_communications").update({
+      const { error: saveError } = await supabase.from("email_communications").update({
         provider_email_id: data.id,
         send_status: "sent",
         delivery_status: "sent",
         error_message: null,
         updated_at: new Date().toISOString(),
       }).eq("id", row.id);
+      if (saveError) {
+        console.error("Provider accepted email but audit update failed", {providerEmailId:data.id,communicationId:row.id,error:saveError});
+        return { ok:false as const,id:data.id,error:"Provider accepted email but its audit update failed. Do not resend automatically." };
+      }
     }
 
     return { ok: true as const, id: data.id, error: null };
