@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { hashValue, normalizeEmail, oneTimeCode, serviceClient } from "@/lib/server";
+import { sendTrackedEmail } from "@/lib/emailAudit";
 
 export async function POST(request: Request) {
   try {
@@ -38,9 +38,9 @@ export async function POST(request: Request) {
       expires_at: expires,
     });
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from: "Once Upon a Covenant <registration@onceuponacovenant.org>",
+    await sendTrackedEmail({
+      purpose: "registrant_login_code",
+      registrationId: registration.id,
       to: email,
       replyTo: "marriagebydesignministry@myeccoc.com",
       subject: "Your Once Upon a Covenant verification code",
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
         <p>Use this one-time code to securely view your retreat registration and payment history:</p>
         <p style="font-size:32px;font-weight:700;letter-spacing:8px;color:#54143d">${code}</p>
         <p>This code expires in 10 minutes. If you did not request it, you can ignore this email.</p>
-      </div>`,
+      </div>`
     });
 
     return NextResponse.json({ ok: true });
