@@ -129,11 +129,15 @@ export async function POST(request:Request){
     const committeeEmail=await sendTrackedEmail({
       purpose:"registration_team_notification",
       registrationId:registration.id,
-      to:"marriagebydesignministry@myeccoc.com",
+      to:[
+        "marriagebydesignministry@myeccoc.com",
+        "floydgang5012@gmail.com",
+        "jessicayoung1111@gmail.com",
+      ],
       replyTo:husbandEmail,
       subject:`New retreat registration: ${clean(b.husbandFirstName)} & ${clean(b.wifeFirstName)}`,
       metadata:{confirmationCode},
-      text:`New registration received.\nReference: ${confirmationCode}\nPayment selected: $${(amountCents/100).toFixed(2)} via ${method}.\nStatus: Pending payment verification.`
+      text:`New registration received.\nReference: ${confirmationCode}\nPayment selected: ${(amountCents/100).toFixed(2)} via ${method}.\nStatus: Pending payment verification.`
     });
 
     if(!attendeeEmail.ok || !committeeEmail.ok){
