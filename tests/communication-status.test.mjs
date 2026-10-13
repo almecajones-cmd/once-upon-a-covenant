@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { communicationState, summarizeRegistration, recipientsFor } from '../lib/communicationStatus.ts';
+import { communicationState, summarizeRegistration, recipientsFor, mergeDeliveryStatus } from '../lib/communicationStatus.ts';
 import { confirmationEmail } from '../lib/confirmationEmail.ts';
 const now=Date.parse('2026-10-06T16:00:00Z');
 const row=(overrides={})=>({id:'message',registration_id:'registration',purpose:'registration_confirmation',to_addresses:['one@example.com','two@example.com'],subject:'Confirmation',provider_email_id:'provider',send_status:'sent',delivery_status:'sent',error_message:null,created_at:'2026-10-06T15:00:00Z',updated_at:'2026-10-06T15:00:00Z',metadata:{},...overrides});
 const reg={id:'registration',husband_email:'one@example.com',wife_email:'two@example.com'};
 test('absence is missing, not a send failure',()=>assert.equal(communicationState(undefined,[],now),'missing'));
-test('accepted delivery goes stale after 30 minutes',()=>assert.equal(communicationState(row(),[],now),'unconfirmed'));
+test('accepted delivery remains pending after 30 minutes without becoming an action issue',()=>{assert.equal(communicationState(row(),[],now),'unconfirmed');assert.deepEqual(summarizeRegistration(reg,[row()],[],now).issues,[]);});
 test('an interrupted attempt stays visible as unknown',()=>assert.equal(communicationState(row({delivery_status:null,send_status:'attempted'}),[],now),'stalled'));
 test('all terminal issue statuses remain exceptions',()=>{for(const status of ['failed','bounced','suppressed','complained']) assert.deepEqual(summarizeRegistration(reg,[row({delivery_status:status})],[],now).issues,[status]);});
 test('out-of-order sent event cannot override delivery',()=>assert.equal(communicationState(row(),[{provider_email_id:'provider',event_type:'email.sent',event_at:'2026-10-06T15:01:00Z'},{provider_email_id:'provider',event_type:'email.delivered',event_at:'2026-10-06T15:02:00Z'}],now),'delivered'));
@@ -16,3 +16,7 @@ test('a message to only one spouse cannot clear the other spouse missing confirm
 test('duplicate saved addresses are deduplicated',()=>assert.deepEqual(recipientsFor({husband_email:' ONE@example.com ',wife_email:'one@example.com'}),['one@example.com']));
 test('missing and invalid email addresses remain actionable',()=>assert.ok(summarizeRegistration({...reg,wife_email:''},[],[],now).issues.includes('missing_email')));
 test('resend reflects current verified balance and escapes attendee names',()=>{const content=confirmationEmail({confirmation_code:'OUC-TEST',registration_status:'confirmed',husband_first_name:'<script>x</script>',verified_paid_cents:60000,balance_cents:0});assert.match(content.html,/&lt;script&gt;/);assert.doesNotMatch(content.html,/<script>/);assert.match(content.text,/Verified payments: \$600.00/);assert.match(content.text,/Remaining balance: \$0.00/);assert.doesNotMatch(content.text,/Pending payment verification/);});
+
+test('stored provider delivery survives an older sent-only event',()=>assert.equal(communicationState(row({delivery_status:'delivered'}),[{provider_email_id:'provider',event_type:'email.sent',event_at:'2026-10-06T15:01:00Z'}],now),'delivered'));
+test('stored suppression survives a sent-only webhook history',()=>assert.equal(communicationState(row({delivery_status:'suppressed'}),[{provider_email_id:'provider',event_type:'email.sent',event_at:'2026-10-06T15:01:00Z'}],now),'suppressed'));
+test('replayed sent and delayed events cannot downgrade delivery or suppression',()=>{for(const incoming of ['sent','delivery_delayed']){assert.equal(mergeDeliveryStatus('delivered',incoming),'delivered');assert.equal(mergeDeliveryStatus('suppressed',incoming),'suppressed');}assert.equal(mergeDeliveryStatus('delivered','bounced'),'bounced');assert.equal(mergeDeliveryStatus('bounced','complained'),'complained');});

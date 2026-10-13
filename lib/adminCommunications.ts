@@ -1,5 +1,6 @@
 import { getAdminSession, serviceClient } from "@/lib/server";
 import { Communication, DeliveryEvent, summarizeRegistration } from "@/lib/communicationStatus";
+import { reconcileDelivery } from "@/lib/reconcileDelivery";
 
 export async function authorizedAdmin() {
   const session = await getAdminSession();
@@ -40,9 +41,28 @@ export async function getCommunicationDashboard(registrationId?: string) {
     events.push(...await readAll((from,to) => db.from("email_delivery_events").select("provider_email_id,event_type,event_at,recipient").in("provider_email_id",ids.slice(i,i+100)).order("event_at", {ascending:false}).order("id").range(from,to)));
   }
   const now = Date.now();
+  const key = process.env.RESEND_API_KEY;
+  const reconciliation = key ? await reconcileDelivery(communications as Communication[], events, {
+    lookup: async id => {
+      const response = await fetch(`https://api.resend.com/emails/${encodeURIComponent(id)}`, {
+        headers: {Authorization: `Bearer ${key}`}, cache: "no-store", signal: AbortSignal.timeout(4000),
+      });
+      if (!response.ok) throw new Error("Provider status unavailable");
+      return response.json();
+    },
+    save: async (row, patch) => {
+      // Do not overwrite a webhook update or a concurrent admin refresh.
+      const {data, error} = await db.from("email_communications").update(patch).eq("id",row.id)
+        .eq("updated_at",row.updated_at).select("id");
+      if (error) throw error;
+      return Boolean(data?.length);
+    },
+    pause: () => new Promise(resolve => setTimeout(resolve, 600)),
+  }, now) : {checked:0,updated:0,errors:0,remaining:0};
   return {
-    checkedAt: new Date(now).toISOString(),
+    checkedAt: new Date().toISOString(),
     webhookConfigured: Boolean(process.env.RESEND_WEBHOOK_SECRET),
+    reconciliation: {...reconciliation, configured:Boolean(key)},
     registrations: registrations.map(r => ({ ...r, communication: summarizeRegistration(r, communications as Communication[], events, now) })),
   };
 }

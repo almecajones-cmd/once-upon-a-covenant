@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { serviceClient } from "@/lib/server";
 import { logAppEvent } from "@/lib/emailAudit";
+import { mergeDeliveryStatus } from "@/lib/communicationStatus";
 
 export const runtime = "nodejs";
 
@@ -66,17 +67,22 @@ export async function POST(request:Request){
         return new NextResponse("Delivery event could not be saved",{status:503});
       }
 
-      const deliveryStatus=statusFromType(event.type);
-      const { error: updateError } = await supabase.from("email_communications").update({
-        delivery_status:deliveryStatus,
-        updated_at:new Date().toISOString(),
-        ...(event.type==="email.failed"||event.type==="email.bounced"||event.type==="email.suppressed"
-          ? {error_message:event?.data?.bounce?.message||event?.data?.error?.message||deliveryStatus}
-          : {})
-      }).eq("provider_email_id",providerEmailId);
-      if(updateError){
-        console.error("Unable to update delivery status",updateError);
-        return new NextResponse("Delivery status could not be saved",{status:503});
+      const {data:existing,error:readError}=await supabase.from("email_communications")
+        .select("id,delivery_status,updated_at").eq("provider_email_id",providerEmailId).maybeSingle();
+      if(readError) return new NextResponse("Delivery status could not be read",{status:503});
+      const deliveryStatus=mergeDeliveryStatus(existing?.delivery_status||null,statusFromType(event.type));
+      if(existing){
+        const { error: updateError } = await supabase.from("email_communications").update({
+          delivery_status:deliveryStatus,
+          updated_at:new Date().toISOString(),
+          ...(event.type==="email.failed"||event.type==="email.bounced"||event.type==="email.suppressed"
+            ? {error_message:event?.data?.bounce?.message||event?.data?.error?.message||deliveryStatus}
+            : {})
+        }).eq("id",existing.id).eq("updated_at",existing.updated_at);
+        if(updateError){
+          console.error("Unable to update delivery status",updateError);
+          return new NextResponse("Delivery status could not be saved",{status:503});
+        }
       }
 
       if(["email.failed","email.bounced","email.suppressed","email.complained","email.delivery_delayed"].includes(event.type)){
