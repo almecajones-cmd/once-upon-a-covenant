@@ -10,12 +10,20 @@ export type DeliveryEvent = {
 export const statusLabels: Record<string, string> = {
   missing: "No confirmation recorded", missing_email: "Missing attendee email",
   invalid_email: "Invalid attendee email", attempted: "Sending", stalled: "Send outcome unknown",
-  sent: "Accepted · awaiting delivery", unconfirmed: "Delivery unconfirmed",
+  sent: "Sent — Awaiting Confirmation", unconfirmed: "Sent — Awaiting Confirmation",
   delivered: "Delivered", bounced: "Bounced", suppressed: "Suppressed", failed: "Failed",
   complained: "Spam complaint", delivery_delayed: "Delivery delayed",
 };
-export const issueStatuses = new Set(["missing", "missing_email", "invalid_email", "stalled", "unconfirmed", "bounced", "suppressed", "failed", "complained", "delivery_delayed"]);
+export const issueStatuses = new Set(["missing", "missing_email", "invalid_email", "stalled", "bounced", "suppressed", "failed", "complained", "delivery_delayed"]);
 const terminalIssues = new Set(["bounced", "suppressed", "failed", "complained"]);
+// Delivery evidence must survive late or replayed email.sent events.
+export function mergeDeliveryStatus(current: string | null, incoming: string) {
+  if (incoming === "complained") return incoming;
+  if (current && terminalIssues.has(current)) return current;
+  if (terminalIssues.has(incoming)) return incoming;
+  if (current === "delivered" || incoming === "delivered") return "delivered";
+  return incoming;
+}
 export function validEmail(email: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
 export function recipientsFor(registration: { husband_email?: string; wife_email?: string }) {
   return [...new Set([registration.husband_email, registration.wife_email].map(e => (e || "").trim().toLowerCase()).filter(Boolean))];
@@ -27,7 +35,7 @@ export function communicationState(row: Communication | undefined, events: Deliv
   // A grouped email can bounce for one spouse and deliver to the other. Keep the issue visible.
   const issue = history.find(e => terminalIssues.has(e.event_type.replace("email.", "")));
   const final = issue || history.find(e => e.event_type === "email.delivered") || history[0];
-  let status = final?.event_type.replace("email.", "") || row.delivery_status || row.send_status;
+  let status = mergeDeliveryStatus(row.delivery_status || row.send_status, final?.event_type.replace("email.", "") || row.delivery_status || row.send_status);
   const age = now - Date.parse(row.created_at);
   if (status === "attempted" && age >= 5 * 60_000) status = "stalled";
   if (status === "sent" && age >= 30 * 60_000) status = "unconfirmed";

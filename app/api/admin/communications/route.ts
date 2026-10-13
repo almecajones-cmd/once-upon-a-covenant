@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { authorizedAdmin, getCommunicationDashboard } from "@/lib/adminCommunications";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 export async function GET(request: Request) {
   try {
     if (!await authorizedAdmin()) return NextResponse.json({error:"Not authorized."}, {status:401});

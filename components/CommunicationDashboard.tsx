@@ -12,7 +12,7 @@ type Registration = {
     committee: (Communication & {status:string}) | null; history: History[];
   };
 };
-type Dashboard = {checkedAt:string;webhookConfigured:boolean;registrations:Registration[]};
+type Dashboard = {checkedAt:string;webhookConfigured:boolean;registrations:Registration[];reconciliation:{configured:boolean;checked:number;updated:number;errors:number;remaining:number}};
 const date = (value: string) => new Date(value).toLocaleString("en-US",{timeZone:"America/Indiana/Indianapolis",dateStyle:"medium",timeStyle:"short"}) + " ET";
 const name = (r: Registration) => `${r.husband_first_name} ${r.husband_last_name} & ${r.wife_first_name} ${r.wife_last_name}`;
 const label = (status: string) => statusLabels[status] || status.replaceAll("_"," ");
@@ -30,8 +30,11 @@ export default function CommunicationDashboard({selectedId,onSelect}:{selectedId
   const [query,setQuery] = useState("");
   const [confirmSend,setConfirmSend] = useState(false);
   const inFlight = useRef(false);
+  const refreshing = useRef(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const refresh = useCallback(async () => {
+    if (refreshing.current) return;
+    refreshing.current=true;
     setLoading(true);
     try {
       const response = await fetch("/api/admin/communications",{cache:"no-store"});
@@ -39,7 +42,7 @@ export default function CommunicationDashboard({selectedId,onSelect}:{selectedId
       if (!response.ok) throw new Error(result.error || "Unable to load communication records.");
       setData(result);setError("");
     } catch(e) {setError(e instanceof Error ? e.message : "Unable to load communication records.");}
-    finally {setLoading(false);}
+    finally {refreshing.current=false;setLoading(false);}
   },[]);
   useEffect(() => {
     void refresh();
@@ -56,11 +59,11 @@ export default function CommunicationDashboard({selectedId,onSelect}:{selectedId
     return { attention:active.filter(r => r.communication.issues.length).length,
       failed:active.filter(r => r.communication.issues.some(s => ["bounced","suppressed","failed","complained"].includes(s))).length,
       missing:active.filter(r => r.communication.issues.some(s => ["missing","missing_email","invalid_email"].includes(s))).length,
-      waiting:active.filter(r => r.communication.issues.some(s => ["stalled","unconfirmed","delivery_delayed"].includes(s))).length };
+      waiting:active.filter(r => r.communication.attendee.some(a => ["sent","unconfirmed"].includes(a.status))).length };
   },[data]);
   const rows = (data?.registrations || []).filter(r => {
     const issues = r.communication.issues;
-    const matches = filter==="all" || (!inactive(r) && (filter==="attention" ? issues.length>0 : issues.includes(filter)));
+    const matches = filter==="all" || (!inactive(r) && (filter==="attention" ? issues.length>0 : filter==="waiting" ? r.communication.attendee.some(a => ["sent","unconfirmed"].includes(a.status)) : filter==="delivered" ? r.communication.attendee.length>0 && r.communication.attendee.every(a => a.status==="delivered") : issues.includes(filter)));
     return matches && (!query.trim() || [name(r),r.confirmation_code,...r.communication.attendee.map(a => a.email)].join(" ").toLowerCase().includes(query.trim().toLowerCase()));
   });
   async function resend() {
@@ -82,12 +85,13 @@ export default function CommunicationDashboard({selectedId,onSelect}:{selectedId
     {!data && !error && <p role="status">Loading communication records…</p>}
     {data && <>
       {!data.webhookConfigured && <p className="commAlert" role="alert">Delivery tracking is not configured. Accepted emails cannot be assumed delivered. Contact the site administrator.</p>}
-      <div className="commMetrics"><div><strong>{counts.attention}</strong><span>Couples needing attention</span></div><div><strong>{counts.failed}</strong><span>Failed, bounced, or blocked</span></div><div><strong>{counts.missing}</strong><span>Missing confirmation or email</span></div><div><strong>{counts.waiting}</strong><span>Delayed or unconfirmed</span></div></div>
+      {(!data.reconciliation.configured || data.reconciliation.errors>0) && <p className="commAlert" role="alert">{data.reconciliation.configured ? "Some provider status checks were unavailable. Saved statuses are shown; awaiting confirmation does not mean delivery failed." : "Automatic provider checks are unavailable. Saved delivery events are shown; contact the site administrator."}</p>}
+      <div className="commMetrics"><div><strong>{counts.attention}</strong><span>Couples needing attention</span></div><div><strong>{counts.failed}</strong><span>Failed, bounced, or blocked</span></div><div><strong>{counts.missing}</strong><span>Missing confirmation or email</span></div><div><strong>{counts.waiting}</strong><span>Sent — awaiting confirmation</span></div></div>
       <div className="commFilters"><label>Search couple, email, or reference<input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search communications…"/></label>
-        <label>Show<select value={filter} onChange={e=>setFilter(e.target.value)}><option value="attention">Needs attention</option><option value="all">All registrations</option>{["bounced","suppressed","failed","missing","missing_email","invalid_email","unconfirmed","stalled","delivery_delayed","complained"].map(s=><option value={s} key={s}>{label(s)}</option>)}</select></label></div>
+        <label>Show<select value={filter} onChange={e=>setFilter(e.target.value)}><option value="attention">Needs attention</option><option value="all">All registrations</option><option value="delivered">Delivered</option><option value="waiting">Sent — Awaiting Confirmation</option>{["bounced","suppressed","failed","missing","missing_email","invalid_email","stalled","delivery_delayed","complained"].map(s=><option value={s} key={s}>{label(s)}</option>)}</select></label></div>
       <p className="commMeta">{rows.length} {rows.length===1?"couple":"couples"} · Updated {date(data.checkedAt)} · Refreshes every minute while open</p>
       {rows.length===0 ? <div className="commEmpty">{filter==="attention"&&!query?"No active registrations need confirmation follow-up.":"No registrations match these filters."}</div> : <div className="commRows">{rows.map(r=><article className="commRow" key={r.id}><div><strong>{name(r)}</strong><p className="commMeta">{r.confirmation_code}{inactive(r)?` · ${r.registration_status}`:""}</p>{r.communication.attendee.map(a=><p className="commRecipient" key={a.email}>{a.email}</p>)}</div><div className="commBadges">{r.communication.issues.length?r.communication.issues.map(s=><span key={s}>{badge(s)}</span>):r.communication.attendee.map(a=><span key={a.email}>{badge(a.status)}</span>)}</div><button className="outlineButton" onClick={()=>onSelect(r.id)}>View communication</button></article>)}</div>}
-      <p className="commHelp">“No confirmation recorded” can include registrations made before tracking began. “Accepted” means the provider accepted the send; “Delivered” means the receiving server accepted the message, not that it reached the inbox. Unconfirmed delivery is flagged after 30 minutes.</p>
+      <p className="commHelp">“Sent — Awaiting Confirmation” means Resend accepted the email, but delivery hasn't been verified yet. It is tracked separately from “Needs attention.” Pending messages are automatically checked with Resend as this dashboard refreshes, without resending email. {data.reconciliation.remaining>0 && `${data.reconciliation.remaining} more messages will be checked on subsequent refreshes. `}“Delivered” means the receiving server accepted the message; it does not guarantee inbox placement. “No confirmation recorded” can include registrations made before tracking began.</p>
     </>}
     <dialog className="commDialog" ref={dialog} aria-labelledby="communication-title" onCancel={e=>{if(sending)e.preventDefault();else onSelect(null);}} onClose={()=>onSelect(null)}>
       <div className="commDialogHead"><div><p className="eyebrow plum">REGISTRATION COMMUNICATIONS</p><h3 id="communication-title">Communication Status</h3></div><button aria-label="Close communication status" className="commClose" onClick={()=>onSelect(null)} disabled={sending}>×</button></div>
